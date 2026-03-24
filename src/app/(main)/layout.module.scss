@@ -1,0 +1,14 @@
+@use 'styles/mixins' as *;
+
+.layout {
+  height: 100dvh;
+  @include flex-col;
+  background-color: #ffffff;
+  overflow: hidden;
+}
+
+.main {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
