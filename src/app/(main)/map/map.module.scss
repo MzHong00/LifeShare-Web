@@ -1,0 +1,117 @@
+@use 'styles/mixins' as *;
+
+.page {
+  height: 100%;
+  @include flex-col;
+  position: relative;
+  overflow: hidden;
+}
+
+// ─── 멤버 헤더 ────────────────────────────────────────────────────────────────
+
+.memberHeader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(255, 255, 255, 0.9) 30%,
+    rgba(255, 255, 255, 0.7) 60%,
+    rgba(255, 255, 255, 0.3) 85%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  padding: 10px 16px 24px;
+  @include flex-row(6px);
+  align-items: flex-start;
+  pointer-events: none;
+}
+
+.memberButton {
+  pointer-events: auto;
+  @include flex-col-center(4px);
+  padding: 6px 10px;
+  border-radius: 14px;
+  transition: background-color 0.15s;
+}
+
+.memberButtonActive {
+  background-color: rgba(49, 130, 246, 0.1);
+}
+
+.memberAvatarWrap {
+  position: relative;
+  border-radius: 9999px;
+}
+
+.focusBadge {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 18px;
+  height: 18px;
+  background-color: #ffffff;
+  border-radius: 9999px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+  @include flex-center;
+  color: var(--grey-500);
+  pointer-events: none;
+}
+
+.memberAvatarActive {
+  outline: 2.5px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: 9999px;
+}
+
+.memberName {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--grey-500);
+}
+
+.memberNameActive {
+  color: var(--primary);
+}
+
+// ─── 스토리 기록 FAB ──────────────────────────────────────────────────────────
+
+.recordFab {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100px;
+  @include flex-center;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.recordButton {
+  pointer-events: auto;
+  @include flex-row(8px);
+  padding: 12px 22px;
+  border-radius: 9999px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.14);
+  transition: background-color 0.15s, transform 0.15s;
+
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+.recordButtonIdle {
+  background-color: rgba(255, 255, 255, 0.97);
+  color: var(--primary);
+}
+
+.recordButtonActive {
+  background-color: var(--error);
+  color: #ffffff;
+}
+
+.recordLabel {
+  font-size: 14px;
+  font-weight: 700;
+}
