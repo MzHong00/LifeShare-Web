@@ -1,0 +1,109 @@
+@use 'styles/mixins' as *;
+
+.statusCard {
+  padding: 16px 20px;
+  margin-bottom: 8px;
+}
+
+.memberRow {
+  @include flex-between;
+  margin-bottom: 8px;
+}
+
+.memberLeft {
+  @include flex-row(12px);
+}
+
+.memberName {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--grey-900);
+}
+
+.batteryRow {
+  @include flex-row(4px);
+  color: var(--grey-400);
+  font-size: 12px;
+}
+
+.locationRow {
+  @include flex-row(8px);
+  margin-bottom: 4px;
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.locationText {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--grey-900);
+}
+
+.timeRow {
+  @include flex-row(6px);
+  color: var(--grey-400);
+  font-size: 12px;
+}
+
+.directionsSection {
+  padding: 0 20px;
+  margin-bottom: 20px;
+}
+
+.directionsButton {
+  width: 100%;
+  @include flex-center;
+  gap: 8px;
+  background-color: var(--grey-100);
+  padding: 14px 0;
+  border-radius: 16px;
+  color: var(--grey-900);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.placesSection {
+  padding: 0 20px 32px;
+}
+
+.placesTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--grey-900);
+  margin-bottom: 16px;
+}
+
+.placesList {
+  @include flex-col(16px);
+}
+
+.placeButton {
+  width: 100%;
+  @include flex-row(12px);
+}
+
+.placeIcon {
+  @include icon-box(44px, 12px);
+  background-color: var(--grey-100);
+  color: var(--grey-500);
+}
+
+.placeInfo {
+  flex: 1;
+  text-align: left;
+}
+
+.placeName {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--grey-900);
+}
+
+.placeDate {
+  font-size: 12px;
+  color: var(--grey-400);
+}
+
+.chevron {
+  color: var(--grey-400);
+}

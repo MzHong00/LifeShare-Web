@@ -1,0 +1,205 @@
+@use 'styles/mixins' as *;
+
+.page {
+  @include page-base(#ffffff);
+  padding-bottom: 100px;
+}
+
+.header {
+  @include flex-between;
+  padding: 24px 24px 16px;
+  align-items: center;
+}
+
+.headerLeft {
+  @include flex-row(12px);
+  align-items: center;
+}
+
+.headerName {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--grey-900);
+}
+
+.headerRight {
+  @include flex-row(12px);
+  align-items: center;
+}
+
+.headerBtn {
+  font-size: 14px;
+  color: var(--grey-500);
+  font-weight: 500;
+  padding: 4px 0;
+  
+  &:active {
+    color: var(--grey-700);
+  }
+}
+
+.headerDivider {
+  width: 1px;
+  height: 12px;
+  background-color: var(--grey-200);
+}
+
+/* Quick Actions Grid */
+.quickGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px 8px;
+  padding: 8px 16px 32px;
+}
+
+.gridItem {
+  @include flex-col-center(8px);
+  
+  &:active {
+    opacity: 0.7;
+  }
+}
+
+.gridIconWrap {
+  @include icon-box(56px, 16px);
+  border-radius: 20px;
+  
+  &.blue {
+    background-color: rgba(49, 130, 246, 0.12);
+    color: var(--primary);
+  }
+  
+  &.orange {
+    background-color: rgba(255, 173, 19, 0.12);
+    color: #f39c12; /* slightly darker orange for text contrast */
+  }
+  
+  &.green {
+    background-color: rgba(0, 212, 148, 0.12);
+    color: var(--success);
+  }
+  
+  &.red {
+    background-color: rgba(240, 68, 82, 0.12);
+    color: var(--error);
+  }
+  
+  &.purple {
+    background-color: rgba(156, 39, 176, 0.12);
+    color: #9c27b0;
+  }
+  
+  &.grey {
+    background-color: var(--grey-100);
+    color: var(--grey-700);
+  }
+}
+
+.gridLabel {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--grey-700);
+}
+
+/* List Section */
+.sectionTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--grey-900);
+  padding: 16px 24px;
+}
+
+.listRow {
+  @include flex-between;
+  padding: 14px 24px;
+  width: 100%;
+  @include ripple-effect;
+}
+
+.listLeft {
+  @include flex-row(16px);
+}
+
+.listIconWrap {
+  @include icon-box(40px, 12px);
+  border-radius: 12px;
+  background-color: var(--grey-100);
+  color: var(--grey-700);
+}
+
+.listTitle {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--grey-900);
+}
+
+.listRightText {
+  font-size: 13px;
+  color: var(--grey-400);
+  font-weight: 400;
+}
+
+/* Invitations */
+.invitationsSection {
+  padding: 0 24px 24px;
+}
+
+.inviteCard {
+  background-color: var(--primary-light);
+  border-radius: 16px;
+  padding: 16px;
+  @include flex-between;
+  margin-bottom: 8px;
+}
+
+.inviteLeft {
+  @include flex-row(12px);
+  flex: 1;
+}
+
+.inviteIcon {
+  @include icon-box(40px, 12px);
+  background-color: #ffffff;
+  color: var(--primary);
+  border-radius: 12px;
+}
+
+.inviterName {
+  font-size: 13px;
+  color: var(--grey-600);
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.inviteMessage {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--grey-900);
+}
+
+.inviteActions {
+  @include flex-row(8px);
+}
+
+.declineButton, .acceptButton {
+  @include icon-box(36px);
+  border-radius: 10px;
+}
+
+.declineButton {
+  background-color: #ffffff;
+  color: var(--grey-600);
+}
+
+.acceptButton {
+  background-color: var(--primary);
+  color: #ffffff;
+}
+
+
+.version {
+  text-align: center;
+  font-size: 12px;
+  color: var(--grey-300);
+  margin-top: 48px;
+}

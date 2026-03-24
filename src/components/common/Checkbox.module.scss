@@ -1,0 +1,31 @@
+@use 'styles/mixins' as *;
+
+.checkbox {
+  @include flex-row(12px);
+}
+
+.box {
+  @include icon-box(24px, 6px);
+  border: 2px solid var(--grey-300);
+  transition: background-color 0.15s, border-color 0.15s;
+  background-color: #ffffff;
+}
+
+.boxChecked {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+.boxDisabled {
+  opacity: 0.5;
+}
+
+.label {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--grey-700);
+}
+
+.labelDisabled {
+  color: var(--grey-400);
+}

@@ -1,0 +1,108 @@
+@use 'styles/mixins' as *;
+
+.page {
+  background-color: var(--grey-100);
+  min-height: 100vh;
+}
+
+.content {
+  padding: 16px 20px;
+  @include flex-col(12px);
+}
+
+.workspaceCard {
+  padding: 16px;
+}
+
+.cardTop {
+  @include flex-row(12px);
+  align-items: flex-start;
+}
+
+.wsIcon {
+  @include icon-box(48px, 16px);
+  background-color: rgba(49, 130, 246, 0.1);
+  color: var(--primary);
+}
+
+.wsInfo {
+  flex: 1;
+}
+
+.nameRow {
+  @include flex-row(8px);
+}
+
+.wsName {
+  font-weight: 700;
+  color: var(--grey-900);
+}
+
+.mainBadge {
+  font-size: 10px;
+  background-color: rgba(49, 130, 246, 0.1);
+  color: var(--primary);
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 9999px;
+}
+
+.wsDate {
+  font-size: 12px;
+  color: var(--grey-500);
+  margin-top: 2px;
+}
+
+.wsMember {
+  font-size: 12px;
+  color: var(--grey-400);
+  margin-top: 2px;
+}
+
+.cardActions {
+  @include flex-row(8px);
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--grey-100);
+}
+
+.setMainButton {
+  flex: 1;
+  @include flex-center;
+  gap: 6px;
+  height: 36px;
+  border-radius: 12px;
+  background-color: rgba(49, 130, 246, 0.1);
+  color: var(--primary);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.settingsButton {
+  flex: 1;
+  @include flex-center;
+  gap: 6px;
+  height: 36px;
+  border-radius: 12px;
+  background-color: var(--grey-100);
+  color: var(--grey-700);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.deleteButton {
+  @include icon-box(36px, 12px);
+  background-color: rgba(240, 68, 82, 0.1);
+  color: var(--error);
+}
+
+.addButton {
+  width: 100%;
+  height: 56px;
+  border-radius: 16px;
+  border: 1.5px dashed var(--grey-300);
+  @include flex-center;
+  gap: 8px;
+  color: var(--grey-500);
+  font-weight: 600;
+}

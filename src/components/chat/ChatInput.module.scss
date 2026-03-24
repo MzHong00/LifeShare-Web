@@ -1,0 +1,37 @@
+@use 'styles/mixins' as *;
+
+.inputRow {
+  @include flex-row(8px);
+  padding: 8px 16px;
+  padding-bottom: max(8px, env(safe-area-inset-bottom));
+  background-color: #ffffff;
+  border-top: 1px solid var(--grey-200);
+  flex-shrink: 0;
+}
+
+.plusButton {
+  @include icon-box(36px);
+  background-color: var(--grey-100);
+  color: var(--grey-600);
+}
+
+.input {
+  flex: 1;
+  background-color: var(--grey-100);
+  border-radius: 9999px;
+  padding: 12px 16px;
+  font-size: 14px;
+  color: var(--grey-900);
+
+  &::placeholder {
+    color: var(--grey-400);
+  }
+}
+
+.sendButton {
+  @include icon-box(36px);
+  transition: background-color 0.15s;
+}
+
+.sendButtonActive   { background-color: var(--primary); }
+.sendButtonInactive { background-color: var(--grey-200); }

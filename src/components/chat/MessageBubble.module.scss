@@ -1,0 +1,55 @@
+@use 'styles/mixins' as *;
+
+.rowMe {
+  @include flex-end;
+  margin-bottom: 10px;
+}
+
+.partnerAvatar {
+  margin-bottom: 2px;
+  flex-shrink: 0;
+}
+
+.rowPartner {
+  @include flex-row(8px);
+  align-items: flex-end;
+  margin-bottom: 10px;
+}
+
+.innerMe,
+.innerPartner {
+  @include flex-row(8px);
+  align-items: flex-end;
+  max-width: 75%;
+}
+
+.time {
+  font-size: 10px;
+  color: var(--grey-400);
+  flex-shrink: 0;
+  margin-bottom: 2px;
+}
+
+.bubbleMe {
+  background-color: var(--primary);
+  color: #ffffff;
+  padding: 10px 14px;
+  border-radius: 16px;
+  border-bottom-right-radius: 4px;
+}
+
+.bubblePartner {
+  background-color: var(--grey-100);
+  padding: 10px 14px;
+  border-radius: 16px;
+  border-bottom-left-radius: 4px;
+}
+
+.text {
+  font-size: 14.5px;
+  line-height: 1.4;
+}
+
+.textPartner {
+  color: var(--grey-900);
+}

@@ -1,0 +1,121 @@
+@use 'styles/mixins' as *;
+
+.page {
+  @include page-base;
+}
+
+.header {
+  @include flex-between;
+  padding: 16px 20px 12px;
+}
+
+.monthTitle {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--grey-900);
+}
+
+.controls {
+  @include flex-row(4px);
+}
+
+.controlButton {
+  @include icon-box(36px, 12px);
+  border: 1px solid var(--grey-200);
+  color: var(--grey-700);
+}
+
+.calendarCard {
+  margin: 0 20px 16px;
+  padding: 12px;
+}
+
+.weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 8px;
+}
+
+.weekday {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 0;
+}
+
+.weekdaySun  { color: var(--error); }
+.weekdaySat  { color: var(--primary); }
+.weekdayDefault { color: var(--grey-500); }
+
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px 0;
+}
+
+.dayButton {
+  @include flex-col-center;
+  padding: 4px 0;
+  border-radius: 12px;
+  transition: background-color 0.1s;
+}
+
+.dayNumber {
+  @include icon-box(32px);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--grey-800);
+}
+
+.dayNumberSelected {
+  background-color: var(--primary);
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.dayNumberToday {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.dayNumberSun { color: var(--error); }
+.dayNumberSat { color: var(--primary); }
+
+.dots {
+  @include flex-row(2px);
+  margin-top: 2px;
+}
+
+.dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 9999px;
+}
+
+.todoSection {
+  padding: 16px 20px 0;
+}
+
+.todoHeader {
+  @include flex-between;
+  margin-bottom: 12px;
+}
+
+.todoTitle {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--grey-900);
+}
+
+.emptyTodo {
+  padding: 40px 0;
+  @include flex-col-center(8px);
+  color: var(--grey-400);
+  font-size: 14px;
+}
+
+.addTodoLink {
+  color: var(--primary);
+  font-size: 14px;
+  font-weight: 600;
+}

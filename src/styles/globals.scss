@@ -1,0 +1,201 @@
+:root {
+  --primary: #3182f6;
+  --primary-light: #e8f3ff;
+  --grey-50: #f9fafb;
+  --grey-100: #f2f4f6;
+  --grey-200: #e5e8eb;
+  --grey-300: #d1d6db;
+  --grey-400: #b2bec3;
+  --grey-500: #8b95a1;
+  --grey-600: #6b7684;
+  --grey-700: #4e5968;
+  --grey-800: #333d4b;
+  --grey-900: #191f28;
+  --success: #00d494;
+  --error: #f04452;
+  --warning: #ffad13;
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-card-lg: 0 4px 16px rgba(0, 0, 0, 0.1);
+  --shadow-primary: 0 4px 12px rgba(49, 130, 246, 0.25);
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: auto;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  min-height: 100vh;
+}
+
+html {
+  background: #e5e8eb;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+}
+
+body {
+  color: var(--grey-900);
+  background: #ffffff;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard",
+    "Noto Sans KR", "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  position: relative;
+}
+
+a {
+  width: fit-content;
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+  font-family: inherit;
+}
+
+textarea,
+input,
+input[type="button"],
+input[type="submit"],
+input[type="date"],
+input[type="search"],
+input[type="number"] {
+  background-color: transparent;
+  background-image: none;
+  font-weight: inherit;
+  line-height: inherit;
+  font-size: inherit;
+  font-family: inherit;
+  outline: none;
+  color: inherit;
+  border: none;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+a,
+button,
+select,
+input[type="button"],
+input[type="submit"],
+input[type="date"] {
+  background-color: transparent;
+  background-image: none;
+  font-weight: inherit;
+  line-height: inherit;
+  font-size: inherit;
+  font-family: inherit;
+  color: inherit;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+}
+
+dialog {
+  margin: auto;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px silver;
+  overflow: hidden;
+}
+
+hr {
+  width: 100%;
+  border-width: 1px;
+  border-top: 1px;
+}
+
+ul,
+ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+textarea {
+  outline: none;
+  resize: none;
+}
+
+select,
+label {
+  cursor: pointer;
+}
+
+input,
+textarea,
+select {
+  font-family: inherit;
+  outline: none;
+  border: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.15s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.animate-slideUp {
+  animation: slideUp 0.3s ease-out;
+}

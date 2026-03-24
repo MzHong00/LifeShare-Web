@@ -1,0 +1,64 @@
+@use 'styles/mixins' as *;
+
+.section {
+  padding: 16px 0;
+}
+
+.sectionHeader {
+  @include flex-between;
+  padding: 0 20px;
+  margin-bottom: 12px;
+}
+
+.sectionTitle {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--grey-900);
+}
+
+.moreButton {
+  @include flex-row(2px);
+  color: var(--grey-600);
+  font-size: 13px;
+}
+
+.scrollRow {
+  @include flex-row(12px);
+  overflow-x: auto;
+  padding: 0 20px 8px;
+  @include scrollbar-hide;
+}
+
+.storyButton {
+  flex-shrink: 0;
+  width: 144px;
+}
+
+.thumbnail {
+  width: 100%;
+  height: 96px;
+  @include flex-center;
+}
+
+.thumbnailImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.info {
+  padding: 12px;
+}
+
+.storyTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--grey-900);
+  @include text-ellipsis;
+}
+
+.storyDate {
+  font-size: 11px;
+  color: var(--grey-400);
+  margin-top: 2px;
+}

@@ -1,0 +1,63 @@
+@use 'styles/mixins' as *;
+
+.main {
+  min-height: 100vh;
+  background-color: var(--grey-100);
+  @include flex-col;
+}
+
+.header {
+  @include flex-end;
+  padding: 12px 20px;
+}
+
+.profileButton {
+  @include icon-box(48px);
+  background-color: #ffffff;
+  box-shadow: var(--shadow-card);
+}
+
+.profileInner {
+  @include icon-box(40px);
+  background-color: rgba(49, 130, 246, 0.1);
+  color: var(--primary);
+}
+
+.content {
+  flex: 1;
+  @include flex-col-center;
+  padding: 0 40px 80px;
+}
+
+.logoWrap {
+  @include icon-box(80px, 24px);
+  margin-bottom: 40px;
+  background-color: #e8f3ff;
+  box-shadow: 0 8px 24px rgba(49, 130, 246, 0.15);
+}
+
+.textCenter {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.heading {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--grey-900);
+  line-height: 1.3;
+  margin-bottom: 16px;
+}
+
+.desc {
+  font-size: 16px;
+  color: var(--grey-400);
+  line-height: 1.625;
+}
+
+.ctaButton {
+  @include btn-primary;
+  height: 58px;
+  border-radius: 18px;
+  box-shadow: var(--shadow-primary);
+}

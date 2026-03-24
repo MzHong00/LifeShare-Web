@@ -1,0 +1,93 @@
+@use "styles/mixins" as *;
+
+.page {
+  @include page-base(var(--grey-100));
+}
+
+.profileSection {
+  background-color: var(--grey-100);
+  padding: 32px 32px 24px;
+  @include flex-col-center;
+}
+
+.avatarButton {
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.cameraButton {
+  @include icon-box(28px);
+  position: absolute;
+  right: -2px;
+  bottom: -2px;
+  background-color: var(--primary);
+  border: 2px solid #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  color: #ffffff;
+}
+
+.fileInput {
+  display: none;
+}
+
+.nameButton {
+  @include flex-row(6px);
+  margin-bottom: 4px;
+  color: var(--grey-400);
+}
+
+.displayName {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--grey-900);
+}
+
+.email {
+  font-size: 14px;
+  color: var(--grey-400);
+}
+
+.content {
+  padding: 16px 20px;
+}
+
+.settingCard {
+  overflow: hidden;
+  padding: 0;
+}
+
+.settingRow {
+  width: 100%;
+  @include flex-between;
+  padding: 16px 20px;
+  @include ripple-effect;
+}
+
+.settingLeft {
+  @include flex-row(14px);
+}
+
+.settingIcon {
+  @include icon-box(36px, 12px);
+  background-color: var(--grey-100);
+}
+
+.settingInfo {
+  text-align: left;
+}
+
+.settingLabel {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--grey-900);
+}
+
+.settingDesc {
+  font-size: 12px;
+  color: var(--grey-400);
+  margin-top: 2px;
+}
+
+.divider {
+  @include divider;
+}

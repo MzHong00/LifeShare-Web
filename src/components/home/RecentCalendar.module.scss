@@ -1,0 +1,101 @@
+@use 'styles/mixins' as *;
+
+.section {
+  padding: 16px 20px;
+}
+
+.sectionHeader {
+  @include flex-between;
+  margin-bottom: 12px;
+}
+
+.sectionTitle {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--grey-900);
+}
+
+.viewAllButton {
+  @include flex-row(2px);
+  color: var(--grey-600);
+  font-size: 13px;
+}
+
+.emptyButton {
+  width: 100%;
+  padding: 32px 0;
+  border-radius: 24px;
+  border: 1.5px dashed var(--grey-200);
+  @include flex-col-center(8px);
+}
+
+.emptyIcon  { color: var(--grey-400); }
+.emptyTitle { font-size: 14px; font-weight: 700; color: var(--grey-600); }
+.emptyDesc  { font-size: 12px; color: var(--grey-400); }
+
+.list {
+  @include flex-col(10px);
+}
+
+.eventCard {
+  @include flex-row;
+  padding: 14px;
+}
+
+.eventBar {
+  width: 4px;
+  height: 24px;
+  border-radius: 9999px;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.eventInfo {
+  flex: 1;
+  text-align: left;
+}
+
+.eventTitle {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--grey-900);
+}
+
+.eventSub {
+  font-size: 12px;
+  color: var(--grey-400);
+  margin-top: 2px;
+}
+
+.todoCard {
+  @include flex-row;
+  padding: 14px;
+}
+
+.todoToggle {
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.todoCircle {
+  width: 24px;
+  height: 24px;
+  border-radius: 9999px;
+  border: 2px solid;
+}
+
+.todoTitleButton {
+  flex: 1;
+  text-align: left;
+}
+
+.todoTitle {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--grey-900);
+}
+
+.todoTitleDone {
+  text-decoration: line-through;
+  color: var(--grey-400);
+}

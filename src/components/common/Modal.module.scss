@@ -1,0 +1,79 @@
+@use 'styles/mixins' as *;
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  @include flex-center;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.container {
+  position: relative;
+  background-color: #ffffff;
+  border-radius: 24px;
+  width: 85%;
+  max-width: 384px;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  animation: fadeIn 0.15s ease-out;
+}
+
+.body {
+  padding: 24px 24px 16px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--grey-900);
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.message {
+  font-size: 14px;
+  color: var(--grey-700);
+  text-align: center;
+  line-height: 1.625;
+  white-space: pre-line;
+}
+
+.content {
+  margin-top: 16px;
+}
+
+.actions {
+  display: flex;
+  border-top: 1px solid var(--grey-200);
+}
+
+.cancelButton {
+  flex: 1;
+  padding: 16px 0;
+  color: var(--grey-700);
+  font-weight: 500;
+  font-size: 16px;
+  border-right: 1px solid var(--grey-200);
+
+  &:active {
+    background-color: var(--grey-50);
+  }
+}
+
+.confirmButton {
+  flex: 1;
+  padding: 16px 0;
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 16px;
+
+  &:active {
+    background-color: rgba(49, 130, 246, 0.05);
+  }
+}

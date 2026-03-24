@@ -1,0 +1,130 @@
+@use 'styles/mixins' as *;
+
+.page {
+  min-height: 100vh;
+  background-color: var(--grey-100);
+}
+
+.content {
+  padding: 16px 20px;
+  @include flex-col(20px);
+}
+
+.pageHeader {
+  @include flex-col-center;
+  padding: 24px 0;
+}
+
+.badge {
+  font-size: 12px;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+
+.badgeCouple {
+  background-color: #fce7f3;
+  color: #ec4899;
+}
+
+.badgeGroup {
+  background-color: rgba(49, 130, 246, 0.1);
+  color: var(--primary);
+}
+
+.workspaceName {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--grey-900);
+}
+
+.sectionLabel {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--grey-500);
+  margin-bottom: 8px;
+  margin-left: 4px;
+}
+
+.settingCard {
+  background-color: #ffffff;
+  border-radius: 24px;
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.settingRow {
+  width: 100%;
+  @include flex-row(12px);
+  padding: 16px 20px;
+}
+
+.settingLabel {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--grey-900);
+  flex: 1;
+  text-align: left;
+}
+
+.settingValue {
+  font-size: 15px;
+  color: var(--grey-400);
+}
+
+.settingIcon {
+  @include icon-box(36px, 12px);
+}
+
+.settingIconPrimary {
+  background-color: rgba(49, 130, 246, 0.1);
+  color: var(--primary);
+}
+
+.settingIconGreen {
+  background-color: #f0fdf4;
+  color: #22c55e;
+}
+
+.divider {
+  @include divider(var(--grey-100), 1px);
+}
+
+.dangerCard {
+  background-color: #ffffff;
+  border-radius: 24px;
+  border: 1px solid #fee2e2;
+  overflow: hidden;
+}
+
+.dangerRow {
+  width: 100%;
+  @include flex-row(16px);
+  padding: 20px;
+}
+
+.dangerInfo {
+  flex: 1;
+  text-align: left;
+}
+
+.dangerTitle {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--error);
+}
+
+.dangerDesc {
+  font-size: 12px;
+  color: var(--grey-400);
+  margin-top: 2px;
+}
+
+.footer {
+  font-size: 12px;
+  color: var(--grey-400);
+  text-align: center;
+  line-height: 1.625;
+  padding-bottom: 16px;
+}

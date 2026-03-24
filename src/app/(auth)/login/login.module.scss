@@ -1,0 +1,74 @@
+@use 'styles/mixins' as *;
+
+.main {
+  min-height: 100vh;
+  @include flex-col-center;
+  justify-content: center;
+  background-color: #ffffff;
+  padding: 0 32px 40px;
+}
+
+.inner {
+  width: 100%;
+  max-width: 384px;
+}
+
+.logoSection {
+  @include flex-col-center;
+  margin-bottom: 56px;
+}
+
+.logoWrap {
+  @include icon-box(80px, 24px);
+  margin-bottom: 16px;
+  background-color: #e8f3ff;
+  box-shadow: 0 8px 24px rgba(49, 130, 246, 0.15);
+}
+
+.appName {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--grey-900);
+}
+
+.appDesc {
+  font-size: 16px;
+  color: var(--grey-600);
+  margin-top: 4px;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.buttons {
+  @include flex-col(12px);
+  margin-bottom: 40px;
+}
+
+.kakaoButton,
+.googleButton {
+  width: 100%;
+  height: 58px;
+  border-radius: 16px;
+  @include flex-center;
+  gap: 10px;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.kakaoButton {
+  background-color: #fee500;
+  color: #3c1e1e;
+}
+
+.googleButton {
+  border: 1px solid var(--grey-200);
+  background-color: #ffffff;
+  color: var(--grey-900);
+}
+
+.terms {
+  text-align: center;
+  font-size: 12px;
+  color: var(--grey-400);
+  line-height: 1.625;
+}

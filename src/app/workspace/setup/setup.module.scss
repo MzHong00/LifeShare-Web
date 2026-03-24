@@ -1,0 +1,146 @@
+@use 'styles/mixins' as *;
+
+.page {
+  min-height: 100vh;
+  background-color: #ffffff;
+  @include flex-col;
+}
+
+.inner {
+  flex: 1;
+  @include flex-col;
+  padding: 0 24px;
+}
+
+.stepContent {
+  flex: 1;
+  @include flex-col;
+}
+
+.topSection {
+  flex: 1;
+  @include flex-col;
+  padding-top: 40px;
+}
+
+.iconWrap {
+  @include icon-box(60px, 20px);
+  background-color: rgba(49, 130, 246, 0.1);
+  margin-bottom: 20px;
+  color: var(--primary);
+}
+
+.heading {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--grey-900);
+  margin-bottom: 12px;
+}
+
+.desc {
+  font-size: 16px;
+  color: var(--grey-600);
+  line-height: 1.625;
+}
+
+.typeOptions {
+  @include flex-col(12px);
+  margin-top: 40px;
+}
+
+.typeButton {
+  width: 100%;
+  height: 72px;
+  border-radius: 18px;
+  @include flex-row(16px);
+  padding: 0 24px;
+  border: 1.5px solid;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+
+.typeButtonActive {
+  background-color: rgba(49, 130, 246, 0.05);
+  border-color: var(--primary);
+}
+
+.typeButtonInactive {
+  background-color: #ffffff;
+  border-color: var(--grey-200);
+}
+
+.typeLabel {
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.typeLabelActive  { color: var(--primary); }
+.typeLabelInactive { color: var(--grey-400); }
+
+.formSection {
+  padding-top: 40px;
+  @include flex-col(12px);
+}
+
+.fieldLabel {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--grey-600);
+  margin-bottom: 8px;
+  margin-left: 4px;
+}
+
+.input {
+  width: 100%;
+  height: 60px;
+  background-color: var(--grey-100);
+  border-radius: 16px;
+  padding: 0 20px;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--grey-900);
+
+  &::placeholder {
+    color: var(--grey-400);
+  }
+}
+
+.emailInputWrap {
+  @include flex-row(12px);
+  background-color: var(--grey-100);
+  border-radius: 16px;
+  padding: 0 16px;
+  height: 60px;
+  color: var(--grey-400);
+}
+
+.emailInput {
+  flex: 1;
+  background: transparent;
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--grey-900);
+
+  &::placeholder {
+    color: var(--grey-400);
+  }
+}
+
+.bottomSection {
+  padding-bottom: 32px;
+  @include flex-col(4px);
+}
+
+.primaryButton {
+  @include btn-primary;
+  height: 56px;
+  font-size: 18px;
+  @include flex-center;
+  gap: 8px;
+}
+
+.secondaryButton {
+  width: 100%;
+  padding: 16px;
+  color: var(--grey-400);
+  font-size: 16px;
+}

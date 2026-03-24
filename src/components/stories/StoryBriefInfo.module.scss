@@ -1,0 +1,28 @@
+@use 'styles/mixins' as *;
+
+.wrapper {
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--grey-900);
+  margin-bottom: 12px;
+}
+
+.metaRow {
+  @include flex-row(16px);
+}
+
+.metaItem {
+  @include flex-row(6px);
+  color: var(--grey-500);
+  font-size: 14px;
+}
+
+.pathDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 9999px;
+}

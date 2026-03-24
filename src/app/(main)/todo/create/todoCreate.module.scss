@@ -1,0 +1,113 @@
+@use 'styles/mixins' as *;
+
+.page {
+  @include page-base;
+  @include flex-col;
+}
+
+.scrollArea {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  @include flex-col(24px);
+}
+
+.field {
+  @include flex-col;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--grey-900);
+  margin-bottom: 8px;
+  margin-left: 4px;
+}
+
+.required {
+  color: var(--error);
+}
+
+.input {
+  @include form-input;
+}
+
+.textarea {
+  @include form-input;
+  resize: none;
+}
+
+.quickDates {
+  @include flex-row(8px);
+  margin-bottom: 8px;
+}
+
+.quickDateButton {
+  padding: 6px 12px;
+  border-radius: 12px;
+  background-color: var(--grey-100);
+  border: 1px solid var(--grey-200);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--grey-600);
+}
+
+.colorPicker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.colorButton {
+  @include icon-box(36px);
+  transition: transform 0.1s;
+}
+
+.assigneeRow {
+  @include flex-row(16px);
+  overflow-x: auto;
+  @include scrollbar-hide;
+}
+
+.assigneeOption {
+  @include flex-col-center(8px);
+  flex-shrink: 0;
+}
+
+.assigneeIcon {
+  @include icon-box(56px, 16px);
+}
+
+.assigneeIconActive   { background-color: var(--primary); }
+.assigneeIconInactive { background-color: var(--grey-100); }
+
+.assigneeLabel {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.assigneeLabelActive   { color: var(--primary); }
+.assigneeLabelInactive { color: var(--grey-500); }
+
+.memberWrap {
+  position: relative;
+}
+
+.checkBadge {
+  @include icon-box(20px);
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: var(--primary);
+  border: 2px solid #ffffff;
+  color: #ffffff;
+}
+
+.footer {
+  padding: 16px 20px;
+  border-top: 1px solid var(--grey-100);
+}
+
+.saveButton {
+  @include btn-primary;
+}

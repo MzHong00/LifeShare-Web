@@ -1,0 +1,44 @@
+@use 'styles/mixins' as *;
+
+.container {
+  position: fixed;
+  bottom: 96px;
+  left: 0;
+  right: 0;
+  z-index: 300;
+  @include flex-col-center(8px);
+  padding: 0 16px;
+  pointer-events: none;
+}
+
+.toast {
+  @include flex-row(12px);
+  padding: 12px 16px;
+  border-radius: 16px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  max-width: 384px;
+  width: 100%;
+  animation: fadeIn 0.15s ease-out;
+}
+
+.success,
+.info {
+  background-color: var(--grey-900);
+  color: #ffffff;
+}
+
+.error {
+  background-color: var(--error);
+  color: #ffffff;
+}
+
+.warning {
+  background-color: var(--warning);
+  color: var(--grey-900);
+}
+
+.message {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.375;
+}

@@ -1,0 +1,25 @@
+@use 'styles/mixins' as *;
+
+.container {
+  padding: 16px 20px;
+}
+
+.thumbnail {
+  width: 100%;
+  aspect-ratio: 3/2;
+  object-fit: cover;
+  border-radius: 16px;
+  margin-top: 8px;
+  background-color: var(--grey-100);
+}
+
+.description {
+  background-color: var(--grey-100);
+  padding: 16px;
+  border-radius: 16px;
+  margin-top: 16px;
+  margin-bottom: 8px;
+  font-size: 14px;
+  line-height: 1.625;
+  color: var(--grey-500);
+}

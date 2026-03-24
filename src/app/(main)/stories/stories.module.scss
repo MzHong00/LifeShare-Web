@@ -1,0 +1,71 @@
+@use 'styles/mixins' as *;
+
+.page {
+  @include page-base;
+}
+
+.searchRow {
+  @include flex-row(8px);
+  padding: 16px 20px;
+}
+
+.searchBox {
+  flex: 1;
+  @include flex-row(8px);
+  background-color: var(--grey-100);
+  border-radius: 16px;
+  padding: 0 16px;
+  height: 48px;
+  color: var(--grey-400);
+}
+
+.searchInput {
+  flex: 1;
+  background: transparent;
+  font-size: 15px;
+  color: var(--grey-900);
+
+  &::placeholder {
+    color: var(--grey-400);
+  }
+}
+
+.addButton {
+  @include icon-box(48px);
+  min-width: 48px;
+  background-color: rgba(49, 130, 246, 0.1);
+  color: var(--primary);
+}
+
+.grid {
+  padding: 0 20px 24px;
+}
+
+.empty {
+  @include flex-col-center(8px);
+  justify-content: center;
+  padding: 80px 0;
+  color: var(--grey-400);
+  font-size: 16px;
+}
+
+.emptyLink {
+  margin-top: 8px;
+  color: var(--primary);
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.columns {
+  @include flex-row(12px);
+  align-items: flex-start;
+}
+
+.col {
+  flex: 1;
+  @include flex-col(12px);
+}
+
+.colOffset {
+  margin-top: 20px;
+}
