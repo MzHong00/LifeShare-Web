@@ -60,32 +60,11 @@ jobs:
       - name: 📥 Checkout
         uses: actions/checkout@v4
 
-      - name: ⚙️ Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-
-      - name: 📦 Install dependencies
-        run: npm ci
-
-      - name: ☁️ Pull Vercel project settings # Vercel 프로젝트 설정 동기화
-        run: npx vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
-        env:
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-
-      - name: 🏗️ Build (Vercel Prebuilt) # prebuilt 방식으로 로컬에서 빌드
-        run: npx vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
-        env:
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-
-      - name: 🚀 Deploy # 빌드 결과물을 Vercel에 업로드
+      - name: 🚀 Deploy # Vercel이 자체 빌드 및 프로덕션 배포
         uses: amondnet/vercel-action@v25.2.0
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          vercel-args: "--prod --prebuilt"
+          vercel-args: '--prod'
