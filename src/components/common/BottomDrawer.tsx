@@ -18,6 +18,7 @@ export const BottomDrawer = ({
   bottomOffset = 60,
 }: BottomDrawerProps) => {
   const [drawerHeight, setDrawerHeight] = useState(300);
+  const [isDraggingState, setIsDraggingState] = useState(false);
 
   // ref로 관리해서 클로저 이슈 방지
   const isDragging = useRef(false);
@@ -57,6 +58,7 @@ export const BottomDrawer = ({
     touchStartY.current = clientY;
     initialDrawerHeight.current = drawerHeightRef.current;
     isDragging.current = true;
+    setIsDraggingState(true);
     // 드래그 중 텍스트 선택 및 pull-to-refresh 방지
     document.body.style.userSelect = "none";
     document.documentElement.style.overscrollBehavior = "none";
@@ -77,6 +79,7 @@ export const BottomDrawer = ({
   const onDragEnd = useCallback(() => {
     if (!isDragging.current) return;
     isDragging.current = false;
+    setIsDraggingState(false);
     document.body.style.userSelect = "";
     document.documentElement.style.overscrollBehavior = "";
 
@@ -131,7 +134,7 @@ export const BottomDrawer = ({
       style={{
         height: `${drawerHeight}px`,
         bottom: `${bottomOffset}px`,
-        transition: isDragging.current ? "none" : "height 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+        transition: isDraggingState ? "none" : "height 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
       }}
     >
       <button

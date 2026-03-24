@@ -47,7 +47,7 @@ export default function AnniversaryPage() {
   const anniversaries = useMemo(() => {
     if (!currentWorkspace?.startDate) return [];
     return generateAnniversaries(currentWorkspace.startDate);
-  }, [currentWorkspace?.startDate]);
+  }, [currentWorkspace]);
 
   return (
     <div className={styles.page}>

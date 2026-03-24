@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { Map, Edit3, Trash2 } from "lucide-react";
 import { useStoryStore, storyActions } from "@/stores/useStoryStore";
@@ -14,12 +14,10 @@ export default function StoryDetailPage() {
   const params = useParams();
   const storyId = params.id as string;
   const stories = useStoryStore((s) => s.stories);
-  const [story, setStory] = useState<Story | null>(null);
-
-  useEffect(() => {
-    const found = stories.find((s) => s.id === storyId);
-    setStory(found || null);
-  }, [storyId, stories]);
+  const story = useMemo<Story | null>(
+    () => stories.find((s) => s.id === storyId) ?? null,
+    [stories, storyId]
+  );
 
   const handleDelete = () => {
     modalActions.showModal({
