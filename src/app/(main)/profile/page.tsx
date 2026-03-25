@@ -105,7 +105,7 @@ export default function ProfilePage() {
           <span className={styles.gridLabel}>기념일</span>
         </button>
 
-        <button onClick={() => router.push("/home")} className={styles.gridItem}>
+        <button onClick={() => router.push("/todo")} className={styles.gridItem}>
           <div className={[styles.gridIconWrap, styles.purple].join(" ")}>
             <ListTodo size={24} />
           </div>

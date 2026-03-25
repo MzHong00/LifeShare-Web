@@ -1,0 +1,11 @@
+@use 'styles/mixins' as *;
+
+.page {
+  @include page-base;
+}
+
+.addButton {
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+}

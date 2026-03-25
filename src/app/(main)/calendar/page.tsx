@@ -3,11 +3,12 @@ import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { Plus, ChevronLeft, ChevronRight } from "lucide-react";
 import { useCalendarStore } from "@/stores/useCalendarStore";
-import { useTodoStore, todoActions } from "@/stores/useTodoStore";
+import { useTodoStore } from "@/stores/useTodoStore";
 import { useWorkspaceStore } from "@/stores/useWorkspaceStore";
 import { getTodayDateString, formatDate, getIntermediateDates } from "@/utils/date";
-import { TodoItem } from "@/components/todo/TodoItem";
+import { TodoList } from "@/components/todo/TodoList";
 import { Card } from "@/components/common/Card";
+import { AppHeader } from "@/components/common/AppHeader";
 import { COLORS } from "@/constants/theme";
 import dayjs from "dayjs";
 import styles from "./calendar.module.scss";
@@ -60,13 +61,12 @@ export default function CalendarPage() {
     );
   }, [todos, currentWorkspace?.id, selectedDate]);
 
-  const activeTodos = selectedDateTodos.filter((t) => !t.isCompleted);
-  const completedTodos = selectedDateTodos.filter((t) => t.isCompleted);
-
   return (
     <div className={styles.page}>
-      <div className={styles.header}>
-        <h1 className={styles.monthTitle}>{currentMonth.format("YYYY년 M월")}</h1>
+      <AppHeader title="캘린더" />
+
+      <div className={styles.calendarHeader}>
+        <h2 className={styles.monthTitle}>{currentMonth.format("YYYY년 M월")}</h2>
         <div className={styles.controls}>
           <button
             onClick={() => setCurrentMonth((m) => m.subtract(1, "month"))}
@@ -83,7 +83,6 @@ export default function CalendarPage() {
           <button
             onClick={() => router.push("/todo/create")}
             className={styles.controlButton}
-            style={{ marginLeft: 4 }}
           >
             <Plus size={20} />
           </button>
@@ -149,42 +148,12 @@ export default function CalendarPage() {
       </Card>
 
       <div className={styles.todoSection}>
-        <div className={styles.todoHeader}>
-          <h2 className={styles.todoTitle}>{formatDate(selectedDate, "M월 D일")} 할 일</h2>
-        </div>
-
-        {selectedDateTodos.length === 0 ? (
-          <div className={styles.emptyTodo}>
-            <p>등록된 할 일이 없습니다.</p>
-            <button
-              onClick={() => router.push(`/todo/create?initialDate=${selectedDate}`)}
-              className={styles.addTodoLink}
-            >
-              할 일 추가하기
-            </button>
-          </div>
-        ) : (
-          <>
-            {activeTodos.map((todo) => (
-              <TodoItem
-                key={todo.id}
-                item={todo}
-                currentWorkspace={currentWorkspace}
-                onToggle={todoActions.toggleTodo}
-                onPress={(id) => router.push(`/todo/create?todoId=${id}`)}
-              />
-            ))}
-            {completedTodos.map((todo) => (
-              <TodoItem
-                key={todo.id}
-                item={todo}
-                currentWorkspace={currentWorkspace}
-                onToggle={todoActions.toggleTodo}
-                onPress={(id) => router.push(`/todo/create?todoId=${id}`)}
-              />
-            ))}
-          </>
-        )}
+        <h2 className={styles.todoTitle}>{formatDate(selectedDate, "M월 D일")} 할 일</h2>
+        <TodoList
+          todos={selectedDateTodos}
+          currentWorkspace={currentWorkspace}
+          initialDate={selectedDate}
+        />
       </div>
     </div>
   );

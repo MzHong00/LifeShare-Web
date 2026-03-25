@@ -36,7 +36,9 @@ function TodoCreateContent() {
   const [assigneeId, setAssigneeId] = useState<string | undefined>(existingTodo?.assigneeId);
   const [startDate, setStartDate] = useState(existingTodo?.startDate || initialDate || getTodayDateString());
   const [endDate, setEndDate] = useState(existingTodo?.endDate || initialDate || getTodayDateString());
-  const [selectedColor, setSelectedColor] = useState(existingTodo?.color || TODO_COLORS[0]);
+  const [selectedColor, setSelectedColor] = useState(
+    existingTodo?.color || TODO_COLORS[Math.floor(Math.random() * TODO_COLORS.length)]
+  );
 
   const members = currentWorkspace?.members || [];
 
