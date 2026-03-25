@@ -27,11 +27,11 @@
 }
 
 .content {
-  padding: 24px 20px;
+  padding: 16px 20px;
   @include flex-col;
   justify-content: space-between;
-  min-height: 210px;
-  gap: 16px;
+  min-height: 168px;
+  gap: 10px;
 }
 
 .headerRow {
@@ -54,7 +54,7 @@
 
 .membersStack {
   @include flex-row;
-  margin-bottom: 14px;
+  margin-bottom: 8px;
 }
 
 .memberAvatar {
@@ -75,7 +75,7 @@
 }
 
 .dDayValue {
-  font-size: 36px;
+  font-size: 28px;
   font-weight: 800;
   letter-spacing: -0.025em;
 }
@@ -91,11 +91,11 @@
 
 .eventBadge {
   width: 100%;
-  padding: 14px 16px;
-  border-radius: 16px;
+  padding: 10px 16px;
+  border-radius: 14px;
   @include flex-center;
   gap: 6px;
-  margin-top: 6px;
+  margin-top: 4px;
 }
 
 .eventTitle {

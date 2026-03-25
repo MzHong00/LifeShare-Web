@@ -81,7 +81,6 @@ textarea,
 input,
 input[type="button"],
 input[type="submit"],
-input[type="date"],
 input[type="search"],
 input[type="number"] {
   background-color: transparent;
@@ -101,8 +100,7 @@ a,
 button,
 select,
 input[type="button"],
-input[type="submit"],
-input[type="date"] {
+input[type="submit"] {
   background-color: transparent;
   background-image: none;
   font-weight: inherit;

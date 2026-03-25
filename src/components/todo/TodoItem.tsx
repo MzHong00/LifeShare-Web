@@ -18,13 +18,13 @@ export const TodoItem = ({ item, currentWorkspace, onToggle, onPress }: TodoItem
   const dateLabel = getRelativeDateLabel(item.endDate);
 
   return (
-    <div className={styles.item}>
+    <div className={[styles.item, item.isCompleted ? styles.itemDone : ""].join(" ")}>
       <button onClick={() => onToggle(item.id)} className={styles.toggleButton}>
         {item.isCompleted ? (
           <CheckCircle2
             size={26}
             color={item.color || COLORS.primary}
-            fill={(item.color || COLORS.primary) + "20"}
+            fill={(item.color || COLORS.primary) + "40"}
           />
         ) : (
           <div
@@ -35,7 +35,12 @@ export const TodoItem = ({ item, currentWorkspace, onToggle, onPress }: TodoItem
       </button>
 
       <button onClick={() => onPress(item.id)} className={styles.contentButton}>
-        <p className={[styles.title, item.isCompleted && styles.titleDone].filter(Boolean).join(' ')}>{item.title}</p>
+        <div className={styles.titleRow}>
+          <p className={[styles.title, item.isCompleted && styles.titleDone].filter(Boolean).join(" ")}>
+            {item.title}
+          </p>
+          {item.isCompleted && <span className={styles.doneBadge}>완료</span>}
+        </div>
         <p className={styles.dateLabel}>{dateLabel}</p>
       </button>
 
