@@ -1,4 +1,4 @@
-const KakaoIcon = () => (
+export const KakaoIcon = () => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
     <path
       d="M12 3C7.029 3 3 6.354 3 10.5c0 2.671 1.662 5.026 4.168 6.408L6.25 20.25a.375.375 0 0 0 .537.407L11.09 18a11.29 11.29 0 0 0 .91.037c4.971 0 9-3.354 9-7.5S16.971 3 12 3Z"
@@ -6,5 +6,3 @@ const KakaoIcon = () => (
     />
   </svg>
 );
-
-export default KakaoIcon;

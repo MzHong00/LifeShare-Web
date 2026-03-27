@@ -9,7 +9,7 @@ import { GoogleMapView } from "@/components/map/GoogleMapView";
 import { MapEmptyState } from "@/components/map/MapEmptyState";
 import { MapPartnerInfo } from "@/components/map/MapPartnerInfo";
 import { MapStoryInfo } from "@/components/map/MapStoryInfo";
-import { ProfileAvatar } from "@/components/common/ProfileAvatar";
+import { ProfileImage } from "@/components/common/ProfileImage";
 import type { WorkspaceMember } from "@/types";
 import { BottomDrawer } from "@/components/common/BottomDrawer";
 import styles from "./map.module.scss";
@@ -25,7 +25,7 @@ const RECENT_PLACES = [
   { id: "3", name: "강남구청 역 이자카야", date: "지난 주말" },
 ];
 
-export default function MapPage() {
+const MapPage = () => {
   const router = useRouter();
   const currentWorkspace = useWorkspaceStore((s) => s.currentWorkspace);
   const stories = useStoryStore((s) => s.stories);
@@ -110,7 +110,7 @@ export default function MapPage() {
               className={[styles.memberButton, isSelected && styles.memberButtonActive].filter(Boolean).join(' ')}
             >
               <div className={[styles.memberAvatarWrap, isSelected && styles.memberAvatarActive].filter(Boolean).join(' ')}>
-                <ProfileAvatar uri={member.avatar} name={member.name} size={52} />
+                <ProfileImage uri={member.avatar} name={member.name} size={52} />
                 <span className={styles.focusBadge}>
                   <Search size={10} strokeWidth={2.5} />
                 </span>
@@ -173,4 +173,6 @@ export default function MapPage() {
       </BottomDrawer>
     </div>
   );
-}
+};
+
+export default MapPage;

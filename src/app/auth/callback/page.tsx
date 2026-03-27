@@ -13,7 +13,7 @@ interface GoogleUserInfo {
   picture?: string;
 }
 
-export default function AuthCallbackPage() {
+const AuthCallbackPage = () => {
   const router = useRouter();
 
   useEffect(() => {
@@ -73,4 +73,6 @@ export default function AuthCallbackPage() {
       </p>
     </div>
   );
-}
+};
+
+export default AuthCallbackPage;

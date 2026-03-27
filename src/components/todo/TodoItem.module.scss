@@ -9,6 +9,11 @@
   margin-bottom: 10px;
 }
 
+.itemDone {
+  background-color: var(--grey-50);
+  box-shadow: none;
+}
+
 .toggleButton {
   flex-shrink: 0;
 }
@@ -25,6 +30,11 @@
   text-align: left;
 }
 
+.titleRow {
+  @include flex-row(6px);
+  align-items: center;
+}
+
 .title {
   font-size: 15px;
   font-weight: 600;
@@ -34,6 +44,16 @@
 .titleDone {
   text-decoration: line-through;
   color: var(--grey-400);
+}
+
+.doneBadge {
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--success);
+  background-color: #e6faf5;
+  padding: 2px 7px;
+  border-radius: 9999px;
 }
 
 .dateLabel {

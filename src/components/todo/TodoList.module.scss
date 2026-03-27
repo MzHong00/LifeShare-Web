@@ -1,0 +1,47 @@
+@use 'styles/mixins' as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.filters {
+  @include flex-row(8px);
+  padding: 12px 20px;
+}
+
+.filterButton {
+  padding: 7px 14px;
+  border-radius: 9999px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--grey-600);
+  background-color: var(--grey-100);
+}
+
+.filterActive {
+  background-color: var(--primary);
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.list {
+  padding: 0 20px;
+}
+
+.empty {
+  @include flex-col-center;
+  gap: 12px;
+  padding: 40px 0;
+}
+
+.emptyText {
+  font-size: 15px;
+  color: var(--grey-400);
+}
+
+.emptyAction {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary);
+}

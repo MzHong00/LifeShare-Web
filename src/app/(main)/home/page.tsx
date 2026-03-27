@@ -3,11 +3,12 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useWorkspaceStore } from "@/stores/useWorkspaceStore";
 import { DDayHero } from "@/components/home/DDayHero";
+import { RecentChat } from "@/components/home/RecentChat";
 import { RecentCalendar } from "@/components/home/RecentCalendar";
 import { RecentStories } from "@/components/home/RecentStories";
 import styles from "./home.module.scss";
 
-export default function HomePage() {
+const HomePage = () => {
   const router = useRouter();
   const currentWorkspace = useWorkspaceStore((s) => s.currentWorkspace);
 
@@ -22,8 +23,11 @@ export default function HomePage() {
   return (
     <div className={styles.page}>
       <DDayHero />
+      <RecentChat />
       <RecentCalendar />
       <RecentStories />
     </div>
   );
-}
+};
+
+export default HomePage;

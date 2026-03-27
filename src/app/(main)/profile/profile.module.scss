@@ -1,4 +1,4 @@
-@use 'styles/mixins' as *;
+@use "styles/mixins" as *;
 
 .page {
   @include page-base(#ffffff);
@@ -32,7 +32,7 @@
   color: var(--grey-500);
   font-weight: 500;
   padding: 4px 0;
-  
+
   &:active {
     color: var(--grey-700);
   }
@@ -54,7 +54,7 @@
 
 .gridItem {
   @include flex-col-center(8px);
-  
+
   &:active {
     opacity: 0.7;
   }
@@ -63,36 +63,56 @@
 .gridIconWrap {
   @include icon-box(56px, 16px);
   border-radius: 20px;
-  
+
   &.blue {
     background-color: rgba(49, 130, 246, 0.12);
     color: var(--primary);
   }
-  
+
   &.orange {
     background-color: rgba(255, 173, 19, 0.12);
     color: #f39c12; /* slightly darker orange for text contrast */
   }
-  
+
   &.green {
     background-color: rgba(0, 212, 148, 0.12);
     color: var(--success);
   }
-  
+
   &.red {
     background-color: rgba(240, 68, 82, 0.12);
     color: var(--error);
   }
-  
+
   &.purple {
     background-color: rgba(156, 39, 176, 0.12);
     color: #9c27b0;
   }
-  
+
   &.grey {
     background-color: var(--grey-100);
     color: var(--grey-700);
   }
+}
+
+.gridIconBadgeWrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.gridBadge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background-color: var(--error);
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 700;
+  @include flex-center;
 }
 
 .gridLabel {
@@ -181,7 +201,8 @@
   @include flex-row(8px);
 }
 
-.declineButton, .acceptButton {
+.declineButton,
+.acceptButton {
   @include icon-box(36px);
   border-radius: 10px;
 }
@@ -195,7 +216,6 @@
   background-color: var(--primary);
   color: #ffffff;
 }
-
 
 .version {
   text-align: center;

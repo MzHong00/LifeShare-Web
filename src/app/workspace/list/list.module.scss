@@ -10,6 +10,24 @@
   @include flex-col(12px);
 }
 
+.header {
+  margin-bottom: 4px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--grey-900);
+  letter-spacing: -0.02em;
+}
+
+.description {
+  font-size: 15px;
+  color: var(--grey-500);
+  margin-top: 6px;
+  line-height: 1.5;
+}
+
 .workspaceCard {
   padding: 16px;
 }

@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { useWorkspaceStore } from "@/stores/useWorkspaceStore";
 
-export default function RootPage() {
+const RootPage = () => {
   const router = useRouter();
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   const currentWorkspace = useWorkspaceStore((s) => s.currentWorkspace);
@@ -20,4 +20,6 @@ export default function RootPage() {
   }, [isAuthenticated, currentWorkspace, router]);
 
   return null;
-}
+};
+
+export default RootPage;

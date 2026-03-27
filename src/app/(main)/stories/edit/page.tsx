@@ -12,7 +12,7 @@ import { getTodayDateString, formatDate } from "@/utils/date";
 import type { LocationPoint } from "@/types";
 import styles from "./storyEdit.module.scss";
 
-function StoryEditContent() {
+const StoryEditContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const storyId = searchParams.get("storyId");
@@ -89,7 +89,7 @@ function StoryEditContent() {
   return (
     <>
       <div className={styles.page}>
-        <AppHeader title={isEditMode ? "스토리 수정" : "스토리 기록"} />
+        <AppHeader />
 
         <div className={styles.scrollArea}>
           {/* 썸네일 */}
@@ -214,10 +214,12 @@ function StoryEditContent() {
   );
 }
 
-export default function StoryEditPage() {
+const StoryEditPage = () => {
   return (
     <Suspense>
       <StoryEditContent />
     </Suspense>
   );
-}
+};
+
+export default StoryEditPage;

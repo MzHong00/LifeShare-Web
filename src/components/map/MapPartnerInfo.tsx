@@ -1,5 +1,5 @@
 import { Battery, MapPin, Clock, Navigation, ChevronRight } from "lucide-react";
-import { ProfileAvatar } from "@/components/common/ProfileAvatar";
+import { ProfileImage } from "@/components/common/ProfileImage";
 import type { WorkspaceMember } from "@/types";
 import styles from "./MapPartnerInfo.module.scss";
 
@@ -21,7 +21,7 @@ export const MapPartnerInfo = ({ member, onOpenDirections, recentPlaces }: MapPa
       <div className={styles.statusCard}>
         <div className={styles.memberRow}>
           <div className={styles.memberLeft}>
-            <ProfileAvatar uri={member.avatar} name={member.name} size={44} />
+            <ProfileImage uri={member.avatar} name={member.name} size={44} />
             <span className={styles.memberName}>{member.name}</span>
           </div>
           <div className={styles.batteryRow}>

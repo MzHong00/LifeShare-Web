@@ -4,13 +4,13 @@
   @include page-base;
 }
 
-.header {
+.calendarHeader {
   @include flex-between;
-  padding: 16px 20px 12px;
+  padding: 12px 20px 8px;
 }
 
 .monthTitle {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 700;
   color: var(--grey-900);
 }
@@ -93,29 +93,12 @@
 }
 
 .todoSection {
-  padding: 16px 20px 0;
-}
-
-.todoHeader {
-  @include flex-between;
-  margin-bottom: 12px;
+  padding: 16px 0 0;
 }
 
 .todoTitle {
   font-size: 17px;
   font-weight: 700;
   color: var(--grey-900);
-}
-
-.emptyTodo {
-  padding: 40px 0;
-  @include flex-col-center(8px);
-  color: var(--grey-400);
-  font-size: 14px;
-}
-
-.addTodoLink {
-  color: var(--primary);
-  font-size: 14px;
-  font-weight: 600;
+  padding: 0 20px;
 }

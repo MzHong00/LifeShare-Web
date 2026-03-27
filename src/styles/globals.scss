@@ -25,11 +25,12 @@
   margin: 0;
   font-family: auto;
   -webkit-tap-highlight-color: transparent;
-}
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 
-html,
-body {
-  min-height: 100vh;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 html {
@@ -52,7 +53,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   max-width: 480px;
   margin: 0 auto;
-  min-height: 100vh;
+  min-height: 100dvh;
   position: relative;
 }
 
@@ -75,7 +76,6 @@ textarea,
 input,
 input[type="button"],
 input[type="submit"],
-input[type="date"],
 input[type="search"],
 input[type="number"] {
   background-color: transparent;
@@ -95,8 +95,7 @@ a,
 button,
 select,
 input[type="button"],
-input[type="submit"],
-input[type="date"] {
+input[type="submit"] {
   background-color: transparent;
   background-image: none;
   font-weight: inherit;

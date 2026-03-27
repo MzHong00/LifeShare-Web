@@ -1,10 +1,10 @@
 import { AppHeader } from "@/components/common/AppHeader";
 import styles from "./privacy.module.scss";
 
-export default function PrivacyPolicyPage() {
+const PrivacyPolicyPage = () => {
   return (
     <div className={styles.page}>
-      <AppHeader title="개인정보 처리방침" />
+      <AppHeader />
       <div className={styles.content}>
         <h2 className={styles.h2}>개인정보 처리방침</h2>
         <p className={styles.p}>
@@ -39,4 +39,6 @@ export default function PrivacyPolicyPage() {
       </div>
     </div>
   );
-}
+};
+
+export default PrivacyPolicyPage;

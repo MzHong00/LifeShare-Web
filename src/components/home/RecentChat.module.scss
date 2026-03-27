@@ -1,0 +1,79 @@
+@use "styles/mixins" as *;
+
+.section {
+  padding: 16px 16px 8px;
+}
+
+.sectionHeader {
+  @include flex-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.sectionTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--grey-900);
+}
+
+.viewAllButton {
+  @include flex-row(2px);
+  align-items: center;
+  font-size: 13px;
+  color: var(--grey-500);
+  font-weight: 500;
+}
+
+.cardButton {
+  width: 100%;
+  text-align: left;
+}
+
+.card {
+  @include flex-row(14px);
+  align-items: center;
+  padding: 16px;
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
+  @include flex-col(4px);
+}
+
+.topRow {
+  @include flex-between;
+  align-items: center;
+}
+
+.partnerName {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--grey-900);
+}
+
+.time {
+  font-size: 12px;
+  color: var(--grey-400);
+  font-weight: 400;
+  flex-shrink: 0;
+}
+
+.lastMessage {
+  font-size: 14px;
+  color: var(--grey-600);
+  @include text-ellipsis;
+}
+
+.badge {
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background-color: var(--error);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  @include flex-center;
+  flex-shrink: 0;
+}

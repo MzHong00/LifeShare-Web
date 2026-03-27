@@ -1,2 +1,2 @@
-export { default as KakaoIcon } from "./KakaoIcon";
-export { default as GoogleIcon } from "./GoogleIcon";
+export { KakaoIcon } from "./KakaoIcon";
+export { GoogleIcon } from "./GoogleIcon";

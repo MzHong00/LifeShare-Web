@@ -7,7 +7,7 @@ import { useUserStore } from "@/stores/useUserStore";
 import { modalActions } from "@/stores/useModalStore";
 import { calculateDDay, formatDate } from "@/utils/date";
 import { joinValuesWithDot } from "@/utils/format";
-import { ProfileAvatar } from "@/components/common/ProfileAvatar";
+import { ProfileImage } from "@/components/common/ProfileImage";
 import { MOCK_DATA } from "@/constants/mockData";
 import styles from "./DDayHero.module.scss";
 
@@ -53,7 +53,7 @@ export const DDayHero = () => {
         <div style={{ paddingTop: 16, display: "flex", flexDirection: "column", gap: 16 }}>
           {members.map((member) => (
             <div key={member.id} style={{ display: "flex", alignItems: "center", gap: 12 }}>
-              <ProfileAvatar uri={member.avatar} name={member.name} size={44} />
+              <ProfileImage uri={member.avatar} name={member.name} size={44} />
               <div>
                 <p style={{ fontWeight: 700, color: "var(--grey-900)" }}>{member.name}</p>
                 <p style={{ fontSize: 14, color: "var(--grey-500)" }}>{member.email}</p>
@@ -71,16 +71,15 @@ export const DDayHero = () => {
 
   const content = (
     <div className={styles.content}>
-      <div className={styles.headerRow}>
-        <h1 className={styles.workspaceName} style={{ color: textColor }}>
-          {currentWorkspace.name}
-        </h1>
-        <p className={styles.memberNames} style={{ color: subColor }}>
-          {memberNamesString}
-        </p>
-      </div>
-
-      <div className={styles.bottomSection}>
+      <div className={styles.topSection}>
+        <div className={styles.headerRow}>
+          <h1 className={styles.workspaceName} style={{ color: textColor }}>
+            {currentWorkspace.name}
+          </h1>
+          <p className={styles.memberNames} style={{ color: subColor }}>
+            {memberNamesString}
+          </p>
+        </div>
         <button onClick={handleMembersClick} className={styles.membersStack}>
           {currentWorkspace.members?.map((member, index) => (
             <div
@@ -88,11 +87,13 @@ export const DDayHero = () => {
               className={styles.memberAvatar}
               style={{ marginLeft: index === 0 ? 0 : -10, zIndex: 10 - index }}
             >
-              <ProfileAvatar uri={member.avatar} name={member.name} size={32} />
+              <ProfileImage uri={member.avatar} name={member.name} size={32} />
             </div>
           ))}
         </button>
+      </div>
 
+      <div className={styles.bottomSection}>
         <div className={styles.dDayRow}>
           <div className={styles.dDayNumber}>
             <span className={styles.dDayValue} style={{ color: textColor }}>{days}</span>

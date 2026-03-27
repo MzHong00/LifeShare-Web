@@ -4,7 +4,7 @@ import { Heart, User } from "lucide-react";
 import { APP_WORKSPACE } from "@/constants/config";
 import styles from "./landing.module.scss";
 
-export default function WorkspaceLandingPage() {
+const WorkspaceLandingPage = () => {
   const router = useRouter();
 
   return (
@@ -37,4 +37,6 @@ export default function WorkspaceLandingPage() {
       </div>
     </main>
   );
-}
+};
+
+export default WorkspaceLandingPage;

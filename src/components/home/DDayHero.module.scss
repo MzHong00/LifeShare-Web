@@ -27,25 +27,34 @@
 }
 
 .content {
-  padding: 24px 20px;
+  padding: 16px 20px;
   @include flex-col;
   justify-content: space-between;
-  min-height: 210px;
-  gap: 16px;
+  min-height: 168px;
+  gap: 32px;
+}
+
+.topSection {
+  @include flex-row;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
 .headerRow {
   @include flex-col;
   gap: 2px;
+  min-width: 0;
 }
 
 .workspaceName {
   font-size: 24px;
   font-weight: 800;
+  @include text-ellipsis;
 }
 
 .memberNames {
   font-size: 13px;
+  @include text-ellipsis;
 }
 
 .bottomSection {
@@ -54,7 +63,6 @@
 
 .membersStack {
   @include flex-row;
-  margin-bottom: 14px;
 }
 
 .memberAvatar {
@@ -75,7 +83,7 @@
 }
 
 .dDayValue {
-  font-size: 36px;
+  font-size: 28px;
   font-weight: 800;
   letter-spacing: -0.025em;
 }
@@ -91,11 +99,11 @@
 
 .eventBadge {
   width: 100%;
-  padding: 14px 16px;
-  border-radius: 16px;
+  padding: 10px 16px;
+  border-radius: 14px;
   @include flex-center;
   gap: 6px;
-  margin-top: 6px;
+  margin-top: 4px;
 }
 
 .eventTitle {

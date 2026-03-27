@@ -7,7 +7,7 @@ import { useWorkspaceStore } from "@/stores/useWorkspaceStore";
 import { modalActions } from "@/stores/useModalStore";
 import { getTodayDateString, getDateWithOffset } from "@/utils/date";
 import { AppHeader } from "@/components/common/AppHeader";
-import { ProfileAvatar } from "@/components/common/ProfileAvatar";
+import { ProfileImage } from "@/components/common/ProfileImage";
 import { TODO_COLORS, COLORS } from "@/constants/theme";
 import styles from "./todoCreate.module.scss";
 
@@ -17,7 +17,7 @@ const QUICK_DATES = [
   { label: "다음 주", offset: 7 },
 ];
 
-function TodoCreateContent() {
+const TodoCreateContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const todoId = searchParams.get("todoId");
@@ -36,7 +36,9 @@ function TodoCreateContent() {
   const [assigneeId, setAssigneeId] = useState<string | undefined>(existingTodo?.assigneeId);
   const [startDate, setStartDate] = useState(existingTodo?.startDate || initialDate || getTodayDateString());
   const [endDate, setEndDate] = useState(existingTodo?.endDate || initialDate || getTodayDateString());
-  const [selectedColor, setSelectedColor] = useState(existingTodo?.color || TODO_COLORS[0]);
+  const [selectedColor, setSelectedColor] = useState(
+    () => existingTodo?.color || TODO_COLORS[Math.floor(Math.random() * TODO_COLORS.length)]
+  );
 
   const members = currentWorkspace?.members || [];
 
@@ -88,7 +90,6 @@ function TodoCreateContent() {
   return (
     <div className={styles.page}>
       <AppHeader
-        title={todoId ? "할 일 수정" : "할 일 추가"}
         rightElement={
           todoId ? (
             <button onClick={handleDelete} style={{ width: 36, height: 36, display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -197,7 +198,7 @@ function TodoCreateContent() {
                 <button key={member.id} onClick={() => setAssigneeId(member.id)} className={styles.assigneeOption}>
                   <div className={[styles.memberWrap, isActive && "ring-2"].filter(Boolean).join(' ')}>
                     <div style={isActive ? { outline: "2px solid var(--primary)", outlineOffset: 1, borderRadius: 9999 } : {}}>
-                      <ProfileAvatar uri={member.avatar} name={member.name} size={56} />
+                      <ProfileImage uri={member.avatar} name={member.name} size={56} />
                     </div>
                     {isActive && (
                       <div className={styles.checkBadge}>
@@ -224,10 +225,12 @@ function TodoCreateContent() {
   );
 }
 
-export default function TodoCreatePage() {
+const TodoCreatePage = () => {
   return (
     <Suspense>
       <TodoCreateContent />
     </Suspense>
   );
-}
+};
+
+export default TodoCreatePage;
