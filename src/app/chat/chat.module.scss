@@ -1,0 +1,75 @@
+@use "styles/mixins" as *;
+
+// GNB 없는 standalone 페이지 — flex-col로 키보드 대응
+// dvh 지원 브라우저에서 키보드가 올라오면 전체 높이가 자연스럽게 줄어든다
+.page {
+  // position: fixed + visualViewport로 iOS Safari 키보드 대응
+  // top/height는 JS가 즉각 업데이트 — dvh는 SSR 초기 폴백
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  height: 100dvh;
+  @include flex-col;
+  background-color: var(--grey-50);
+  overflow: hidden;
+}
+
+.header {
+  flex-shrink: 0;
+  @include flex-between;
+  align-items: center;
+  padding: 0 8px 0 4px;
+  height: 60px;
+  background-color: #ffffff;
+  border-bottom: 1px solid var(--grey-100);
+}
+
+.backButton {
+  @include icon-box(40px);
+  color: var(--grey-900);
+
+  &:active {
+    background-color: var(--grey-100);
+  }
+}
+
+.headerInfo {
+  @include flex-row(10px);
+  align-items: center;
+  flex: 1;
+  padding-left: 4px;
+}
+
+.headerRight {
+  width: 40px;
+}
+
+.partnerName {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--grey-900);
+  line-height: 1.2;
+}
+
+.onlineStatus {
+  font-size: 11px;
+  color: var(--success);
+  line-height: 1.2;
+}
+
+// flex: 1로 남은 공간 전부 차지하며 자체 스크롤
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 16px 8px;
+}
+
+// flex 아이템으로 하단에 자연스럽게 위치 — position: fixed 불필요
+.inputArea {
+  flex-shrink: 0;
+  background-color: var(--grey-50);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}

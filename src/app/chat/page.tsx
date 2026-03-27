@@ -1,10 +1,11 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
-import { Image as ImageIcon, Video } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { ChevronLeft } from "lucide-react";
 import { useWorkspaceStore } from "@/stores/useWorkspaceStore";
 import { MessageBubble } from "@/components/chat/MessageBubble";
 import { ChatInput } from "@/components/chat/ChatInput";
-import { ProfileAvatar } from "@/components/common/ProfileAvatar";
+import { ProfileImage } from "@/components/common/ProfileImage";
 import { formatChatTime } from "@/utils/date";
 import type { ChatMessage } from "@/types";
 import styles from "./chat.module.scss";
@@ -17,68 +18,73 @@ const INITIAL_MESSAGES: ChatMessage[] = [
 ];
 
 export default function ChatPage() {
+  const router = useRouter();
   const [messages, setMessages] = useState<ChatMessage[]>(INITIAL_MESSAGES);
   const [inputText, setInputText] = useState("");
-  const [isActionMenuVisible, setIsActionMenuVisible] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
   const pageRef = useRef<HTMLDivElement>(null);
   const currentWorkspace = useWorkspaceStore((s) => s.currentWorkspace);
 
-  const partner = currentWorkspace?.members?.find((m) => m.id !== "user-1") || {
+  const partner = currentWorkspace?.members?.find((m) => m.id !== "user-1") ?? {
+    id: "partner",
     name: "파트너",
     avatar: undefined,
     email: "",
-    id: "partner",
   };
+
+  // visualViewport로 키보드 등장 시 레이아웃 즉각 반영
+  // height + offsetTop 모두 반영해야 iOS Safari에서 페이지가 스크롤로 밀려나지 않는다
+  useEffect(() => {
+    const vv = window.visualViewport;
+    if (!vv || !pageRef.current) return;
+
+    const update = () => {
+      if (!pageRef.current) return;
+      pageRef.current.style.height = `${vv.height}px`;
+      pageRef.current.style.top = `${vv.offsetTop}px`;
+      bottomRef.current?.scrollIntoView({ behavior: "instant" });
+    };
+
+    update();
+    vv.addEventListener("resize", update);
+    vv.addEventListener("scroll", update);
+    return () => {
+      vv.removeEventListener("resize", update);
+      vv.removeEventListener("scroll", update);
+    };
+  }, []);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // 키패드가 올라올 때 페이지 높이를 visual viewport에 맞게 동적 조정
-  useEffect(() => {
-    const vv = window.visualViewport;
-    if (!vv) return;
-
-    const onResize = () => {
-      if (pageRef.current) {
-        pageRef.current.style.height = `${vv.height}px`;
-      }
-      setTimeout(() => {
-        bottomRef.current?.scrollIntoView({ behavior: "instant" });
-      }, 50);
-    };
-
-    vv.addEventListener("resize", onResize);
-    return () => vv.removeEventListener("resize", onResize);
-  }, []);
-
   const sendMessage = () => {
     if (!inputText.trim()) return;
-    const newMessage: ChatMessage = {
+    const newMsg: ChatMessage = {
       id: Date.now().toString(),
       text: inputText,
       sender: "me",
       time: formatChatTime(),
     };
-    setMessages((prev) => [...prev, newMessage]);
+    setMessages((prev) => [...prev, newMsg]);
     setInputText("");
   };
 
-  const actionItems = [
-    { id: "gallery", label: "갤러리", icon: <ImageIcon size={24} /> },
-    { id: "video", label: "동영상", icon: <Video size={24} /> },
-  ];
-
   return (
     <div ref={pageRef} className={styles.page}>
-      <div className={styles.chatHeader}>
-        <ProfileAvatar uri={partner.avatar} name={partner.name} size={40} />
-        <div>
-          <p className={styles.partnerName}>{partner.name}</p>
-          <p className={styles.onlineStatus}>현재 활동 중</p>
+      <header className={styles.header}>
+        <button onClick={() => router.back()} className={styles.backButton}>
+          <ChevronLeft size={24} />
+        </button>
+        <div className={styles.headerInfo}>
+          <ProfileImage uri={partner.avatar} name={partner.name} size={36} />
+          <div>
+            <p className={styles.partnerName}>{partner.name}</p>
+            <p className={styles.onlineStatus}>현재 활동 중</p>
+          </div>
         </div>
-      </div>
+        <div className={styles.headerRight} />
+      </header>
 
       <div className={styles.messages}>
         {messages.map((msg) => (
@@ -94,23 +100,13 @@ export default function ChatPage() {
         <div ref={bottomRef} />
       </div>
 
-      {isActionMenuVisible && (
-        <div className={styles.actionMenu}>
-          {actionItems.map((item) => (
-            <button key={item.id} className={styles.actionItem}>
-              <div className={styles.actionIcon}>{item.icon}</div>
-              <span className={styles.actionLabel}>{item.label}</span>
-            </button>
-          ))}
-        </div>
-      )}
-
-      <ChatInput
-        value={inputText}
-        onChange={setInputText}
-        onSend={sendMessage}
-        onPlusPress={() => setIsActionMenuVisible(!isActionMenuVisible)}
-      />
+      <div className={styles.inputArea}>
+        <ChatInput
+          value={inputText}
+          onChange={setInputText}
+          onSend={sendMessage}
+        />
+      </div>
     </div>
   );
 }
