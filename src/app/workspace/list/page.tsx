@@ -38,9 +38,16 @@ export default function WorkspaceListPage() {
 
   return (
     <div className={styles.page}>
-      <AppHeader title={`${APP_WORKSPACE.KR} 관리`} transparent />
+      <AppHeader />
 
       <div className={styles.content}>
+        <div className={styles.header}>
+          <h1 className={styles.title}>내 라이프룸 목록</h1>
+          <p className={styles.description}>
+            참여 중인 라이프룸을 전환하거나 관리할 수 있습니다.
+          </p>
+        </div>
+
         {workspaces.map((ws) => {
           const isMain = ws.id === currentWorkspace?.id;
           const days = ws.startDate ? calculateDDay(ws.startDate) : null;
