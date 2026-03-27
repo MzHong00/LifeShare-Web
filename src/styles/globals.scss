@@ -33,11 +33,6 @@
   }
 }
 
-html,
-body {
-  min-height: 100vh;
-}
-
 html {
   background: #e5e8eb;
 }
@@ -58,7 +53,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   max-width: 480px;
   margin: 0 auto;
-  min-height: 100vh;
+  min-height: 100dvh;
   position: relative;
 }
 
