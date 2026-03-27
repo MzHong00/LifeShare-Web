@@ -1,27 +1,44 @@
 @use 'styles/mixins' as *;
 
-.inputRow {
+// 인풋 바 + 도구함을 감싸는 최상위 래퍼
+.wrapper {
+  @include flex-col;
+  gap: 8px;
+  padding: 10px 12px 10px;
+}
+
+// 인풋 필 (플러스 + 텍스트 + 전송)
+.container {
+  width: 100%;
   @include flex-row(8px);
-  padding: 8px 16px;
-  padding-bottom: max(8px, env(safe-area-inset-bottom));
+  padding: 10px 10px 10px 12px;
   background-color: #ffffff;
-  border-top: 1px solid var(--grey-200);
-  flex-shrink: 0;
+  border-radius: 9999px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
 }
 
 .plusButton {
-  @include icon-box(36px);
+  @include icon-box(32px);
+  border-radius: 9999px;
   background-color: var(--grey-100);
   color: var(--grey-600);
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+// 도구함 열렸을 때 플러스 버튼 강조
+.plusButtonActive {
+  background-color: var(--primary);
+  color: #ffffff;
+  transform: rotate(45deg);
 }
 
 .input {
   flex: 1;
-  background-color: var(--grey-100);
-  border-radius: 9999px;
-  padding: 12px 16px;
-  font-size: 14px;
+  background-color: transparent;
+  font-size: 15px;
   color: var(--grey-900);
+  padding: 2px 0;
 
   &::placeholder {
     color: var(--grey-400);
@@ -29,9 +46,43 @@
 }
 
 .sendButton {
-  @include icon-box(36px);
-  transition: background-color 0.15s;
+  @include icon-box(32px);
+  border-radius: 9999px;
+  flex-shrink: 0;
+  transition: all 0.2s;
 }
 
 .sendButtonActive   { background-color: var(--primary); }
-.sendButtonInactive { background-color: var(--grey-200); }
+.sendButtonInactive { background-color: var(--grey-100); }
+
+// 도구함 — 인풋 바 위에 표시
+.actionMenu {
+  @include flex-row(0px);
+  padding: 4px 4px;
+  gap: 4px;
+}
+
+.actionItem {
+  @include flex-col-center(4px);
+  flex: 1;
+  padding: 10px 4px;
+  border-radius: 14px;
+  transition: background-color 0.15s;
+
+  &:active {
+    background-color: var(--grey-100);
+  }
+}
+
+.actionIcon {
+  @include icon-box(44px, 13px);
+  background-color: var(--primary-light);
+  color: var(--primary);
+  border-radius: 14px;
+}
+
+.actionLabel {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--grey-600);
+}
