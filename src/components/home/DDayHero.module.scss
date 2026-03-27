@@ -31,21 +31,30 @@
   @include flex-col;
   justify-content: space-between;
   min-height: 168px;
-  gap: 10px;
+  gap: 32px;
+}
+
+.topSection {
+  @include flex-row;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
 .headerRow {
   @include flex-col;
   gap: 2px;
+  min-width: 0;
 }
 
 .workspaceName {
   font-size: 24px;
   font-weight: 800;
+  @include text-ellipsis;
 }
 
 .memberNames {
   font-size: 13px;
+  @include text-ellipsis;
 }
 
 .bottomSection {
@@ -54,7 +63,6 @@
 
 .membersStack {
   @include flex-row;
-  margin-bottom: 8px;
 }
 
 .memberAvatar {

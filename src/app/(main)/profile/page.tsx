@@ -1,13 +1,13 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { Users, ShieldCheck, Inbox, Check, X, CalendarDays, Gift, ListTodo, Megaphone, Headphones } from "lucide-react";
+import { Users, ShieldCheck, Inbox, Check, X, CalendarDays, Gift, ListTodo, Megaphone, Headphones, MessageCircle } from "lucide-react";
 import { useUserStore } from "@/stores/useUserStore";
 import {
   useWorkspaceStore,
   workspaceActions,
 } from "@/stores/useWorkspaceStore";
 import { modalActions } from "@/stores/useModalStore";
-import { ProfileAvatar } from "@/components/common/ProfileAvatar";
+import { ProfileImage } from "@/components/common/ProfileImage";
 import styles from "./profile.module.scss";
 
 export default function ProfilePage() {
@@ -65,7 +65,7 @@ export default function ProfilePage() {
       {/* Header Area */}
       <header className={styles.header}>
         <div className={styles.headerLeft}>
-          <ProfileAvatar
+          <ProfileImage
             uri={user?.profileImage}
             name={displayName}
             size={36}
@@ -89,6 +89,17 @@ export default function ProfilePage() {
             <Users size={24} />
           </div>
           <span className={styles.gridLabel}>라이프룸</span>
+        </button>
+
+        <button onClick={() => router.push("/chat")} className={styles.gridItem}>
+          <div className={styles.gridIconBadgeWrap}>
+            <div className={[styles.gridIconWrap, styles.blue].join(" ")}>
+              <MessageCircle size={24} />
+            </div>
+            {/* 임시 안읽은 메시지 수 — 실제 연동 시 채팅 스토어에서 가져온다 */}
+            <span className={styles.gridBadge}>3</span>
+          </div>
+          <span className={styles.gridLabel}>채팅</span>
         </button>
 
         <button onClick={() => router.push("/calendar")} className={styles.gridItem}>
