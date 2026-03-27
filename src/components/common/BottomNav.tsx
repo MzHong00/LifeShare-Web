@@ -13,7 +13,7 @@ const navItems = [
 
 const GNB_PATHS = navItems.map((item) => item.href);
 
-export default function BottomNav() {
+export const BottomNav = () => {
   const pathname = usePathname();
   const isGnbPage = GNB_PATHS.some((path) => pathname === path);
 

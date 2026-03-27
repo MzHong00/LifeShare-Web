@@ -8,7 +8,7 @@ import { RecentCalendar } from "@/components/home/RecentCalendar";
 import { RecentStories } from "@/components/home/RecentStories";
 import styles from "./home.module.scss";
 
-export default function HomePage() {
+const HomePage = () => {
   const router = useRouter();
   const currentWorkspace = useWorkspaceStore((s) => s.currentWorkspace);
 
@@ -28,4 +28,6 @@ export default function HomePage() {
       <RecentStories />
     </div>
   );
-}
+};
+
+export default HomePage;

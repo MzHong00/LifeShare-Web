@@ -13,7 +13,7 @@ import styles from "./setup.module.scss";
 type Step = "initial" | "create" | "invite";
 type CreateSubStep = "type" | "name";
 
-function WorkspaceSetupContent() {
+const WorkspaceSetupContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const existingWorkspaceId = searchParams.get("workspaceId");
@@ -186,6 +186,8 @@ function WorkspaceSetupContent() {
   );
 }
 
-export default function WorkspaceSetupPage() {
+const WorkspaceSetupPage = () => {
   return <Suspense><WorkspaceSetupContent /></Suspense>;
-}
+};
+
+export default WorkspaceSetupPage;

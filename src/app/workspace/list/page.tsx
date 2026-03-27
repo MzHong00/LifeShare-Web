@@ -10,7 +10,7 @@ import { formatDate, calculateDDay } from "@/utils/date";
 import { APP_WORKSPACE } from "@/constants/config";
 import styles from "./list.module.scss";
 
-export default function WorkspaceListPage() {
+const WorkspaceListPage = () => {
   const router = useRouter();
   const workspaces = useWorkspaceStore((s) => s.workspaces);
   const currentWorkspace = useWorkspaceStore((s) => s.currentWorkspace);
@@ -96,4 +96,6 @@ export default function WorkspaceListPage() {
       </div>
     </div>
   );
-}
+};
+
+export default WorkspaceListPage;

@@ -134,7 +134,8 @@ TypeScript에서 색상이 필요한 경우 (style prop 등)에는 `@/constants/
 
 ### 1. 컴포넌트
 
-- 모든 컴포넌트는 화살표 함수 (`const Foo = () => { ... }`) 형식으로 작성한다.
+- 모든 컴포넌트는 화살표 함수 (`const Foo = () => { ... }`) 형식으로 작성한다. `function` 키워드 선언식은 사용하지 않는다.
+- 컴포넌트 export는 `export default` 대신 **named export** (`export const Foo = ...`)를 사용한다.
 - 클라이언트 사이드 로직 (이벤트, 상태 등)이 있는 파일은 반드시 `"use client";`를 첫 줄에 선언한다.
 - 컴포넌트 내부에 또 다른 컴포넌트를 정의(Nested Component)하지 않는다. 필요 시 파일 내 최상위 수준에서 정의하거나 별도 파일로 분리한다.
 
@@ -265,4 +266,4 @@ export const fooActions = {
 
 ---
 
-_최종 업데이트: 2026-03-24_
+_최종 업데이트: 2026-03-27_

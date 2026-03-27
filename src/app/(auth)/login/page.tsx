@@ -9,7 +9,7 @@ import { ENV } from "@/constants/config";
 import { KakaoIcon, GoogleIcon } from "@/assets/icons";
 import styles from "./login.module.scss";
 
-function LoginContent() {
+const LoginContent = () => {
   const router = useRouter();
   const setAuth = useAuthStore((s) => s.setAuth);
 
@@ -68,6 +68,8 @@ function LoginContent() {
   );
 }
 
-export default function LoginPage() {
+const LoginPage = () => {
   return <LoginContent />;
-}
+};
+
+export default LoginPage;

@@ -25,7 +25,7 @@ const RECENT_PLACES = [
   { id: "3", name: "강남구청 역 이자카야", date: "지난 주말" },
 ];
 
-export default function MapPage() {
+const MapPage = () => {
   const router = useRouter();
   const currentWorkspace = useWorkspaceStore((s) => s.currentWorkspace);
   const stories = useStoryStore((s) => s.stories);
@@ -173,4 +173,6 @@ export default function MapPage() {
       </BottomDrawer>
     </div>
   );
-}
+};
+
+export default MapPage;

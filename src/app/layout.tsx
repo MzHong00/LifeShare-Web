@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "../styles/globals.scss";
-import QueryProvider from "@/lib/QueryProvider";
+import { QueryProvider } from "@/lib/QueryProvider";
 import { Modal } from "@/components/common/Modal";
 import { Toast } from "@/components/common/Toast";
 
@@ -13,11 +13,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+const RootLayout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}>) => {
   return (
     <html lang="ko">
       <body>
@@ -29,4 +29,6 @@ export default function RootLayout({
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;

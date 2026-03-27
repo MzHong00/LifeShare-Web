@@ -20,7 +20,7 @@ import { toastActions } from "@/stores/useToastStore";
 import { ProfileImage } from "@/components/common/ProfileImage";
 import styles from "./settings.module.scss";
 
-export default function PersonalSettingsPage() {
+const PersonalSettingsPage = () => {
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const user = useUserStore((s) => s.user);
@@ -181,4 +181,6 @@ export default function PersonalSettingsPage() {
       </div>
     </div>
   );
-}
+};
+
+export default PersonalSettingsPage;

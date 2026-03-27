@@ -40,7 +40,7 @@ const generateAnniversaries = (startDate: string) => {
   return anniversaries.sort((a, b) => a.daysLeft - b.daysLeft).slice(0, 12);
 };
 
-export default function AnniversaryPage() {
+const AnniversaryPage = () => {
   const currentWorkspace = useWorkspaceStore((s) => s.currentWorkspace);
   const days = currentWorkspace?.startDate ? calculateDDay(currentWorkspace.startDate) : 0;
 
@@ -121,4 +121,6 @@ export default function AnniversaryPage() {
       </div>
     </div>
   );
-}
+};
+
+export default AnniversaryPage;

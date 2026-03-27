@@ -18,7 +18,7 @@ import styles from "./calendar.module.scss";
 const WEEKDAYS = ["일", "월", "화", "수", "목", "금", "토"];
 
 // useSearchParams를 사용하므로 Suspense 경계 안에서 렌더링해야 한다.
-function CalendarContent() {
+const CalendarContent = () => {
   const router = useRouter();
   const [params, setParams] = useQueryParams();
   const today = getTodayDateString();
@@ -193,11 +193,13 @@ function CalendarContent() {
   );
 }
 
-export default function CalendarPage() {
+const CalendarPage = () => {
   // useSearchParams 사용 시 Next.js App Router에서 Suspense 래핑이 필요하다.
   return (
     <Suspense>
       <CalendarContent />
     </Suspense>
   );
-}
+};
+
+export default CalendarPage;

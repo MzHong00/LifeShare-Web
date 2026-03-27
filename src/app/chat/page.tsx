@@ -17,7 +17,7 @@ const INITIAL_MESSAGES: ChatMessage[] = [
   { id: "4", text: "좋아! 7시에 역 앞에서 만나", sender: "partner", time: "오후 2:33" },
 ];
 
-export default function ChatPage() {
+const ChatPage = () => {
   const router = useRouter();
   const [messages, setMessages] = useState<ChatMessage[]>(INITIAL_MESSAGES);
   const [inputText, setInputText] = useState("");
@@ -109,4 +109,6 @@ export default function ChatPage() {
       </div>
     </div>
   );
-}
+};
+
+export default ChatPage;

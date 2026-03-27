@@ -12,7 +12,7 @@ import { getTodayDateString, formatDate } from "@/utils/date";
 import type { LocationPoint } from "@/types";
 import styles from "./storyEdit.module.scss";
 
-function StoryEditContent() {
+const StoryEditContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const storyId = searchParams.get("storyId");
@@ -214,10 +214,12 @@ function StoryEditContent() {
   );
 }
 
-export default function StoryEditPage() {
+const StoryEditPage = () => {
   return (
     <Suspense>
       <StoryEditContent />
     </Suspense>
   );
-}
+};
+
+export default StoryEditPage;

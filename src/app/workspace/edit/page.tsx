@@ -11,7 +11,7 @@ import { AppHeader } from "@/components/common/AppHeader";
 import { APP_WORKSPACE } from "@/constants/config";
 import styles from "./edit.module.scss";
 
-function WorkspaceEditContent() {
+const WorkspaceEditContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const workspaceId = searchParams.get("workspaceId") || "";
@@ -334,10 +334,12 @@ function WorkspaceEditContent() {
   );
 }
 
-export default function WorkspaceEditPage() {
+const WorkspaceEditPage = () => {
   return (
     <Suspense>
       <WorkspaceEditContent />
     </Suspense>
   );
-}
+};
+
+export default WorkspaceEditPage;

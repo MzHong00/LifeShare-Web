@@ -8,7 +8,7 @@ import { StoryItem } from "@/components/stories/StoryItem";
 import styles from "./stories.module.scss";
 
 // useSearchParams를 사용하므로 Suspense 경계 안에서 렌더링해야 한다.
-function StoriesContent() {
+const StoriesContent = () => {
   const router = useRouter();
   const [params, setParams] = useQueryParams();
   const stories = useStoryStore((s) => s.stories);
@@ -86,11 +86,13 @@ function StoriesContent() {
   );
 }
 
-export default function StoriesPage() {
+const StoriesPage = () => {
   // useSearchParams 사용 시 Next.js App Router에서 Suspense 래핑이 필요하다.
   return (
     <Suspense>
       <StoriesContent />
     </Suspense>
   );
-}
+};
+
+export default StoriesPage;

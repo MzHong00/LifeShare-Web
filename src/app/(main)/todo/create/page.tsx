@@ -17,7 +17,7 @@ const QUICK_DATES = [
   { label: "다음 주", offset: 7 },
 ];
 
-function TodoCreateContent() {
+const TodoCreateContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const todoId = searchParams.get("todoId");
@@ -37,7 +37,7 @@ function TodoCreateContent() {
   const [startDate, setStartDate] = useState(existingTodo?.startDate || initialDate || getTodayDateString());
   const [endDate, setEndDate] = useState(existingTodo?.endDate || initialDate || getTodayDateString());
   const [selectedColor, setSelectedColor] = useState(
-    existingTodo?.color || TODO_COLORS[Math.floor(Math.random() * TODO_COLORS.length)]
+    () => existingTodo?.color || TODO_COLORS[Math.floor(Math.random() * TODO_COLORS.length)]
   );
 
   const members = currentWorkspace?.members || [];
@@ -225,10 +225,12 @@ function TodoCreateContent() {
   );
 }
 
-export default function TodoCreatePage() {
+const TodoCreatePage = () => {
   return (
     <Suspense>
       <TodoCreateContent />
     </Suspense>
   );
-}
+};
+
+export default TodoCreatePage;

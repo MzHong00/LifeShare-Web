@@ -10,7 +10,7 @@ import { modalActions } from "@/stores/useModalStore";
 import { ProfileImage } from "@/components/common/ProfileImage";
 import styles from "./profile.module.scss";
 
-export default function ProfilePage() {
+const ProfilePage = () => {
   const router = useRouter();
   const user = useUserStore((s) => s.user);
   const invitations = useWorkspaceStore((s) => s.invitations);
@@ -191,4 +191,6 @@ export default function ProfilePage() {
       <p className={styles.version}>버전 1.0.0 (beta)</p>
     </div>
   );
-}
+};
+
+export default ProfilePage;

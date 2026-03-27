@@ -9,7 +9,7 @@ import { AppHeader } from "@/components/common/AppHeader";
 import { StoryBriefInfo } from "@/components/stories/StoryBriefInfo";
 import styles from "./storyDetail.module.scss";
 
-export default function StoryDetailPage() {
+const StoryDetailPage = () => {
   const router = useRouter();
   const params = useParams();
   const storyId = params.id as string;
@@ -88,4 +88,6 @@ export default function StoryDetailPage() {
       </div>
     </div>
   );
-}
+};
+
+export default StoryDetailPage;

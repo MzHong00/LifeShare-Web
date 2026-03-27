@@ -14,7 +14,7 @@ import styles from "./todo.module.scss";
 const VALID_FILTERS: Filter[] = ["all", "active", "completed"];
 
 // useSearchParams를 사용하므로 Suspense 경계 안에서 렌더링해야 한다.
-function TodoContent() {
+const TodoContent = () => {
   const router = useRouter();
   const [params, setParams] = useQueryParams();
   const todos = useTodoStore((s) => s.todos);
@@ -60,11 +60,13 @@ function TodoContent() {
   );
 }
 
-export default function TodoPage() {
+const TodoPage = () => {
   // useSearchParams 사용 시 Next.js App Router에서 Suspense 래핑이 필요하다.
   return (
     <Suspense>
       <TodoContent />
     </Suspense>
   );
-}
+};
+
+export default TodoPage;
