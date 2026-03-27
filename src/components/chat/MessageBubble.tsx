@@ -1,4 +1,4 @@
-import { ProfileAvatar } from "@/components/common/ProfileAvatar";
+import { ProfileImage } from "@/components/common/ProfileImage";
 import styles from "./MessageBubble.module.scss";
 
 interface MessageBubbleProps {
@@ -27,7 +27,7 @@ export const MessageBubble = ({ text, sender, time, avatar, name }: MessageBubbl
 
   return (
     <div className={styles.rowPartner}>
-      <ProfileAvatar uri={avatar} name={name || "?"} size={32} className={styles.partnerAvatar} />
+      <ProfileImage uri={avatar} name={name || "?"} size={32} className={styles.partnerAvatar} />
       <div className={styles.innerPartner}>
         <div className={styles.bubblePartner}>
           <p className={`${styles.text} ${styles.textPartner}`}>{text}</p>

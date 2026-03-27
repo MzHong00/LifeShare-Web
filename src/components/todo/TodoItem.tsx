@@ -3,7 +3,7 @@ import { CheckCircle2 } from "lucide-react";
 import type { Todo, Workspace } from "@/types";
 import { COLORS } from "@/constants/theme";
 import { getRelativeDateLabel } from "@/utils/date";
-import { ProfileAvatar } from "@/components/common/ProfileAvatar";
+import { ProfileImage } from "@/components/common/ProfileImage";
 import styles from "./TodoItem.module.scss";
 
 interface TodoItemProps {
@@ -44,7 +44,7 @@ export const TodoItem = ({ item, currentWorkspace, onToggle, onPress }: TodoItem
         <p className={styles.dateLabel}>{dateLabel}</p>
       </button>
 
-      {assignee && <ProfileAvatar uri={assignee.avatar} name={assignee.name} size={28} />}
+      {assignee && <ProfileImage uri={assignee.avatar} name={assignee.name} size={28} />}
     </div>
   );
 };

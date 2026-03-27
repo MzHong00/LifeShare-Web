@@ -17,7 +17,7 @@ import { useUserStore, userActions } from "@/stores/useUserStore";
 import { workspaceActions } from "@/stores/useWorkspaceStore";
 import { modalActions } from "@/stores/useModalStore";
 import { toastActions } from "@/stores/useToastStore";
-import { ProfileAvatar } from "@/components/common/ProfileAvatar";
+import { ProfileImage } from "@/components/common/ProfileImage";
 import styles from "./settings.module.scss";
 
 export default function PersonalSettingsPage() {
@@ -108,14 +108,14 @@ export default function PersonalSettingsPage() {
 
   return (
     <div className={styles.page}>
-      <AppHeader title="설정" transparent />
+      <AppHeader />
 
       <div className={styles.profileSection}>
         <button
           onClick={() => fileInputRef.current?.click()}
           className={styles.avatarButton}
         >
-          <ProfileAvatar
+          <ProfileImage
             uri={user?.profileImage}
             name={displayName}
             size={80}
