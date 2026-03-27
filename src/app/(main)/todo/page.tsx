@@ -44,7 +44,6 @@ function TodoContent() {
   return (
     <div className={styles.page}>
       <AppHeader
-        title="할 일"
         rightElement={
           <button onClick={() => router.push("/todo/create")} className={styles.addButton}>
             <Plus size={22} />

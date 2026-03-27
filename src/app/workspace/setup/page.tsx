@@ -59,6 +59,8 @@ function WorkspaceSetupContent() {
   const handleBack = () => {
     if (step === "create" && createSubStep === "name") {
       setCreateSubStep("type");
+    } else if (step === "initial") {
+      router.back();
     } else {
       setStep("initial");
       setCreateSubStep("type");
@@ -67,7 +69,7 @@ function WorkspaceSetupContent() {
 
   return (
     <div className={styles.page}>
-      <AppHeader showBack={step !== "initial"} onBack={handleBack} />
+      <AppHeader showBack={true} onBack={handleBack} />
 
       <div className={styles.inner}>
         {step === "initial" && (

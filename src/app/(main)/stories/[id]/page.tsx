@@ -50,7 +50,6 @@ export default function StoryDetailPage() {
   return (
     <div className={styles.page}>
       <AppHeader
-        title={story.title}
         rightElement={
           <div className={styles.headerButtons}>
             <button onClick={handleDelete} className={styles.headerButton}>

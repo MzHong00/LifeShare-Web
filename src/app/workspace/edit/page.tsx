@@ -227,7 +227,7 @@ function WorkspaceEditContent() {
 
   return (
     <div className={styles.page}>
-      <AppHeader title={`${APP_WORKSPACE.KR} 설정`} />
+      <AppHeader />
       <div className={styles.content}>
         <div className={styles.pageHeader}>
           <span

@@ -89,7 +89,7 @@ function StoryEditContent() {
   return (
     <>
       <div className={styles.page}>
-        <AppHeader title={isEditMode ? "스토리 수정" : "스토리 기록"} />
+        <AppHeader />
 
         <div className={styles.scrollArea}>
           {/* 썸네일 */}

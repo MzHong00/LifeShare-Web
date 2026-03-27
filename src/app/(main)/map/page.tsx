@@ -9,7 +9,7 @@ import { GoogleMapView } from "@/components/map/GoogleMapView";
 import { MapEmptyState } from "@/components/map/MapEmptyState";
 import { MapPartnerInfo } from "@/components/map/MapPartnerInfo";
 import { MapStoryInfo } from "@/components/map/MapStoryInfo";
-import { ProfileAvatar } from "@/components/common/ProfileAvatar";
+import { ProfileImage } from "@/components/common/ProfileImage";
 import type { WorkspaceMember } from "@/types";
 import { BottomDrawer } from "@/components/common/BottomDrawer";
 import styles from "./map.module.scss";
@@ -110,7 +110,7 @@ export default function MapPage() {
               className={[styles.memberButton, isSelected && styles.memberButtonActive].filter(Boolean).join(' ')}
             >
               <div className={[styles.memberAvatarWrap, isSelected && styles.memberAvatarActive].filter(Boolean).join(' ')}>
-                <ProfileAvatar uri={member.avatar} name={member.name} size={52} />
+                <ProfileImage uri={member.avatar} name={member.name} size={52} />
                 <span className={styles.focusBadge}>
                   <Search size={10} strokeWidth={2.5} />
                 </span>

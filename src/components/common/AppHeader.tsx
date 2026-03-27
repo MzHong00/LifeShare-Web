@@ -16,7 +16,7 @@ export const AppHeader = ({
   showBack = true,
   rightElement,
   onBack,
-  transparent = false,
+  transparent = true,
 }: AppHeaderProps) => {
   const router = useRouter();
 

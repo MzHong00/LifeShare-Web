@@ -51,7 +51,7 @@ export default function AnniversaryPage() {
 
   return (
     <div className={styles.page}>
-      <AppHeader title="기념일" transparent />
+      <AppHeader />
 
       <div className={styles.heroSection}>
         <div className={styles.heroCard}>

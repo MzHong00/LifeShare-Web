@@ -88,7 +88,7 @@ function CalendarContent() {
 
   return (
     <div className={styles.page}>
-      <AppHeader title="캘린더" />
+      <AppHeader />
 
       <div className={styles.calendarHeader}>
         <h2 className={styles.monthTitle}>{currentMonth.format("YYYY년 M월")}</h2>
