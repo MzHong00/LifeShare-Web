@@ -1,8 +1,7 @@
 import { AlertCircle } from "lucide-react";
 
+import { ICON_SIZE } from "@/constants/iconSize";
 import styles from "./ErrorFallback.module.scss";
-
-const ICON_SIZE = 48; // 중앙 아이콘 크기(px)
 
 interface ErrorFallbackProps {
   desc?: string; // 에러 메시지
@@ -14,7 +13,7 @@ export const ErrorFallback = ({ desc, onRetry }: ErrorFallbackProps) => {
   return (
     <main className={styles.main}>
       <div className={styles.iconBadge}>
-        <AlertCircle size={ICON_SIZE} />
+        <AlertCircle size={ICON_SIZE["4xl"]} />
       </div>
 
       <h1 className={styles.title}>문제가 발생했습니다</h1>

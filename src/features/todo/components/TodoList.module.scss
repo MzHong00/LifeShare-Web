@@ -7,14 +7,14 @@
 
 .filters {
   @include flex-row(8px);
-  padding: 12px 20px;
+  padding: var(--space-md) var(--space-xl);
 }
 
 .filterButton {
   padding: 7px 14px;
-  border-radius: 9999px;
-  font-size: 14px;
-  font-weight: 500;
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
   color: var(--grey-600);
   background-color: var(--grey-100);
 }
@@ -22,7 +22,7 @@
 .filterActive {
   background-color: var(--primary);
   color: var(--white);
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
 }
 
 .list {
@@ -33,31 +33,31 @@
 .empty {
   @include flex-col-center;
   gap: 12px;
-  padding: 40px 0;
+  padding: var(--space-4xl) 0;
 }
 
 .emptyText {
-  font-size: 15px;
+  font-size: var(--font-size-lg);
   color: var(--grey-400);
 }
 
 .errorText {
-  padding: 40px 0;
+  padding: var(--space-4xl) 0;
   text-align: center;
-  font-size: 15px;
+  font-size: var(--font-size-lg);
   color: var(--grey-400);
 }
 
 .emptyAction {
-  font-size: 14px;
-  font-weight: 600;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
   color: var(--primary);
 }
 
 .skeletonRow {
   @include flex-row(12px);
   background-color: var(--white);
-  border-radius: 16px;
+  border-radius: var(--radius-xl);
   padding: 14px;
   box-shadow: var(--shadow-card);
 }

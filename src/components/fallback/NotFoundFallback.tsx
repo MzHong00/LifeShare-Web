@@ -1,18 +1,17 @@
 import { FileQuestion } from "lucide-react";
 import Link from "next/link";
 
+import { ICON_SIZE } from "@/constants/iconSize";
 import { ROUTES } from "@/constants/routes";
 
 import styles from "./NotFoundFallback.module.scss";
-
-const ICON_SIZE = 48; // 중앙 아이콘 크기(px)
 
 /** 존재하지 않는 경로 접근 시 노출되는 404 폴백 UI (not-found.tsx에서 공통으로 쓴다) */
 export const NotFoundFallback = () => {
   return (
     <main className={styles.main}>
       <div className={styles.iconBadge}>
-        <FileQuestion size={ICON_SIZE} />
+        <FileQuestion size={ICON_SIZE["4xl"]} />
       </div>
 
       <h1 className={styles.title}>페이지를 찾을 수 없어요</h1>

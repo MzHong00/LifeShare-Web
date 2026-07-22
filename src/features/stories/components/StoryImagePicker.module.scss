@@ -8,9 +8,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: var(--space-sm);
   color: var(--grey-400);
-  font-size: 14px;
+  font-size: var(--font-size-md);
 
   &:hover {
     filter: brightness(0.97);
@@ -30,8 +30,8 @@
 .removeButton {
   @include icon-box(32px);
   position: absolute;
-  top: 12px;
-  right: 12px;
+  top: var(--space-md);
+  right: var(--space-md);
   background-color: rgba(0, 0, 0, 0.5);
   color: var(--white);
 }

@@ -4,7 +4,7 @@
   @include flex-center;
   height: 100%;
   color: var(--grey-400);
-  font-size: 14px;
+  font-size: var(--font-size-md);
 }
 
 .loadingWrap {

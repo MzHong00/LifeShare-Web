@@ -3,7 +3,7 @@
 .colorPicker {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: var(--space-md);
 }
 
 .colorButton {

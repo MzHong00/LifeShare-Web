@@ -3,7 +3,7 @@
 // 이미지가 있을 때 감싸는 컨테이너
 .wrapper {
   position: relative;
-  border-radius: 9999px;
+  border-radius: var(--radius-pill);
   overflow: hidden;
   flex-shrink: 0;
 }
@@ -23,7 +23,7 @@
 .skeleton {
   position: absolute;
   inset: 0;
-  border-radius: 9999px;
+  border-radius: var(--radius-pill);
   background: linear-gradient(90deg, var(--grey-200) 25%, var(--grey-100) 50%, var(--grey-200) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.4s infinite linear;
@@ -40,12 +40,12 @@
 
 // uri가 없을 때 이니셜을 보여주는 폴백
 .fallback {
-  border-radius: 9999px;
+  border-radius: var(--radius-pill);
   @include flex-center;
   flex-shrink: 0;
 }
 
 .initial {
   color: var(--white);
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
 }

@@ -3,12 +3,11 @@ import { Sparkles } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import { useAnniversaries } from "@/features/anniversary/hooks/useAnniversaries";
+import { ICON_SIZE } from "@/constants/iconSize";
 import { ROUTES } from "@/constants/routes";
 import { formatDate } from "@/utils/date";
 
 import styles from "./AnniversarySpotlight.module.scss";
-
-const SPARKLE_ICON_SIZE = 13; // 함께한 지 라벨 옆 반짝임 아이콘 크기(px)
 
 /** 홈 중앙의 폴라로이드 감성 "함께한 지 N일" 스포트라이트 */
 export const AnniversarySpotlight = () => {
@@ -27,7 +26,7 @@ export const AnniversarySpotlight = () => {
       >
         <div className={styles.polaroidInner}>
           <span className={styles.eventLabel}>
-            <Sparkles size={SPARKLE_ICON_SIZE} className={styles.sparkle} />
+            <Sparkles size={ICON_SIZE.sm} className={styles.sparkle} />
             함께한 지
           </span>
           <span className={styles.eventDDay}>{days}일</span>

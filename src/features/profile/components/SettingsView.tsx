@@ -5,6 +5,7 @@ import { Bell, Lock, ChevronRight, LogOut, Camera, Pencil } from "lucide-react";
 import { AppHeader } from "@/components/layout/AppHeader";
 import { Card } from "@/components/ui/Card";
 import { ProfileImage } from "@/components/ui/ProfileImage";
+import { ICON_SIZE } from "@/constants/iconSize";
 import { cx } from "@/utils/cn";
 
 import { useProfileUser } from "@/features/profile/hooks/useProfileUser";
@@ -15,7 +16,6 @@ import styles from "./SettingsView.module.scss";
 
 import type { ReactNode } from "react";
 
-const SETTING_ICON_SIZE = 20; // 설정 행 아이콘 크기(px)
 const AVATAR_SIZE = 80; // 프로필 아바타 크기(px)
 
 interface SettingItem {
@@ -30,13 +30,13 @@ const SETTING_ITEMS: SettingItem[] = [
     id: "notifications",
     label: "알림 설정",
     description: "푸시 알림 및 메시지 알림",
-    icon: <Bell size={SETTING_ICON_SIZE} color="var(--grey-900)" />,
+    icon: <Bell size={ICON_SIZE.lg} color="var(--grey-900)" />,
   },
   {
     id: "privacy",
     label: "위치 공유 설정",
     description: "파트너와 위치 공유 여부",
-    icon: <Lock size={SETTING_ICON_SIZE} color="var(--grey-900)" />,
+    icon: <Lock size={ICON_SIZE.lg} color="var(--grey-900)" />,
   },
 ];
 
@@ -131,7 +131,7 @@ export const SettingsView = () => {
           <button onClick={confirmLogout} className={styles.settingRow}>
             <div className={styles.settingLeft}>
               <div className={cx(styles.settingIcon, styles.logoutIcon)}>
-                <LogOut size={SETTING_ICON_SIZE} color="var(--error)" />
+                <LogOut size={ICON_SIZE.lg} color="var(--error)" />
               </div>
               <div className={styles.settingInfo}>
                 <p className={cx(styles.settingLabel, styles.logoutLabel)}>로그아웃</p>

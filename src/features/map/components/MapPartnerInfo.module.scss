@@ -1,8 +1,8 @@
 @use "styles/mixins" as *;
 
 .statusCard {
-  padding: 16px 20px;
-  margin-bottom: 8px;
+  padding: var(--space-lg) var(--space-xl);
+  margin-bottom: var(--space-sm);
 }
 
 .memberRow {
@@ -14,14 +14,14 @@
 }
 
 .memberName {
-  font-size: 18px;
-  font-weight: 700;
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
   color: var(--grey-900);
 }
 
 .directionsSection {
-  padding: 0 20px;
-  margin-bottom: 20px;
+  padding: 0 var(--space-xl);
+  margin-bottom: var(--space-xl);
 }
 
 .directionsButton {
@@ -30,21 +30,21 @@
   gap: 8px;
   background-color: var(--grey-100);
   padding: 14px 0;
-  border-radius: 16px;
+  border-radius: var(--radius-xl);
   color: var(--grey-900);
-  font-size: 14px;
-  font-weight: 700;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
 }
 
 .placesSection {
-  padding: 0 20px 32px;
+  padding: 0 var(--space-xl) var(--space-3xl);
 }
 
 .placesTitle {
-  font-size: 14px;
-  font-weight: 700;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
   color: var(--grey-900);
-  margin-bottom: 16px;
+  margin-bottom: var(--space-lg);
 }
 
 .placesList {
@@ -68,13 +68,13 @@
 }
 
 .placeName {
-  font-size: 14px;
-  font-weight: 600;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
   color: var(--grey-900);
 }
 
 .placeDate {
-  font-size: 12px;
+  font-size: var(--font-size-xs);
   color: var(--grey-400);
 }
 

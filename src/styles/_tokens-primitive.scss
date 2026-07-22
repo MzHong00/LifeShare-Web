@@ -1,0 +1,106 @@
+// ─── Primitive 색상 팔레트 ────────────────────────────────────────────────────
+// 용도(semantic)와 무관한 원시(raw) 값 — 워크스페이스 테마 선택지 등에서 색상 자체로 재사용됨
+// CSS 커스텀 프로퍼티는 :root에서 그대로 선언 — SCSS 변수로 바꾸지 말 것
+// ([data-theme]로 런타임 오버라이드되는 semantic 토큰이 CSS 변수 특성에 의존)
+// 색조 이름(blue/pink/purple/green)은 50~900 스텝으로만 참조 — 축약형(기본 스텝) 별칭 없음, 항상 스텝 명시
+
+:root {
+  --white: #ffffff;
+
+  // Grey 스케일
+  --grey-50: #f9fafb;
+  --grey-100: #f2f4f6;
+  --grey-200: #e5e8eb;
+  --grey-300: #d1d6db;
+  --grey-400: #b2bec3;
+  --grey-500: #8b95a1;
+  --grey-600: #6b7684;
+  --grey-700: #4e5968;
+  --grey-800: #333d4b;
+  --grey-900: #191f28;
+
+  // Blue 스케일 — 50~400 흰색 혼합, 600~900 검은색 혼합으로 500 기준 계산
+  // "primary"(브랜드 메인 컬러)는 역할 이름이라 semantic 토큰이므로 여기선 실제 색조 이름(blue)으로 선언
+  --blue-50: #f5f9ff;
+  --blue-100: #e6f0fe;
+  --blue-200: #c5dcfc;
+  --blue-300: #a0c6fb;
+  --blue-400: #6ba5f9;
+  --blue-500: #3182f6;
+  --blue-600: #296dcf;
+  --blue-700: #2158a7;
+  --blue-800: #194480;
+  --blue-900: #122f59;
+
+  // Pink 스케일
+  --pink-50: #fef6fa;
+  --pink-100: #fde9f3;
+  --pink-200: #facce2;
+  --pink-300: #f6abd0;
+  --pink-400: #f17bb6;
+  --pink-500: #ec4899;
+  --pink-600: #c63c81;
+  --pink-700: #a03168;
+  --pink-800: #7b2550;
+  --pink-900: #551a37;
+
+  // Purple 스케일
+  --purple-50: #faf4fb;
+  --purple-100: #f3e5f6;
+  --purple-200: #e3c3e9;
+  --purple-300: #d19cdb;
+  --purple-400: #b863c6;
+  --purple-500: #9c27b0;
+  --purple-600: #832194;
+  --purple-700: #6a1b78;
+  --purple-800: #51145c;
+  --purple-900: #380e3f;
+
+  // Green 스케일
+  --green-50: #f4fcf7;
+  --green-100: #e4f8ec;
+  --green-200: #c1efd2;
+  --green-300: #99e4b5;
+  --green-400: #60d58b;
+  --green-500: #22c55e;
+  --green-600: #1da54f;
+  --green-700: #178640;
+  --green-800: #126631;
+  --green-900: #0c4722;
+
+  // Red 스케일 — semantic --error가 참조
+  --red-50: #fef6f6;
+  --red-100: #fde9ea;
+  --red-200: #fbcbcf;
+  --red-300: #f8a9af;
+  --red-400: #f47882;
+  --red-500: #f04452;
+  --red-600: #ca3945;
+  --red-700: #a32e38;
+  --red-800: #7d232b;
+  --red-900: #56181e;
+
+  // Teal 스케일 — semantic --success가 참조
+  --teal-50: #f2fdfa;
+  --teal-100: #e0faf2;
+  --teal-200: #b8f3e1;
+  --teal-300: #8aebce;
+  --teal-400: #47e0b2;
+  --teal-500: #00d494;
+  --teal-600: #00b27c;
+  --teal-700: #009065;
+  --teal-800: #006e4d;
+  --teal-900: #004c35;
+
+  // Amber 스케일 — semantic --warning이 참조
+  --amber-50: #fffbf3;
+  --amber-100: #fff5e3;
+  --amber-200: #ffe8bd;
+  --amber-300: #ffd992;
+  --amber-400: #ffc455;
+  --amber-500: #ffad13;
+  --amber-600: #d69110;
+  --amber-700: #ad760d;
+  --amber-800: #855a0a;
+  --amber-900: #5c3e07;
+}

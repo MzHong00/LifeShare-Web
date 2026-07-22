@@ -13,7 +13,7 @@
   border: 2px solid var(--white);
   background-color: var(--white);
   @include flex-center;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-md);
   overflow: hidden;
 }
 
@@ -29,6 +29,6 @@
 
 .initial {
   color: var(--primary);
-  font-weight: 700;
-  font-size: 16px;
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-xl);
 }

@@ -23,8 +23,8 @@
 }
 
 .label {
-  font-size: 16px;
-  font-weight: 500;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-medium);
   color: var(--grey-700);
 }
 

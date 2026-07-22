@@ -2,15 +2,12 @@
 import { CalendarDays, ChevronRight, Circle, ListTodo } from "lucide-react";
 import { useRouter } from "next/navigation";
 
+import { ICON_SIZE } from "@/constants/iconSize";
 import { ROUTES } from "@/constants/routes";
 import { useHomeDigest } from "@/features/home/hooks/useHomeDigest";
 import { formatDate, getRelativeDateLabel, isToday } from "@/utils/date";
 
 import styles from "./UpcomingDigest.module.scss";
-
-const SECTION_ICON_SIZE = 14; // 섹션 헤더 아이콘 크기(px)
-const ARROW_ICON_SIZE = 14; // 섹션 이동 화살표 아이콘 크기(px)
-const TODO_DOT_SIZE = 8; // 할 일 행 앞 미완료 표시 점 크기(px)
 
 /** 홈 중앙의 다가오는 일정·오늘 할 일 요약을 보여주는 유리 질감 다이제스트 카드 */
 export const UpcomingDigest = () => {
@@ -29,10 +26,10 @@ export const UpcomingDigest = () => {
           aria-label="다가오는 일정, 캘린더로 이동"
         >
           <span className={styles.sectionTitle}>
-            <CalendarDays size={SECTION_ICON_SIZE} className={styles.calendarIcon} />
+            <CalendarDays size={ICON_SIZE.sm} className={styles.calendarIcon} />
             다가오는 일정
           </span>
-          <ChevronRight size={ARROW_ICON_SIZE} className={styles.arrow} />
+          <ChevronRight size={ICON_SIZE.sm} className={styles.arrow} />
         </button>
 
         {upcomingEvents.length > 0 ? (
@@ -61,17 +58,17 @@ export const UpcomingDigest = () => {
           aria-label="오늘 할 일, 할 일 목록으로 이동"
         >
           <span className={styles.sectionTitle}>
-            <ListTodo size={SECTION_ICON_SIZE} className={styles.todoIcon} />
+            <ListTodo size={ICON_SIZE.sm} className={styles.todoIcon} />
             오늘 할 일
           </span>
-          <ChevronRight size={ARROW_ICON_SIZE} className={styles.arrow} />
+          <ChevronRight size={ICON_SIZE.sm} className={styles.arrow} />
         </button>
 
         {todayTodos.length > 0 ? (
           <ul className={styles.list}>
             {todayTodos.map((todo) => (
               <li key={todo.id} className={styles.row}>
-                <Circle size={TODO_DOT_SIZE} className={styles.todoDot} />
+                <Circle size={ICON_SIZE.xs} className={styles.todoDot} />
                 <span className={styles.rowTitle}>{todo.title}</span>
                 <span className={styles.todoDue}>{getRelativeDateLabel(todo.endDate)}</span>
               </li>

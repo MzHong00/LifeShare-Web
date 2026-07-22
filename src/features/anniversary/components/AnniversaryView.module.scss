@@ -7,7 +7,7 @@
 }
 
 .heroSection {
-  padding: 16px 20px;
+  padding: var(--space-lg) var(--space-xl);
 }
 
 .heroCard {
@@ -31,7 +31,7 @@
 .heroContent {
   position: relative;
   height: 100%;
-  padding: 20px;
+  padding: var(--space-xl);
   @include flex-col;
   justify-content: space-between;
 }
@@ -42,14 +42,14 @@
 
 .heroTitle {
   color: var(--white);
-  font-size: 20px;
-  font-weight: 800;
-  margin-top: 8px;
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-extrabold);
+  margin-top: var(--space-sm);
 }
 
 .heroSubTitle {
   color: rgba(255, 255, 255, 0.8);
-  font-size: 13px;
+  font-size: var(--font-size-sm);
 }
 
 .heroDaysBadge {
@@ -58,39 +58,39 @@
 
 .heroStartDate {
   color: rgba(255, 255, 255, 0.75);
-  font-size: 12px;
+  font-size: var(--font-size-xs);
 }
 
 .heroDays {
   color: var(--white);
   font-size: 44px;
-  font-weight: 800;
+  font-weight: var(--font-weight-extrabold);
   letter-spacing: -0.025em;
   line-height: 1;
 }
 
 .heroDaysUnit {
-  font-size: 20px;
-  margin-left: 4px;
-  font-weight: 700;
+  font-size: var(--font-size-3xl);
+  margin-left: var(--space-xs);
+  font-weight: var(--font-weight-bold);
 }
 
 .heroSub {
   color: rgba(255, 255, 255, 0.75);
-  font-size: 13px;
+  font-size: var(--font-size-sm);
 }
 
 .listSection {
-  padding: 8px 20px 0;
+  padding: var(--space-sm) var(--space-xl) 0;
 }
 
 .listTitle {
   font-size: 17px;
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   color: var(--grey-900);
-  margin-bottom: 12px;
+  margin-bottom: var(--space-md);
 }
 
 .list {
-  @include flex-col(12px);
+  @include flex-col(var(--space-md));
 }

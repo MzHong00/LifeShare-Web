@@ -4,8 +4,8 @@
   min-height: 100dvh;
   @include flex-col-center;
   justify-content: center;
-  padding: 0 24px;
-  gap: 24px;
+  padding: 0 var(--space-2xl);
+  gap: var(--space-2xl);
   background-color: var(--white);
 }
 
@@ -14,7 +14,7 @@
 }
 
 .statusText {
-  font-size: 15px;
+  font-size: var(--font-size-lg);
   color: var(--grey-500);
 }
 
@@ -24,13 +24,13 @@
 
 .title {
   font-size: 22px;
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   color: var(--grey-900);
-  margin-bottom: 8px;
+  margin-bottom: var(--space-sm);
 }
 
 .desc {
-  font-size: 15px;
+  font-size: var(--font-size-lg);
   color: var(--grey-600);
   line-height: 1.6;
 }
@@ -41,23 +41,23 @@
   height: 56px;
   background: var(--primary);
   color: white;
-  border-radius: 16px;
+  border-radius: var(--radius-xl);
   font-size: 17px;
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   cursor: pointer;
 }
 
 .errorText {
-  font-size: 15px;
+  font-size: var(--font-size-lg);
   color: var(--error);
   text-align: center;
 }
 
 .homeButton {
-  padding: 12px 24px;
+  padding: var(--space-md) var(--space-2xl);
   background: var(--grey-100);
-  border-radius: 12px;
-  font-size: 15px;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-lg);
   color: var(--grey-700);
   cursor: pointer;
 }

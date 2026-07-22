@@ -13,7 +13,7 @@
   flex: 1;
   align-items: stretch;
   padding: 10px;
-  border-radius: 16px;
+  border-radius: var(--radius-xl);
   background: var(--white);
   box-shadow: var(--shadow-card);
   transition:

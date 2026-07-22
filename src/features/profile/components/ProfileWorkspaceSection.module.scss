@@ -1,7 +1,7 @@
 @use "styles/mixins" as *;
 
 .section {
-  padding: 0 20px 24px;
+  padding: 0 var(--space-xl) var(--space-2xl);
 }
 
 .sectionHeader {
@@ -10,22 +10,22 @@
 }
 
 .sectionTitle {
-  font-size: 14px;
-  font-weight: 700;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
   color: var(--grey-500);
 }
 
 .moreButton {
   @include flex-row(2px);
   align-items: center;
-  font-size: 13px;
-  font-weight: 600;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
   color: var(--grey-400);
 }
 
 .emptyText {
   padding: 20px 6px;
-  font-size: 14px;
+  font-size: var(--font-size-md);
   color: var(--grey-400);
 }
 
@@ -38,7 +38,7 @@
 
 .listRow {
   @include flex-between;
-  padding: 16px;
+  padding: var(--space-lg);
   width: 100%;
   @include ripple-effect;
 
@@ -64,8 +64,8 @@
 }
 
 .listTitle {
-  font-size: 15px;
-  font-weight: 600;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
   color: var(--grey-900);
 }
 
@@ -73,9 +73,9 @@
   font-size: 10px;
   background-color: var(--primary-light);
   color: var(--primary);
-  font-weight: 700;
-  padding: 2px 8px;
-  border-radius: 9999px;
+  font-weight: var(--font-weight-bold);
+  padding: var(--space-2xs) var(--space-sm);
+  border-radius: var(--radius-pill);
 }
 
 .memberStack {

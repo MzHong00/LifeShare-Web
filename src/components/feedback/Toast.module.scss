@@ -15,7 +15,7 @@
   @include flex-row(10px);
   align-items: center;
   padding: 10px 14px;
-  border-radius: 16px;
+  border-radius: var(--radius-xl);
   background-color: var(--grey-900);
   box-shadow: var(--shadow-toast);
   max-width: 384px;
@@ -49,8 +49,8 @@
 }
 
 .message {
-  font-size: 14px;
-  font-weight: 600;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
   line-height: 1.375;
   color: var(--white);
 }

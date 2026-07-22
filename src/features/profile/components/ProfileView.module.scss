@@ -14,7 +14,7 @@
 .hero {
   position: relative;
   @include flex-col-center(6px);
-  padding: 40px 24px 28px;
+  padding: var(--space-4xl) var(--space-2xl) 28px;
 }
 
 .settingsBtn {
@@ -34,35 +34,35 @@
 .heroAvatar {
   border: 3px solid var(--white);
   box-shadow: var(--shadow-card-lg);
-  margin-bottom: 4px;
+  margin-bottom: var(--space-xs);
 }
 
 .heroName {
   font-size: 22px;
-  font-weight: 800;
+  font-weight: var(--font-weight-extrabold);
   color: var(--grey-900);
 }
 
 .heroEmail {
-  font-size: 14px;
+  font-size: var(--font-size-md);
   color: var(--grey-500);
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
 }
 
 .errorText {
-  font-size: 14px;
+  font-size: var(--font-size-md);
   color: var(--grey-400);
   padding: 20px 0;
 }
 
 /* List Section */
 .section {
-  padding: 0 20px 24px;
+  padding: 0 var(--space-xl) var(--space-2xl);
 }
 
 .sectionTitle {
-  font-size: 14px;
-  font-weight: 700;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
   color: var(--grey-500);
   padding: 0 6px 10px;
 }
@@ -76,7 +76,7 @@
 
 .listRow {
   @include flex-between;
-  padding: 16px;
+  padding: var(--space-lg);
   width: 100%;
   @include ripple-effect;
 
@@ -109,8 +109,8 @@
 }
 
 .listTitle {
-  font-size: 15px;
-  font-weight: 600;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
   color: var(--grey-900);
 }
 
@@ -119,20 +119,20 @@
 }
 
 .listRightText {
-  font-size: 13px;
+  font-size: var(--font-size-sm);
   color: var(--grey-400);
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
 }
 
 /* Invitations */
 .invitationsSection {
-  padding: 0 24px 24px;
+  padding: 0 var(--space-2xl) var(--space-2xl);
 }
 
 .inviteCard {
   background-color: var(--theme-accent-light);
-  border-radius: 16px;
-  padding: 16px;
+  border-radius: var(--radius-xl);
+  padding: var(--space-lg);
   @include flex-between;
   margin-bottom: 8px;
 }
@@ -146,19 +146,19 @@
   @include icon-box(40px, 12px);
   background-color: var(--white);
   color: var(--theme-accent);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
 }
 
 .inviterName {
-  font-size: 13px;
+  font-size: var(--font-size-sm);
   color: var(--grey-600);
-  font-weight: 500;
-  margin-bottom: 2px;
+  font-weight: var(--font-weight-medium);
+  margin-bottom: var(--space-2xs);
 }
 
 .inviteMessage {
-  font-size: 15px;
-  font-weight: 700;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
   color: var(--grey-900);
 }
 
@@ -184,7 +184,7 @@
 
 .version {
   text-align: center;
-  font-size: 12px;
+  font-size: var(--font-size-xs);
   color: var(--grey-300);
   margin-top: 48px;
 }

@@ -1,21 +1,21 @@
 @use "styles/mixins" as *;
 
 .calendarCard {
-  margin: 0 20px 16px;
-  padding: 12px;
+  margin: 0 var(--space-xl) var(--space-lg);
+  padding: var(--space-md);
 }
 
 .weekdays {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  margin-bottom: 8px;
+  margin-bottom: var(--space-sm);
 }
 
 .weekday {
   text-align: center;
-  font-size: 12px;
-  font-weight: 700;
-  padding: 4px 0;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  padding: var(--space-xs) 0;
 }
 
 .weekdaySun {
@@ -31,5 +31,5 @@
 .days {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 4px 0;
+  gap: var(--space-xs) 0;
 }

@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import { Settings } from "lucide-react";
 
 import { ProfileImage } from "@/components/ui/ProfileImage";
+import { ICON_SIZE } from "@/constants/iconSize";
 import { ROUTES } from "@/constants/routes";
 
 import { useProfileUser } from "@/features/profile/hooks/useProfileUser";
@@ -13,7 +14,6 @@ import { ProfileMenuRow } from "./ProfileMenuRow";
 import { ProfileHeroSkeleton } from "./ProfileHeroSkeleton";
 import styles from "./ProfileView.module.scss";
 
-const SETTINGS_ICON_SIZE = 20; // 설정 버튼 아이콘 크기(px)
 const HERO_AVATAR_SIZE = 84; // 히어로 영역 아바타 크기(px)
 
 export const ProfileView = () => {
@@ -28,7 +28,7 @@ export const ProfileView = () => {
           className={styles.settingsBtn}
           aria-label="설정"
         >
-          <Settings size={SETTINGS_ICON_SIZE} />
+          <Settings size={ICON_SIZE.lg} />
         </button>
         {isLoading ? (
           <ProfileHeroSkeleton />

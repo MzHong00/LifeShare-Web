@@ -3,7 +3,7 @@
 .container {
   @include flex-col-center(12px);
   justify-content: center;
-  padding: 40px 20px;
+  padding: var(--space-4xl) var(--space-xl);
 }
 
 .iconWrap {
@@ -17,12 +17,12 @@
 }
 
 .title {
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   color: var(--grey-900);
 }
 
 .desc {
-  font-size: 14px;
+  font-size: var(--font-size-md);
   color: var(--grey-500);
-  margin-top: 4px;
+  margin-top: var(--space-xs);
 }

@@ -4,35 +4,35 @@
   min-height: 100dvh;
   @include flex-col-center(12px);
   justify-content: center;
-  padding: 24px 32px;
+  padding: var(--space-2xl) var(--space-3xl);
   text-align: center;
 }
 
 .iconBadge {
   @include flex-center;
   color: var(--theme-primary);
-  margin-bottom: 12px;
+  margin-bottom: var(--space-md);
 }
 
 .title {
-  font-size: 18px;
-  font-weight: 700;
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
   color: var(--grey-900);
 }
 
 .desc {
-  font-size: 14px;
+  font-size: var(--font-size-md);
   color: var(--grey-600);
 }
 
 .homeButton {
-  margin-top: 12px;
+  margin-top: var(--space-md);
   padding: 14px 28px;
-  border-radius: 9999px;
+  border-radius: var(--radius-pill);
   background-color: var(--theme-primary);
   color: var(--white);
-  font-size: 15px;
-  font-weight: 700;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
 
   &:active {
     transform: scale(0.96);

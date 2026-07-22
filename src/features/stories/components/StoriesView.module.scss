@@ -13,7 +13,7 @@
 // 유리 질감 헤더 (뒤로가기 + 타이틀)
 .header {
   @include flex-between;
-  padding: 0 8px 0 4px;
+  padding: 0 var(--space-sm) 0 var(--space-xs);
   height: 56px;
 }
 
@@ -32,8 +32,8 @@
 }
 
 .headerTitle {
-  font-size: 16px;
-  font-weight: 700;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
   color: var(--grey-900);
 }
 
@@ -47,7 +47,7 @@
 // 추가 버튼은 그 안에서 테마 그라디언트로 튀어나와 시선을 끈다.
 .searchRow {
   @include flex-row(4px);
-  margin: 16px 20px;
+  margin: var(--space-lg) var(--space-xl);
   padding: 6px 6px 6px 20px;
   height: 56px;
   border-radius: 28px;
@@ -84,10 +84,10 @@
   flex: 1;
   min-width: 0;
   background: transparent;
-  font-size: 16px;
-  font-weight: 500;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-medium);
   color: var(--grey-900);
-  padding: 0 8px;
+  padding: 0 var(--space-sm);
 
   &::placeholder {
     color: var(--grey-400);
@@ -110,7 +110,7 @@
 }
 
 .grid {
-  padding: 0 20px 24px;
+  padding: 0 var(--space-xl) var(--space-2xl);
 }
 
 .empty {
@@ -118,14 +118,14 @@
   justify-content: center;
   padding: 80px 0;
   color: var(--grey-400);
-  font-size: 16px;
+  font-size: var(--font-size-xl);
 }
 
 .emptyLink {
-  margin-top: 8px;
+  margin-top: var(--space-sm);
   color: var(--primary);
-  font-weight: 600;
-  font-size: 14px;
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-md);
 }
 
 .columns {
@@ -139,5 +139,5 @@
 }
 
 .colOffset {
-  margin-top: 20px;
+  margin-top: var(--space-xl);
 }

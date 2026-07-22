@@ -1,11 +1,10 @@
 import { ShieldCheck, Megaphone } from "lucide-react";
 
+import { ICON_SIZE } from "@/constants/iconSize";
 import { ROUTES } from "@/constants/routes";
 import { toastActions } from "@/stores/useToastStore";
 
 import type { ReactNode } from "react";
-
-const LIST_ICON_SIZE = 20; // 메뉴 리스트 아이콘 크기(px)
 
 /** 알림·지원 메뉴 리스트 단일 항목 */
 export interface ProfileMenuItem {
@@ -24,7 +23,7 @@ export const PROFILE_MENU_ITEMS: ProfileMenuItem[] = [
     label: "개인정보 처리방침",
     subText: "약관 및 정책",
     route: ROUTES.PROFILE.PRIVACY.path,
-    icon: <ShieldCheck size={LIST_ICON_SIZE} color="var(--grey-700)" />,
+    icon: <ShieldCheck size={ICON_SIZE.lg} color="var(--grey-700)" />,
     colorClass: "grey",
   },
   {
@@ -32,7 +31,7 @@ export const PROFILE_MENU_ITEMS: ProfileMenuItem[] = [
     label: "공지사항",
     subText: "새로운 소식",
     onClick: () => toastActions.showToast("준비중입니다", "info"),
-    icon: <Megaphone size={LIST_ICON_SIZE} color="var(--primary)" />,
+    icon: <Megaphone size={ICON_SIZE.lg} color="var(--primary)" />,
     colorClass: "blue",
   },
 ];

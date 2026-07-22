@@ -2,6 +2,7 @@
 import { useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
+import { ICON_SIZE } from "@/constants/iconSize";
 import { CalendarDayCell } from "@/features/calendar/components/CalendarDayCell";
 import { addMonths, formatYearMonth, getCalendarDays, getTodayDateString } from "@/utils/date";
 import { cx } from "@/utils/cn";
@@ -20,7 +21,6 @@ const SATURDAY = 6; // 토요일 인덱스
 const NO_DOT_COLORS: string[] = []; // 이 데이트피커에서는 일정 마킹이 필요 없음(고정 참조)
 const PREV_MONTH = -1; // 이전 달 이동 delta
 const NEXT_MONTH = 1; // 다음 달 이동 delta
-const NAV_ICON_SIZE = 18; // 월 이동 아이콘 크기
 const MONTH_KEY_LENGTH = 7; // "YYYY-MM" 슬라이스 길이
 const CALENDAR_GRID_CELL_COUNT = 42; // 6주 × 7일 — 월마다 주 수가 달라 그리드 높이가 바뀌는 것을 막기 위한 고정 셀 수
 
@@ -58,7 +58,7 @@ export const DatePicker = ({ initialDate, onChangeDate }: DatePickerProps) => {
             className={styles.controlButton}
             aria-label="이전 달"
           >
-            <ChevronLeft size={NAV_ICON_SIZE} />
+            <ChevronLeft size={ICON_SIZE.md} />
           </button>
           <h3 className={styles.monthTitle}>{formatYearMonth(currentMonth)}</h3>
           <button
@@ -66,7 +66,7 @@ export const DatePicker = ({ initialDate, onChangeDate }: DatePickerProps) => {
             className={styles.controlButton}
             aria-label="다음 달"
           >
-            <ChevronRight size={NAV_ICON_SIZE} />
+            <ChevronRight size={ICON_SIZE.md} />
           </button>
         </div>
 

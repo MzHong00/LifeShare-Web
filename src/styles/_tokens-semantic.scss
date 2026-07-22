@@ -1,0 +1,94 @@
+// ─── Semantic 색상 토큰 ───────────────────────────────────────────────────────
+// 용도(성공/에러/테마 등) 기반 토큰. 가능한 경우 primitive를 참조한다.
+// CSS 커스텀 프로퍼티는 :root/[data-theme]에서 그대로 선언 — SCSS 변수로 바꾸지 말 것
+
+:root {
+  // 브랜드 메인 컬러 — "primary"는 역할 이름(semantic)이라 실제 색조 primitive(blue)를 참조
+  --primary: var(--blue-500);
+  --primary-rgb: 49, 130, 246; /* --primary(blue-500) 알파 변형용 RGB 채널 */
+  --primary-light: var(--blue-100); // 기존 -light 값과 가장 가까운 스텝
+
+  // 상태(success/error/warning) — 각각 전용 primitive 스케일(teal/red/amber)을 참조
+  --success: var(--teal-500);
+  --success-light: var(--teal-100);
+  --error: var(--red-500);
+  --error-rgb: 240, 68, 82; /* --error(red-500) 알파 변형용 RGB 채널 */
+  --error-light: var(--red-100);
+  --error-border: #fee2e2; // red-100과 가장 가깝지만(거리 10.7) light보다 더 연한 별도 톤이라 유지
+  --warning: var(--amber-500);
+  --warning-light: var(--amber-100);
+
+  // 워크스페이스 테마 (기본값: 핑크) — primitive 참조
+  --theme-primary: #f43f5e; /* 테마 그라데이션 시작색 (기본 핑크 테마: 로즈) — 전역 --primary와 분리 */
+  --theme-primary-rgb: 244, 63, 94; /* --theme-primary 알파 변형용 RGB 채널 */
+  --theme-accent: var(--pink-500); /* 워크스페이스 테마 액센트 (기본: 핑크) */
+  --theme-accent-rgb: 236, 72, 153; /* --theme-accent 알파 변형용 RGB 채널 */
+  --theme-accent-light: var(--pink-100);
+  --theme-tertiary: #d946ef; /* 오로라 배경 3번째 광원 (기본 핑크 테마: 푸시아) */
+  --theme-tertiary-rgb: 217, 70, 239; /* --theme-tertiary 알파 변형용 RGB 채널 */
+
+  // 용도별 그림자 — 중립 elevation 스케일(_tokens-layout.scss)과 값이 사실상 동일한 것만 별칭 처리,
+  // 나머지는 컴포넌트별로 튜닝됐거나 브랜드 컬러가 섞인 고유값이라 유지
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.06); // 표준 스케일과 거리가 있어(md와 거리 3.0) 고유값 유지
+  --shadow-card-lg: 0 4px 16px rgba(0, 0, 0, 0.1); // lg와 거리 6.4로 커서 고유값 유지
+  --shadow-primary: 0 4px 12px rgba(var(--primary-rgb), 0.25); // 브랜드 컬러 글로우라 중립 스케일과 무관, 유지
+  --shadow-drawer: 0 -4px 16px rgba(0, 0, 0, 0.06); // 위쪽으로 뜨는 바텀시트 전용 방향이라 스케일과 무관, 유지
+  --shadow-toast: var(--shadow-lg); // 기존 값과 완전히 동일(거리 0)
+  --shadow-modal: var(--shadow-2xl); // 기존 값과 완전히 동일(거리 0)
+  --overlay-scrim: rgba(0, 0, 0, 0.5);
+}
+
+/* 워크스페이스 테마가 'pink'일 때: :root 기본값 명시적 재선언 — 상위 요소의 활성 테마 상속을 차단 */
+[data-theme="pink"] {
+  --theme-primary: #f43f5e;
+  --theme-primary-rgb: 244, 63, 94;
+  --theme-accent: var(--pink-500);
+  --theme-accent-rgb: 236, 72, 153;
+  --theme-accent-light: var(--pink-100);
+  --theme-tertiary: #d946ef;
+  --theme-tertiary-rgb: 217, 70, 239;
+}
+
+/* 워크스페이스 테마가 'blue'일 때 액센트 토큰을 코어 블루 단독 톤으로 오버라이드 */
+[data-theme="blue"] {
+  --theme-primary: var(--primary);
+  --theme-primary-rgb: var(--primary-rgb);
+  --theme-accent: #38bdf8;
+  --theme-accent-rgb: 56, 189, 248;
+  --theme-accent-light: #e0f2fe;
+  --theme-tertiary: #0ea5e9; /* 블루 테마의 오로라 3번째 광원: 보라 대신 하늘색 계열 */
+  --theme-tertiary-rgb: 14, 165, 233;
+}
+
+/* 워크스페이스 테마가 'twilight'일 때: 해질녘 하늘 콘셉트 — 인디고(저무는 하늘) → 로즈(노을 잔광) + 바이올렛(황혼) 광원 */
+[data-theme="twilight"] {
+  --theme-primary: #6366f1;
+  --theme-primary-rgb: 99, 102, 241;
+  --theme-accent: #fb7185;
+  --theme-accent-rgb: 251, 113, 133;
+  --theme-accent-light: #ffe4e6;
+  --theme-tertiary: #8b5cf6;
+  --theme-tertiary-rgb: 139, 92, 246;
+}
+
+/* 워크스페이스 테마가 'yellow'일 때: 햇살 콘셉트 — 앰버 → 옐로 + 오렌지 광원 */
+[data-theme="yellow"] {
+  --theme-primary: #f59e0b;
+  --theme-primary-rgb: 245, 158, 11;
+  --theme-accent: #facc15;
+  --theme-accent-rgb: 250, 204, 21;
+  --theme-accent-light: #fef9c3;
+  --theme-tertiary: #fb923c;
+  --theme-tertiary-rgb: 251, 146, 60;
+}
+
+/* 워크스페이스 테마가 'green'일 때: 싱그러운 숲 콘셉트 — 에메랄드 → 그린 + 틸 광원 */
+[data-theme="green"] {
+  --theme-primary: #10b981;
+  --theme-primary-rgb: 16, 185, 129;
+  --theme-accent: #4ade80;
+  --theme-accent-rgb: 74, 222, 128;
+  --theme-accent-light: #dcfce7;
+  --theme-tertiary: #2dd4bf;
+  --theme-tertiary-rgb: 45, 212, 191;
+}

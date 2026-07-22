@@ -14,8 +14,8 @@ $nodes-rail-inset: $rail-inset - $journey-pad-x; // .nodes 기준 레일 끝 여
   position: relative;
   display: block;
   width: 100%;
-  margin-top: 8px; // 위 스포트라이트 카드와의 간격을 형제 gap(16px)보다 더 벌림
-  padding: 4px 8px 2px;
+  margin-top: var(--space-sm); // 위 스포트라이트 카드와의 간격을 형제 gap(16px)보다 더 벌림
+  padding: var(--space-xs) var(--space-sm) var(--space-2xs);
   text-align: left;
 
   // 전역 button 호버(brightness 0.9)로 인한 회색빛 해제
@@ -31,7 +31,7 @@ $nodes-rail-inset: $rail-inset - $journey-pad-x; // .nodes 기준 레일 끝 여
   left: $rail-inset;
   right: $rail-inset;
   height: 3px;
-  border-radius: 9999px;
+  border-radius: var(--radius-pill);
   background: rgba(var(--theme-primary-rgb), 0.12);
 }
 
@@ -42,7 +42,7 @@ $nodes-rail-inset: $rail-inset - $journey-pad-x; // .nodes 기준 레일 끝 여
   left: $rail-inset;
   width: calc((100% - #{$rail-inset * 2}) * var(--heart-ratio, 0));
   height: 3px;
-  border-radius: 9999px;
+  border-radius: var(--radius-pill);
   background: linear-gradient(
     90deg,
     color-mix(in srgb, var(--theme-primary) 55%, var(--white)) 0%,
@@ -61,7 +61,7 @@ $nodes-rail-inset: $rail-inset - $journey-pad-x; // .nodes 기준 레일 끝 여
   z-index: 1;
   width: $today-dot-size;
   height: $today-dot-size;
-  border-radius: 9999px;
+  border-radius: var(--radius-pill);
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -95,15 +95,15 @@ $nodes-rail-inset: $rail-inset - $journey-pad-x; // .nodes 기준 레일 끝 여
   width: $dot-size;
   height: $dot-size;
   margin-top: $rail-top - math.div($dot-size, 2);
-  border-radius: 9999px;
+  border-radius: var(--radius-pill);
   background: var(--white);
   border: 2px solid rgba(var(--theme-primary-rgb), 0.15);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-xs);
 }
 
 .nodeLabel {
-  font-size: 12px;
-  font-weight: 700;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
   color: var(--grey-700);
   letter-spacing: -0.01em;
   @include text-ellipsis;
@@ -112,7 +112,7 @@ $nodes-rail-inset: $rail-inset - $journey-pad-x; // .nodes 기준 레일 끝 여
 
 .nodeSub {
   font-size: 11px;
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
   color: var(--grey-500);
 }
 
@@ -140,7 +140,7 @@ $nodes-rail-inset: $rail-inset - $journey-pad-x; // .nodes 기준 레일 끝 여
 // 다음 목적지 정거장: 아직 프로그레스가 닿지 않았으므로 도트는 빈 점 유지, D-day 텍스트만 강조
 .nextNode {
   .nodeSub {
-    font-weight: 800;
+    font-weight: var(--font-weight-extrabold);
     background: linear-gradient(135deg, var(--theme-primary) 0%, var(--theme-accent) 100%);
     background-clip: text;
     -webkit-background-clip: text;

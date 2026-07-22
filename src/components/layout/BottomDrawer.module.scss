@@ -38,7 +38,7 @@
     width: 40px;
     height: 4px;
     background-color: var(--grey-300);
-    border-radius: 9999px;
+    border-radius: var(--radius-pill);
     margin: 0 auto;
   }
 }

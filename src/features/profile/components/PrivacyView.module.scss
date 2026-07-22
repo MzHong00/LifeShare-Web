@@ -10,27 +10,27 @@
 }
 
 .h2 {
-  font-size: 18px;
-  font-weight: 700;
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
   color: var(--grey-900);
-  margin-bottom: 12px;
+  margin-bottom: var(--space-md);
 }
 
 .h3 {
-  font-size: 16px;
-  font-weight: 700;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
   color: var(--grey-900);
-  margin-bottom: 8px;
+  margin-bottom: var(--space-sm);
 }
 
 .p {
-  font-size: 14px;
+  font-size: var(--font-size-md);
   line-height: 1.625;
-  margin-bottom: 16px;
+  margin-bottom: var(--space-lg);
 }
 
 .footer {
-  font-size: 12px;
+  font-size: var(--font-size-xs);
   color: var(--grey-400);
-  margin-top: 32px;
+  margin-top: var(--space-3xl);
 }

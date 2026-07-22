@@ -1,0 +1,59 @@
+// ─── Spacing / Typography / Radius / Icon-size 토큰 ──────────────────────────
+// 컴포넌트 실사용 값(padding/margin/gap/font-size/font-weight/border-radius) 빈도를 기준으로 정의
+// CSS 커스텀 프로퍼티는 :root에서 그대로 선언 — SCSS 변수로 바꾸지 말 것
+
+:root {
+  // Spacing (t-shirt 사이즈) — padding/margin/gap 실사용 값 기준 스케일
+  --space-2xs: 2px;
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 20px;
+  --space-2xl: 24px;
+  --space-3xl: 32px;
+  --space-4xl: 40px;
+
+  // Typography — font-size 실사용 값 기준 스케일
+  --font-size-xs: 12px;
+  --font-size-sm: 13px;
+  --font-size-md: 14px;
+  --font-size-lg: 15px;
+  --font-size-xl: 16px;
+  --font-size-2xl: 18px;
+  --font-size-3xl: 20px;
+  --font-size-4xl: 24px;
+
+  // Typography — font-weight 실사용 값 기준 스케일
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+
+  // Radius — border-radius 실사용 값 기준 스케일
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 14px;
+  --radius-xl: 16px;
+  --radius-pill: 9999px; /* pill(캡슐) 형태 */
+
+  // Icon size — src/constants/iconSize.ts의 ICON_SIZE와 동일한 스케일(4px 그리드 기준)
+  // JS(size prop)에는 ICON_SIZE를, CSS(배경/테두리 등)에는 이 변수를 사용
+  --icon-size-xs: 8px;
+  --icon-size-sm: 12px;
+  --icon-size-md: 16px;
+  --icon-size-lg: 20px;
+  --icon-size-xl: 24px;
+  --icon-size-2xl: 32px;
+  --icon-size-3xl: 40px;
+  --icon-size-4xl: 48px;
+
+  // Shadow(elevation) — 관례적 표준 box-shadow 스케일(중립 검정 기준, 브랜드색과 무관해 여기 위치)
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}

@@ -1,15 +1,15 @@
 @use "styles/mixins" as *;
 
 .container {
-  padding: 16px 20px;
+  padding: var(--space-lg) var(--space-xl);
 }
 
 .thumbnailWrap {
   position: relative;
   width: 100%;
   aspect-ratio: 3/2;
-  border-radius: 16px;
-  margin-top: 8px;
+  border-radius: var(--radius-xl);
+  margin-top: var(--space-sm);
   background-color: var(--grey-100);
   overflow: hidden;
 }
@@ -20,11 +20,11 @@
 
 .description {
   background-color: var(--grey-100);
-  padding: 16px;
-  border-radius: 16px;
-  margin-top: 16px;
-  margin-bottom: 8px;
-  font-size: 14px;
+  padding: var(--space-lg);
+  border-radius: var(--radius-xl);
+  margin-top: var(--space-lg);
+  margin-bottom: var(--space-sm);
+  font-size: var(--font-size-md);
   line-height: 1.625;
   color: var(--grey-500);
 }

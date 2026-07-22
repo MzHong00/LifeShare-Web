@@ -13,8 +13,8 @@
 }
 
 .sectionTitle {
-  font-size: 14px;
-  font-weight: 800;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-extrabold);
   color: var(--grey-800);
   letter-spacing: -0.01em;
   padding: 0 4px;
@@ -23,7 +23,7 @@
 .storyList {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--space-md);
   width: 100%;
 }
 
@@ -132,7 +132,7 @@
 }
 
 .recentStoryTitle {
-  font-size: 18px;
+  font-size: var(--font-size-2xl);
   font-weight: 900;
   color: var(--white);
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
@@ -142,7 +142,7 @@
 
 .recentStoryDate {
   font-size: 11px;
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
   color: rgba(255, 255, 255, 0.65);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
@@ -151,7 +151,7 @@
 
 .emptyStoryCard {
   width: 100%;
-  padding: 24px 20px;
+  padding: var(--space-2xl) var(--space-xl);
   border-radius: 24px;
   background: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(20px);
@@ -185,7 +185,7 @@
   @include flex-center;
   width: 44px;
   height: 44px;
-  border-radius: 14px;
+  border-radius: var(--radius-lg);
   background: rgba(var(--primary-rgb), 0.08);
   color: var(--primary);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
@@ -197,14 +197,14 @@
 }
 
 .emptyTitle {
-  font-size: 15px;
-  font-weight: 800;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-extrabold);
   color: var(--grey-800);
 }
 
 .emptySub {
-  font-size: 12px;
-  font-weight: 500;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
   color: var(--grey-500);
   line-height: 1.4;
   max-width: 240px;
@@ -215,10 +215,10 @@
   align-items: center;
   background: var(--primary);
   color: var(--white);
-  padding: 8px 16px;
-  border-radius: 12px;
-  font-size: 12px;
-  font-weight: 700;
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
   box-shadow: var(--shadow-primary);
   transition:
     transform 0.2s ease,

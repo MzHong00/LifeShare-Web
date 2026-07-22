@@ -24,8 +24,8 @@
 .row {
   @include flex-row(10px);
   align-items: center;
-  padding: 6px 8px;
-  border-radius: 12px;
+  padding: 6px var(--space-sm);
+  border-radius: var(--radius-md);
   transition:
     background-color 0.15s ease,
     transform 0.15s ease;
@@ -43,7 +43,7 @@
   flex-shrink: 0;
   display: inline-flex;
   border-radius: 50%;
-  padding: 2px;
+  padding: var(--space-2xs);
   background: linear-gradient(
     135deg,
     rgba(var(--theme-accent-rgb), 0.35),
@@ -57,21 +57,21 @@
 }
 
 .name {
-  font-size: 14px;
-  font-weight: 600;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
   color: var(--grey-900);
   letter-spacing: -0.01em;
 }
 
 .email {
-  font-size: 12px;
+  font-size: var(--font-size-xs);
   color: var(--grey-400);
   @include text-ellipsis;
 }
 
 .empty {
   padding: 28px 0;
-  font-size: 14px;
+  font-size: var(--font-size-md);
   color: var(--grey-500);
   text-align: center;
 }
