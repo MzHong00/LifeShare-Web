@@ -1,4 +1,5 @@
-import { memo, useMemo } from "react";
+import { memo, useMemo, useRef } from "react";
+import { useVirtualizer } from "@tanstack/react-virtual";
 
 import { Spinner } from "@/components/feedback/Spinner";
 import { MessageBubble } from "@/features/chat/components/MessageBubble";
@@ -8,6 +9,9 @@ import styles from "./MessageList.module.scss";
 
 import type { ChatMessage } from "@/features/chat/types/chat";
 import type { WorkspaceMember } from "@/features/workspace/types/workspace";
+
+const ESTIMATED_MESSAGE_HEIGHT_PX = 56; // 가상화 초기 높이 추정치(실제 높이는 렌더 후 measureElement로 보정)
+const VIRTUAL_OVERSCAN_COUNT = 8; // 화면 밖에 미리 렌더링해둘 메시지 개수(빠른 스크롤 시 빈 공간 방지)
 
 interface MessageListProps {
   messages: ChatMessage[];
@@ -32,8 +36,19 @@ const MessageListComponent = ({
   bottomRef,
   className,
 }: MessageListProps) => {
+  const parentRef = useRef<HTMLDivElement>(null);
+
   // 발신자 id -> 멤버 조회 맵(그룹 워크스페이스에서 상대 메시지별 이름·아바타를 정확히 표시하기 위함)
   const memberMap = useMemo(() => new Map(members?.map((m) => [m.id, m])), [members]);
+
+  // 대량 메시지 렌더링 성능을 위해 화면에 보이는 항목만 DOM에 그린다(리스트 가상화)
+  const virtualizer = useVirtualizer({
+    count: messages.length,
+    getScrollElement: () => parentRef.current,
+    estimateSize: () => ESTIMATED_MESSAGE_HEIGHT_PX,
+    overscan: VIRTUAL_OVERSCAN_COUNT,
+    getItemKey: (index) => messages[index].id,
+  });
 
   if (isError) {
     return (
@@ -52,29 +67,39 @@ const MessageListComponent = ({
   }
 
   return (
-    <div className={className}>
-      {messages.map((msg, index) => {
-        const prev = messages[index - 1];
-        const next = messages[index + 1];
-        const isFirstInGroup = !prev || !isSameGroup(prev, msg);
-        const isLastInGroup = !next || !isSameGroup(next, msg);
-        const senderMember = memberMap.get(msg.senderId);
+    <div ref={parentRef} className={className}>
+      <div className={styles.virtualSizer} style={{ height: virtualizer.getTotalSize() }}>
+        {virtualizer.getVirtualItems().map((virtualRow) => {
+          const msg = messages[virtualRow.index];
+          const prev = messages[virtualRow.index - 1];
+          const next = messages[virtualRow.index + 1];
+          const isFirstInGroup = !prev || !isSameGroup(prev, msg);
+          const isLastInGroup = !next || !isSameGroup(next, msg);
+          const senderMember = memberMap.get(msg.senderId);
 
-        return (
-          <MessageBubble
-            key={msg.id}
-            text={msg.text}
-            sender={msg.sender}
-            time={msg.time}
-            avatar={msg.sender === "partner" ? senderMember?.avatar : undefined}
-            name={
-              msg.sender === "partner" ? (senderMember?.name ?? UNKNOWN_SENDER_NAME) : undefined
-            }
-            isFirstInGroup={isFirstInGroup}
-            isLastInGroup={isLastInGroup}
-          />
-        );
-      })}
+          return (
+            <div
+              key={msg.id}
+              ref={virtualizer.measureElement}
+              data-index={virtualRow.index}
+              className={styles.virtualItem}
+              style={{ transform: `translateY(${virtualRow.start}px)` }}
+            >
+              <MessageBubble
+                text={msg.text}
+                sender={msg.sender}
+                time={msg.time}
+                avatar={msg.sender === "partner" ? senderMember?.avatar : undefined}
+                name={
+                  msg.sender === "partner" ? (senderMember?.name ?? UNKNOWN_SENDER_NAME) : undefined
+                }
+                isFirstInGroup={isFirstInGroup}
+                isLastInGroup={isLastInGroup}
+              />
+            </div>
+          );
+        })}
+      </div>
       <div ref={bottomRef} />
     </div>
   );
