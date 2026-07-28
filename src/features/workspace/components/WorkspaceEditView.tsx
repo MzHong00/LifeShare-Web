@@ -226,10 +226,7 @@ export const WorkspaceEditView = () => {
             <div className={styles.divider} />
             <div className={styles.themeRow}>
               <span className={styles.settingLabel}>테마</span>
-              <WorkspaceThemePicker
-                value={workspace.themeColor}
-                onChange={changeThemeColor}
-              />
+              <WorkspaceThemePicker value={workspace.themeColor} onChange={changeThemeColor} />
             </div>
           </div>
         </div>
@@ -245,11 +242,7 @@ export const WorkspaceEditView = () => {
               <ChevronRight size={16} color="var(--grey-300)" />
             </button>
             <div className={styles.divider} />
-            <button
-              onClick={invite}
-              className={styles.settingRow}
-              disabled={isInviting}
-            >
+            <button onClick={invite} className={styles.settingRow} disabled={isInviting}>
               <div className={cx(styles.settingIcon, styles.settingIconGreen)}>
                 <UserPlus size={18} />
               </div>
