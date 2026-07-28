@@ -1,12 +1,19 @@
 "use client";
 
+import dynamic from "next/dynamic";
+
 import { AppHeader } from "@/components/layout/AppHeader";
-import { PathPickerMap } from "@/features/map/components/PathPickerMap";
 import { useStoryForm } from "@/features/stories/hooks/useStoryForm";
 import { StoryImagePicker } from "@/features/stories/components/StoryImagePicker";
 import { StoryPathField } from "@/features/stories/components/StoryPathField";
 
 import styles from "./StoryEditView.module.scss";
+
+// Google Maps SDK 의존 컴포넌트라 경로 선택 모달을 열 때만 청크를 내려받도록 지연 로딩
+const PathPickerMap = dynamic(
+  () => import("@/features/map/components/PathPickerMap").then((mod) => mod.PathPickerMap),
+  { ssr: false }
+);
 
 export const StoryEditView = () => {
   const {
