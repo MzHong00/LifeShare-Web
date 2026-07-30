@@ -63,6 +63,45 @@ describe("Modal", () => {
     expect(screen.queryByText("삭제 확인")).not.toBeInTheDocument();
   });
 
+  it("confirmPhrase가 있으면 입력 전에는 확인 버튼이 비활성화된다", () => {
+    modalActions.showModal({ type: "confirm", title: "삭제 확인", confirmPhrase: "삭제하기" });
+    render(<Modal />);
+
+    expect(screen.getByText("확인")).toBeDisabled();
+  });
+
+  it("confirmPhrase와 다른 값을 입력하면 확인 버튼이 계속 비활성화된다", () => {
+    const onConfirm = vi.fn();
+    modalActions.showModal({
+      type: "confirm",
+      title: "삭제 확인",
+      confirmPhrase: "삭제하기",
+      onConfirm,
+    });
+    render(<Modal />);
+
+    fireEvent.change(screen.getByPlaceholderText("삭제하기"), { target: { value: "삭제" } });
+
+    expect(screen.getByText("확인")).toBeDisabled();
+    expect(onConfirm).not.toHaveBeenCalled();
+  });
+
+  it("confirmPhrase와 일치하게 입력하면 확인 버튼이 열리고 onConfirm이 호출된다", () => {
+    const onConfirm = vi.fn();
+    modalActions.showModal({
+      type: "confirm",
+      title: "삭제 확인",
+      confirmPhrase: "삭제하기",
+      onConfirm,
+    });
+    render(<Modal />);
+
+    fireEvent.change(screen.getByPlaceholderText("삭제하기"), { target: { value: "삭제하기" } });
+    fireEvent.click(screen.getByText("확인"));
+
+    expect(onConfirm).toHaveBeenCalledTimes(1);
+  });
+
   it("confirmText, cancelText가 있으면 커스텀 라벨을 렌더링한다", () => {
     modalActions.showModal({
       type: "confirm",

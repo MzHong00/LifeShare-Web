@@ -48,10 +48,55 @@
   text-align: center;
   line-height: 1.6;
   white-space: pre-line;
+  // 한국어가 어절 중간에서 끊기지 않도록 (긴 워크스페이스 이름 등으로 넘칠 때만 강제 분리)
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 .content {
   margin-top: var(--space-lg);
+}
+
+// ─── 확인 문구 입력 (되돌릴 수 없는 작업) ─────────────────────────────────────
+
+.phraseField {
+  margin-top: var(--space-xl);
+  @include flex-col(var(--space-sm));
+}
+
+.phraseHint {
+  font-size: var(--font-size-md);
+  color: var(--grey-600);
+  text-align: center;
+}
+
+// 따라 입력해야 할 문구 — 문장 안에서 눈에 띄도록 굵기만 올린다
+.phraseWord {
+  font-weight: var(--font-weight-bold);
+  color: var(--grey-900);
+}
+
+.phraseInput {
+  width: 100%;
+  height: 52px;
+  background-color: var(--grey-100);
+  border: 1px solid transparent;
+  border-radius: var(--radius-lg);
+  padding: 0 var(--space-lg);
+  text-align: center;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--grey-900);
+  transition: border-color 0.15s ease;
+
+  &::placeholder {
+    color: var(--grey-400);
+    font-weight: var(--font-weight-regular);
+  }
+
+  &:focus {
+    border-color: var(--error);
+  }
 }
 
 .actions {
@@ -88,6 +133,15 @@
 
   &:active {
     transform: scale(0.97);
+  }
+
+  // 확인 문구가 아직 일치하지 않은 상태 — 눌러도 진행되지 않음을 시각적으로 알린다
+  &:disabled {
+    background-color: var(--grey-200);
+    color: var(--grey-400);
+    box-shadow: none;
+    cursor: not-allowed;
+    transform: none;
   }
 }
 
