@@ -6,7 +6,10 @@ export const ROUTES = {
     query: (params: { redirect?: string }) => withQuery("/login", params),
   },
   AUTH: {
-    CALLBACK: { path: "/auth/callback" },
+    CALLBACK: {
+      path: "/auth/callback",
+      query: (params: { redirect?: string }) => withQuery("/auth/callback", params),
+    },
   },
   HOME: { path: "/home" },
   CHAT: { path: "/chat" },

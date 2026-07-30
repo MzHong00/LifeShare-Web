@@ -10,7 +10,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "format": "prettier --write \"src/**/*.{ts,tsx,scss}\"",
-    "check": "npm run format && next build && eslint src && vitest run"
+    "check": "npm run format && next build && eslint src && vitest run",
+    "seed:test-account": "node --env-file=.env.local scripts/seed-test-account.mjs"
   },
   "dependencies": {
     "@react-google-maps/api": "^2.20.8",
