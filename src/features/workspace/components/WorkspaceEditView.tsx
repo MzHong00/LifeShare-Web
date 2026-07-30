@@ -20,6 +20,7 @@ import { cx } from "@/utils/cn";
 import styles from "./WorkspaceEditView.module.scss";
 
 const PROFILE_MODAL_AVATAR_SIZE = 72; // 프로필 수정 모달의 아바타 크기(px)
+const LAST_LEAVE_CONFIRM_PHRASE = "삭제하기"; // 마지막 멤버 나가기(=전체 삭제) 모달에서 그대로 입력해야 진행되는 확인 문구
 
 export const WorkspaceEditView = () => {
   const searchParams = useSearchParams();
@@ -42,6 +43,7 @@ export const WorkspaceEditView = () => {
   if (!workspace) return null;
 
   const members = workspace.members ?? [];
+  const isLastMember = members.length <= 1; // 나 혼자면 나가는 순간 라이프룸과 모든 기록이 삭제된다
 
   /** 이 라이프룸을 메인으로 설정한다 */
   const handleSetAsMain = () => {
@@ -49,12 +51,17 @@ export const WorkspaceEditView = () => {
     toastActions.showToast(`'${workspace.name}'이 메인 라이프룸으로 설정되었습니다`, "success");
   };
 
+  /** 라이프룸에서 나간다. 마지막 멤버면 라이프룸과 모든 기록이 함께 삭제되므로 확인 문구를 요구한다 */
   const handleLeaveWorkspace = () => {
     modalActions.showModal({
       type: "confirm",
       title: `${APP_WORKSPACE.KR}에서 나가기`,
-      message: `정말로 '${workspace.name}' ${APP_WORKSPACE.KR}에서 나갈까요?\n기존에 기록된 데이터는 삭제되지 않지만 목록에서 사라집니다.`,
+      // 이름 길이에 따라 자연 줄바꿈되므로 \n을 넣지 않는다 (넣으면 이름이 길 때 한 글자만 떨어져 나감)
+      message: isLastMember
+        ? `마지막 멤버라 나가면 '${workspace.name}'의 일정·할 일·스토리·대화가 모두 삭제되며 되돌릴 수 없습니다.`
+        : `정말로 '${workspace.name}'에서 나갈까요? 기록된 데이터는 삭제되지 않지만 목록에서 사라집니다.`,
       confirmText: "나가기",
+      ...(isLastMember && { confirmPhrase: LAST_LEAVE_CONFIRM_PHRASE }),
       onConfirm: leave,
     });
   };
@@ -263,7 +270,11 @@ export const WorkspaceEditView = () => {
             <button onClick={handleLeaveWorkspace} className={styles.dangerRow}>
               <div className={styles.dangerInfo}>
                 <p className={styles.dangerTitle}>{APP_WORKSPACE.KR}에서 나가기</p>
-                <p className={styles.dangerDesc}>데이터는 유지되지만 리스트에서 사라집니다.</p>
+                <p className={styles.dangerDesc}>
+                  {isLastMember
+                    ? "마지막 멤버라 나가면 모든 기록이 삭제됩니다."
+                    : "데이터는 유지되지만 리스트에서 사라집니다."}
+                </p>
               </div>
               <Trash2 size={18} color="var(--error)" className={styles.dangerIcon} />
             </button>
