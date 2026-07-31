@@ -7,8 +7,9 @@ import { workspaceQueries } from "@/features/workspace/queries/workspaceQueries"
 import { authQueries } from "@/features/auth/queries/authQueries";
 import { useCurrentWorkspace } from "./useCurrentWorkspace";
 
-import type { ReactNode } from "react";
 import type { Workspace } from "@/features/workspace/types/workspace";
+import type { User } from "@/types/user";
+import type { ReactNode } from "react";
 
 vi.mock("@/features/workspace/stores/useWorkspaceStore", () => ({
   useWorkspaceStore: vi.fn(),
@@ -80,7 +81,7 @@ describe("useCurrentWorkspace", () => {
       },
     ];
     queryClient.setQueryData(workspaceQueries.mine().queryKey, workspacesWithMembers);
-    queryClient.setQueryData(authQueries.user().queryKey, {
+    queryClient.setQueryData<User>(authQueries.user().queryKey, {
       id: "user-1",
       name: "최신 전역 이름",
       profileImage: "new.png",

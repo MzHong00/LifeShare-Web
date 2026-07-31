@@ -16,6 +16,7 @@ import { getTodayDateString } from "@/utils/date";
 import { useStoryForm } from "./useStoryForm";
 
 import type { Story } from "@/features/stories/types/story";
+import type { User } from "@/types/user";
 import type { ReactNode } from "react";
 
 const mockBack = vi.fn();
@@ -195,7 +196,7 @@ describe("useStoryForm", () => {
   it("생성 모드에서 handleSave 성공 시 createStory를 호출하고 이전 화면으로 돌아간다", async () => {
     createMutateAsync.mockResolvedValueOnce(undefined);
     const { Wrapper, queryClient } = createWrapper();
-    queryClient.setQueryData(authQueries.user().queryKey, { id: "user-1", name: "테스트" });
+    queryClient.setQueryData<User>(authQueries.user().queryKey, { id: "user-1", name: "테스트" });
 
     const { result } = renderHook(() => useStoryForm(), { wrapper: Wrapper });
 
@@ -291,7 +292,7 @@ describe("useStoryForm", () => {
 
   it("이미지 업로드 실패 시 에러 토스트를 띄우고 저장을 중단한다", async () => {
     const { Wrapper, queryClient } = createWrapper();
-    queryClient.setQueryData(authQueries.user().queryKey, { id: "user-1", name: "테스트" });
+    queryClient.setQueryData<User>(authQueries.user().queryKey, { id: "user-1", name: "테스트" });
     vi.mocked(storageApi.uploadImage).mockRejectedValueOnce(new Error("upload fail"));
 
     const { result } = renderHook(() => useStoryForm(), { wrapper: Wrapper });
