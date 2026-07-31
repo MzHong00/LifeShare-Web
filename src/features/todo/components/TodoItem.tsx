@@ -2,15 +2,15 @@
 import { memo } from "react";
 import { CheckCircle2 } from "lucide-react";
 
-import { ProfileImage } from "@/components/ProfileImage";
+import { ProfileImage } from "@/components/ui/ProfileImage";
 import { COLORS } from "@/constants/theme";
 import { getRelativeDateLabel, isPastDate, isToday } from "@/utils/date";
 import { cx } from "@/utils/cn";
 
+import styles from "./TodoItem.module.scss";
+
 import type { Todo } from "@/features/todo/types/todo";
 import type { WorkspaceMember } from "@/features/workspace/types/workspace";
-
-import styles from "./TodoItem.module.scss";
 
 interface TodoItemProps {
   item: Todo;

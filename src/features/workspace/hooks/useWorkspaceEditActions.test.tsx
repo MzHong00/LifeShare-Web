@@ -133,38 +133,38 @@ describe("useWorkspaceEditActions", () => {
     expect(modalActions.showModal).not.toHaveBeenCalled();
   });
 
-  it("changeName 실패 시 에러 알림 모달을 띄운다", async () => {
-    updateNameMutateAsync.mockRejectedValueOnce(new Error("fail"));
+  it("changeName 실패 시 에러 메시지를 담아 알림 모달을 띄운다", async () => {
+    updateNameMutateAsync.mockRejectedValueOnce(new Error("서버 에러"));
     const { result } = renderHook(() => useWorkspaceEditActions("workspace-1"));
 
     await result.current.changeName("새 이름");
 
     expect(modalActions.showModal).toHaveBeenCalledWith({
       type: "alert",
-      title: "오류",
-      message: "제목 수정에 실패했습니다.",
+      title: "알림",
+      message: "서버 에러",
     });
   });
 
-  it("changeStartDate 실패 시 에러 알림 모달을 띄운다", async () => {
-    updateStartDateMutateAsync.mockRejectedValueOnce(new Error("fail"));
+  it("changeStartDate 실패 시 에러 메시지를 담아 알림 모달을 띄운다", async () => {
+    updateStartDateMutateAsync.mockRejectedValueOnce(new Error("서버 에러"));
     const { result } = renderHook(() => useWorkspaceEditActions("workspace-1"));
 
     await result.current.changeStartDate("2026-01-01");
 
     expect(modalActions.showModal).toHaveBeenCalledWith(
-      expect.objectContaining({ message: "날짜 수정에 실패했습니다." })
+      expect.objectContaining({ message: "서버 에러" })
     );
   });
 
-  it("changeThemeColor 실패 시 에러 알림 모달을 띄운다", async () => {
-    updateThemeMutateAsync.mockRejectedValueOnce(new Error("fail"));
+  it("changeThemeColor 실패 시 에러 메시지를 담아 알림 모달을 띄운다", async () => {
+    updateThemeMutateAsync.mockRejectedValueOnce(new Error("서버 에러"));
     const { result } = renderHook(() => useWorkspaceEditActions("workspace-1"));
 
     await result.current.changeThemeColor("pink");
 
     expect(modalActions.showModal).toHaveBeenCalledWith(
-      expect.objectContaining({ message: "테마 수정에 실패했습니다." })
+      expect.objectContaining({ message: "서버 에러" })
     );
   });
 
@@ -186,7 +186,7 @@ describe("useWorkspaceEditActions", () => {
     expect(updateMemberMutateAsync).toHaveBeenCalledWith({
       workspaceId: "workspace-1",
       userId: "user-1",
-      updates: { display_name: "닉네임" },
+      updates: { displayName: "닉네임" },
     });
   });
 
@@ -198,7 +198,7 @@ describe("useWorkspaceEditActions", () => {
 
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith("https://duous.app/invite/abc123");
     expect(toastActions.showToast).toHaveBeenCalledWith(
-      "초대 링크를 복사했어요. 파트너에게 공유해보세요.",
+      "초대 링크를 복사했습니다. 파트너에게 공유해보세요.",
       "success"
     );
   });
@@ -209,7 +209,7 @@ describe("useWorkspaceEditActions", () => {
 
     await result.current.invite();
 
-    expect(toastActions.showToast).toHaveBeenCalledWith("초대 링크 생성에 실패했어요.", "error");
+    expect(toastActions.showToast).toHaveBeenCalledWith("초대 링크 생성에 실패했습니다.", "error");
   });
 
   it("leave 성공 시 현재 워크스페이스면 store를 초기화하고 목록 화면으로 이동한다", async () => {
@@ -244,14 +244,14 @@ describe("useWorkspaceEditActions", () => {
     expect(mockReplace).toHaveBeenCalledWith(ROUTES.WORKSPACE.LIST.path);
   });
 
-  it("leave 실패 시 에러 알림 모달을 띄운다", async () => {
-    leaveWorkspaceMutateAsync.mockRejectedValueOnce(new Error("fail"));
+  it("leave 실패 시 에러 메시지를 담아 알림 모달을 띄운다", async () => {
+    leaveWorkspaceMutateAsync.mockRejectedValueOnce(new Error("서버 에러"));
     const { result } = renderHook(() => useWorkspaceEditActions("workspace-1"));
 
     await result.current.leave();
 
     expect(modalActions.showModal).toHaveBeenCalledWith(
-      expect.objectContaining({ message: "나가기에 실패했습니다." })
+      expect.objectContaining({ message: "서버 에러" })
     );
     expect(mockReplace).not.toHaveBeenCalled();
   });

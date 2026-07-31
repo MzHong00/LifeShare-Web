@@ -38,10 +38,9 @@ export const ChatInput = ({ value, onChange, onSend }: ChatInputProps) => {
     inputRef.current?.focus();
   };
 
-  /** 도구함 펼침을 토글하고 포커스를 유지한다 */
+  /** 도구함 펼침을 토글한다 (포커스를 주면 모바일 키패드가 열리므로 호출하지 않음) */
   const handlePlusClick = () => {
     setIsMenuOpen((prev) => !prev);
-    inputRef.current?.focus();
   };
 
   /** 아직 구현되지 않은 도구함 액션을 안내하고 도구함을 닫는다 */

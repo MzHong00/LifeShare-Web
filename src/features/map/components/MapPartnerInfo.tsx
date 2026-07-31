@@ -1,7 +1,10 @@
 import { MapPin, Navigation, ChevronRight } from "lucide-react";
-import { ProfileImage } from "@/components/ProfileImage";
-import type { WorkspaceMember } from "@/features/workspace/types/workspace";
+
+import { ProfileImage } from "@/components/ui/ProfileImage";
+
 import styles from "./MapPartnerInfo.module.scss";
+
+import type { WorkspaceMember } from "@/features/workspace/types/workspace";
 
 interface RecentPlace {
   id: string;

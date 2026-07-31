@@ -2,8 +2,9 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { todosApi } from "@/features/todo/api/todos";
 import { toastActions } from "@/stores/useToastStore";
-import type { Todo } from "@/features/todo/types/todo";
 import { todoQueries } from "./todoQueries";
+
+import type { Todo } from "@/features/todo/types/todo";
 
 const TOGGLE_TODO_ERROR_MESSAGE = "완료 상태 변경에 실패했습니다."; // 토글 뮤테이션 실패 시 토스트 메시지
 

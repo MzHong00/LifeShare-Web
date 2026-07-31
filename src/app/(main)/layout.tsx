@@ -1,5 +1,5 @@
 "use client";
-import { BottomNav } from "@/components/BottomNav";
+import { BottomNav } from "@/components/layout/BottomNav";
 import { useWorkspaceThemeSync } from "@/features/workspace/hooks/useWorkspaceThemeSync";
 import styles from "./layout.module.scss";
 

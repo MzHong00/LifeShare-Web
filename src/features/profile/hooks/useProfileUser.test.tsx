@@ -6,6 +6,7 @@ import { authQueries } from "@/features/auth/queries/authQueries";
 import { FALLBACK_EMAIL, FALLBACK_NAME } from "@/features/profile/constants/profile";
 import { useProfileUser } from "./useProfileUser";
 
+import type { User } from "@/types/user";
 import type { ReactNode } from "react";
 
 vi.mock("@/features/auth/queries/authQueries", () => ({
@@ -23,7 +24,7 @@ const createWrapper = () => {
 describe("useProfileUser", () => {
   it("user에 name이 있으면 그대로 표시 이름으로 사용한다", () => {
     const { Wrapper, queryClient } = createWrapper();
-    queryClient.setQueryData(authQueries.user().queryKey, {
+    queryClient.setQueryData<User>(authQueries.user().queryKey, {
       id: "1",
       name: "홍길동",
       email: "hong@example.com",
@@ -39,7 +40,7 @@ describe("useProfileUser", () => {
 
   it("name이 없으면 이메일 앞부분을 표시 이름으로 사용한다", () => {
     const { Wrapper, queryClient } = createWrapper();
-    queryClient.setQueryData(authQueries.user().queryKey, {
+    queryClient.setQueryData<User>(authQueries.user().queryKey, {
       id: "1",
       name: "",
       email: "hong@example.com",

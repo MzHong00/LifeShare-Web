@@ -27,7 +27,7 @@ export const WorkspaceJoinView = () => {
       return;
     }
     try {
-      const joined = await joinWorkspace.mutateAsync({ workspaceId: workspace.id, user });
+      const joined = await joinWorkspace.mutateAsync({ workspaceId: workspace.id });
       workspaceActions.setCurrentWorkspaceId(joined.id);
       router.replace(ROUTES.HOME.path);
     } catch {
@@ -35,11 +35,7 @@ export const WorkspaceJoinView = () => {
     }
   };
 
-  // byInviteCode는 만료/무효 시 null을 반환하므로 로딩이 끝난 뒤의 빈 값도 에러로 취급한다
-  const loadErrorMsg = isError
-    ? "초대 정보를 불러오는 중 오류가 발생했습니다."
-    : "초대 링크가 유효하지 않거나 만료되었습니다.";
-  const errorMsg = joinError || loadErrorMsg;
+  const errorMsg = joinError || "초대 정보를 불러오는 중 오류가 발생했습니다.";
   const hasError = !!joinError || isError || (!isPending && !workspace);
 
   return (

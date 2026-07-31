@@ -4,13 +4,6 @@ import { chatApi } from "@/features/chat/api/chat";
 
 export const useSendMessageMutation = () =>
   useMutation({
-    mutationFn: ({
-      workspaceId,
-      senderId,
-      text,
-    }: {
-      workspaceId: string;
-      senderId: string;
-      text: string;
-    }) => chatApi.send(workspaceId, senderId, text),
+    mutationFn: ({ workspaceId, text }: { workspaceId: string; text: string }) =>
+      chatApi.send(workspaceId, text),
   });

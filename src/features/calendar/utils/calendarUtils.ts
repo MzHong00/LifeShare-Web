@@ -1,5 +1,36 @@
 import { getIntermediateDates } from "@/utils/date";
 
+import type { CalendarEvent } from "@/features/calendar/types/calendar";
+
+export interface CalendarEventRow {
+  id: string;
+  workspace_id: string;
+  title: string;
+  description?: string;
+  start_date: string;
+  end_date: string;
+  start_time?: string;
+  end_time?: string;
+  is_all_day: boolean;
+  color: string;
+  created_at: string;
+}
+
+/** Supabase row를 앱의 CalendarEvent 타입으로 변환한다 */
+export const rowToEvent = (row: CalendarEventRow): CalendarEvent => ({
+  id: row.id,
+  workspaceId: row.workspace_id,
+  title: row.title,
+  description: row.description,
+  startDate: row.start_date,
+  endDate: row.end_date,
+  startTime: row.start_time,
+  endTime: row.end_time,
+  isAllDay: row.is_all_day,
+  color: row.color,
+  createdAt: row.created_at,
+});
+
 interface DateRangeItem {
   startDate: string;
   endDate: string;

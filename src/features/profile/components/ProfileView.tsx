@@ -2,23 +2,23 @@
 import { useRouter } from "next/navigation";
 import { Settings } from "lucide-react";
 
-import { ProfileImage } from "@/components/ProfileImage";
+import { ProfileImage } from "@/components/ui/ProfileImage";
+import { ICON_SIZE } from "@/constants/iconSize";
 import { ROUTES } from "@/constants/routes";
 
 import { useProfileUser } from "@/features/profile/hooks/useProfileUser";
 import { PROFILE_MENU_ITEMS } from "@/features/profile/constants/profileMenu";
 import { APP_VERSION } from "@/features/profile/constants/profile";
-import { ProfileQuickCards } from "./ProfileQuickCards";
+import { ProfileWorkspaceSection } from "./ProfileWorkspaceSection";
 import { ProfileMenuRow } from "./ProfileMenuRow";
 import { ProfileHeroSkeleton } from "./ProfileHeroSkeleton";
 import styles from "./ProfileView.module.scss";
 
-const SETTINGS_ICON_SIZE = 20; // 설정 버튼 아이콘 크기(px)
 const HERO_AVATAR_SIZE = 84; // 히어로 영역 아바타 크기(px)
 
 export const ProfileView = () => {
   const router = useRouter();
-  const { user, email, displayName, isLoading } = useProfileUser();
+  const { user, email, displayName, isLoading, isError } = useProfileUser();
 
   return (
     <div className={styles.page}>
@@ -28,10 +28,12 @@ export const ProfileView = () => {
           className={styles.settingsBtn}
           aria-label="설정"
         >
-          <Settings size={SETTINGS_ICON_SIZE} />
+          <Settings size={ICON_SIZE.lg} />
         </button>
         {isLoading ? (
           <ProfileHeroSkeleton />
+        ) : isError ? (
+          <p className={styles.errorText}>프로필 정보를 불러오지 못했습니다.</p>
         ) : (
           <>
             <ProfileImage
@@ -46,7 +48,7 @@ export const ProfileView = () => {
         )}
       </header>
 
-      <ProfileQuickCards />
+      <ProfileWorkspaceSection />
 
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>알림 및 지원</h2>

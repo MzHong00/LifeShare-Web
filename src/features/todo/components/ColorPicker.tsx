@@ -1,10 +1,10 @@
 "use client";
-import type { CSSProperties } from "react";
-
 import { cx } from "@/utils/cn";
 import { TODO_COLORS } from "@/constants/theme";
 
 import styles from "./ColorPicker.module.scss";
+
+import type { CSSProperties } from "react";
 
 interface ColorPickerProps {
   selectedColor: string;

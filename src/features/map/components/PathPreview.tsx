@@ -3,8 +3,9 @@ import { MapPin, Pencil, Trash2 } from "lucide-react";
 
 import { normalize, fmtCoord, getWaypointLabel } from "@/features/map/utils/pathPreviewUtils";
 
-import type { LocationPoint } from "@/features/stories/types/story";
 import styles from "./PathPreview.module.scss";
+
+import type { LocationPoint } from "@/features/stories/types/story";
 
 interface PathPreviewProps {
   path: LocationPoint[];

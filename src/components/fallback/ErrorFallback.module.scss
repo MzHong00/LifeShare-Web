@@ -1,0 +1,41 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  height: 100%;
+  min-height: 100dvh;
+  padding: var(--space-2xl);
+  text-align: center;
+}
+
+.iconBadge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--theme-primary);
+  margin-bottom: var(--space-md);
+}
+
+.title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--grey-900);
+}
+
+.desc {
+  font-size: var(--font-size-md);
+  color: var(--grey-600);
+  white-space: pre-line;
+}
+
+.retryButton {
+  margin-top: var(--space-sm);
+  padding: var(--space-md) var(--space-2xl);
+  border-radius: var(--radius-md);
+  background-color: var(--theme-primary);
+  color: var(--white);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+}

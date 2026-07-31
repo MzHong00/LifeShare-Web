@@ -1,14 +1,13 @@
 import { supabase } from "@/lib/supabase/client";
+import { ENV } from "@/constants/config";
+import { ROUTES } from "@/constants/routes";
 
-import type { User } from "@/types/user";
-
-const DEFAULT_USER_NAME = "사용자"; // 이름·이메일을 얻지 못했을 때의 표시 이름
-const OAUTH_CALLBACK_PATH = "/auth/callback"; // OAuth 리다이렉트 콜백 경로
 const GOOGLE_OAUTH_SCOPES = "openid email profile"; // 구글 OAuth 요청 스코프
+const TEST_ACCOUNT_MISSING_MESSAGE = "체험 계정이 설정되지 않았습니다.";
 
 export const authApi = {
   signInWithGoogle: async (redirectPath?: string): Promise<void> => {
-    const callbackUrl = new URL(OAUTH_CALLBACK_PATH, window.location.origin);
+    const callbackUrl = new URL(ROUTES.AUTH.CALLBACK.path, window.location.origin);
     if (redirectPath) callbackUrl.searchParams.set("redirect", redirectPath);
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
@@ -16,6 +15,18 @@ export const authApi = {
         redirectTo: callbackUrl.toString(),
         scopes: GOOGLE_OAUTH_SCOPES,
       },
+    });
+    if (error) throw error;
+  },
+
+  // 공용 테스트 계정으로 로그인한다. OAuth와 달리 외부 리다이렉트가 없어 즉시 세션이 확보되므로,
+  // 이후 처리(프로필 생성·워크스페이스 분기)는 호출부가 콜백 경로로 이동해 OAuth와 동일한 흐름을 태운다
+  signInWithTestAccount: async (): Promise<void> => {
+    if (!ENV.TEST_ACCOUNT_EMAIL || !ENV.TEST_ACCOUNT_PASSWORD)
+      throw new Error(TEST_ACCOUNT_MISSING_MESSAGE);
+    const { error } = await supabase.auth.signInWithPassword({
+      email: ENV.TEST_ACCOUNT_EMAIL,
+      password: ENV.TEST_ACCOUNT_PASSWORD,
     });
     if (error) throw error;
   },
@@ -32,30 +43,5 @@ export const authApi = {
     } = await supabase.auth.getSession();
     if (error) throw error;
     return session;
-  },
-
-  getUser: async (): Promise<User | null> => {
-    const {
-      data: { user },
-      error,
-    } = await supabase.auth.getUser();
-    if (error || !user) return null;
-    return {
-      id: user.id,
-      name: user.user_metadata?.full_name || user.email?.split("@")[0] || DEFAULT_USER_NAME,
-      email: user.email,
-      profileImage: user.user_metadata?.avatar_url,
-    };
-  },
-
-  // 이름·프로필 이미지를 Supabase auth user_metadata에 반영해 실제로 영속화한다
-  updateProfile: async (updates: { name?: string; profileImage?: string }): Promise<void> => {
-    const { error } = await supabase.auth.updateUser({
-      data: {
-        ...(updates.name !== undefined && { full_name: updates.name }),
-        ...(updates.profileImage !== undefined && { avatar_url: updates.profileImage }),
-      },
-    });
-    if (error) throw error;
   },
 };

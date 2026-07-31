@@ -1,5 +1,5 @@
-import { supabase } from "@/lib/supabase/client";
 import { formatChatTime } from "@/utils/date";
+import { bffFetch } from "@/lib/api/bffClient";
 
 import type { ChatMessage } from "@/features/chat/types/chat";
 
@@ -11,7 +11,7 @@ interface MessageRow {
   created_at: string;
 }
 
-/** DB row를 뷰어(userId) 관점의 ChatMessage로 변환한다 */
+/** DB row를 뷰어(userId) 관점의 ChatMessage로 변환한다 (Realtime 구독·API Route에서 공용) */
 export const rowToChatMessage = (row: MessageRow, userId: string): ChatMessage => ({
   id: row.id,
   text: row.text,
@@ -21,24 +21,19 @@ export const rowToChatMessage = (row: MessageRow, userId: string): ChatMessage =
 });
 
 export const chatApi = {
-  // 워크스페이스의 메시지 목록 (오래된 순)
-  list: async (workspaceId: string, userId: string): Promise<ChatMessage[]> => {
-    const { data, error } = await supabase
-      .from("messages")
-      .select("*")
-      .eq("workspace_id", workspaceId)
-      .order("created_at", { ascending: true });
-    if (error) throw error;
-    return (data as MessageRow[]).map((row) => rowToChatMessage(row, userId));
-  },
+  // 워크스페이스의 메시지 목록 (오래된 순, isMine 판별은 서버가 세션 사용자 기준으로 수행)
+  list: async (workspaceId: string): Promise<ChatMessage[]> =>
+    bffFetch<ChatMessage[]>(
+      `/api/messages?workspaceId=${encodeURIComponent(workspaceId)}`,
+      "메시지 목록 조회에 실패했습니다."
+    ),
 
-  // 메시지 전송 (실시간 반영은 구독이 담당)
-  send: async (workspaceId: string, senderId: string, text: string): Promise<void> => {
-    const { error } = await supabase
-      .from("messages")
-      .insert({ workspace_id: workspaceId, sender_id: senderId, text });
-    if (error) throw error;
-  },
+  // 메시지 전송 (발신자는 서버가 세션에서 확정, 실시간 반영은 구독이 담당)
+  send: async (workspaceId: string, text: string): Promise<void> =>
+    bffFetch<void>("/api/messages", "메시지 전송에 실패했습니다.", {
+      method: "POST",
+      body: JSON.stringify({ workspaceId, text }),
+    }),
 };
 
 export type { MessageRow };

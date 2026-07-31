@@ -3,8 +3,8 @@
 .pathPlaceholder {
   width: 100%;
   background-color: var(--grey-100);
-  border-radius: 16px;
-  padding: 20px 16px;
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl) var(--space-lg);
   @include flex-col-center(6px);
   border: 1.5px dashed var(--grey-300);
   transition: background-color 0.12s;
@@ -18,16 +18,16 @@
   @include icon-box(48px);
   background-color: var(--primary-light);
   color: var(--primary);
-  margin-bottom: 2px;
+  margin-bottom: var(--space-2xs);
 }
 
 .pathPlaceholderText {
-  font-size: 15px;
-  font-weight: 700;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
   color: var(--grey-800);
 }
 
 .pathPlaceholderSub {
-  font-size: 13px;
+  font-size: var(--font-size-sm);
   color: var(--grey-400);
 }

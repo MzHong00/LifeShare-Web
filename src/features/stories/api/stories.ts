@@ -1,64 +1,33 @@
-import { supabase } from "@/lib/supabase/client";
-import { rowToStory } from "@/features/stories/utils/storyUtils";
+import { bffFetch } from "@/lib/api/bffClient";
 
 import type { Story } from "@/features/stories/types/story";
-import type { StoryRow } from "@/features/stories/utils/storyUtils";
 
 export const storiesApi = {
-  list: async (workspaceId: string): Promise<Story[]> => {
-    const { data, error } = await supabase
-      .from("stories")
-      .select("*")
-      .eq("workspace_id", workspaceId)
-      .order("date", { ascending: false });
-    if (error) throw error;
-    return (data as StoryRow[]).map(rowToStory);
-  },
+  list: async (workspaceId: string): Promise<Story[]> =>
+    bffFetch<Story[]>(
+      `/api/stories?workspaceId=${encodeURIComponent(workspaceId)}`,
+      "스토리 목록 조회에 실패했습니다."
+    ),
 
-  create: async (story: Omit<Story, "id">): Promise<Story> => {
-    const { data, error } = await supabase
-      .from("stories")
-      .insert({
-        workspace_id: story.workspaceId,
-        user_id: story.userId,
-        title: story.title,
-        description: story.description,
-        date: story.date,
-        thumbnail_url: story.thumbnailUrl,
-        path: story.path,
-        path_color: story.pathColor,
-      })
-      .select()
-      .single();
-    if (error) throw error;
-    return rowToStory(data as StoryRow);
-  },
+  create: async (story: Omit<Story, "id">): Promise<Story> =>
+    bffFetch<Story>("/api/stories", "스토리 생성에 실패했습니다.", {
+      method: "POST",
+      body: JSON.stringify(story),
+    }),
 
   update: async (
     id: string,
     data: Partial<
       Pick<Story, "title" | "description" | "date" | "thumbnailUrl" | "path" | "pathColor">
     >
-  ): Promise<Story> => {
-    const { data: updated, error } = await supabase
-      .from("stories")
-      .update({
-        title: data.title,
-        description: data.description,
-        date: data.date,
-        thumbnail_url: data.thumbnailUrl,
-        path: data.path,
-        path_color: data.pathColor,
-      })
-      .eq("id", id)
-      .select()
-      .single();
-    if (error) throw error;
-    return rowToStory(updated as StoryRow);
-  },
+  ): Promise<Story> =>
+    bffFetch<Story>(`/api/stories/${encodeURIComponent(id)}`, "스토리 수정에 실패했습니다.", {
+      method: "PATCH",
+      body: JSON.stringify(data),
+    }),
 
-  delete: async (id: string): Promise<void> => {
-    const { error } = await supabase.from("stories").delete().eq("id", id);
-    if (error) throw error;
-  },
+  delete: async (id: string): Promise<void> =>
+    bffFetch<void>(`/api/stories/${encodeURIComponent(id)}`, "스토리 삭제에 실패했습니다.", {
+      method: "DELETE",
+    }),
 };

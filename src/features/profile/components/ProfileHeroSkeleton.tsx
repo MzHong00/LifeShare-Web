@@ -1,4 +1,4 @@
-import { Skeleton } from "@/components/Skeleton";
+import { Skeleton } from "@/components/feedback/Skeleton";
 
 import styles from "./ProfileHeroSkeleton.module.scss";
 

@@ -3,26 +3,27 @@
 // 인풋 바 + 도구함을 감싸는 최상위 래퍼
 .wrapper {
   @include flex-col;
-  gap: 8px;
-  padding: 10px 12px 10px;
+  gap: var(--space-sm);
+  padding: 10px var(--space-md) 10px;
 }
 
 // 인풋 필 (플러스 + 텍스트 + 전송) — 유리질감으로 오로라 배경과 톤을 맞춤
 .container {
   width: 100%;
   @include flex-row(8px);
-  padding: 10px 10px 10px 12px;
+  padding: 10px 10px 10px var(--space-md);
   background-color: rgba(255, 255, 255, 0.75);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.5);
-  border-radius: 9999px;
+  border-radius: var(--radius-pill);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
 }
 
 .plusButton {
   @include icon-box(32px);
-  border-radius: 9999px;
+  @include expand-tap-target(32px);
+  border-radius: var(--radius-pill);
   background-color: var(--grey-100);
   color: var(--grey-600);
   transition: all 0.2s;
@@ -39,7 +40,7 @@
 .input {
   flex: 1;
   background-color: transparent;
-  font-size: 15px;
+  font-size: var(--font-size-lg);
   color: var(--grey-900);
   padding: 2px 0;
 
@@ -50,7 +51,8 @@
 
 .sendButton {
   @include icon-box(32px);
-  border-radius: 9999px;
+  @include expand-tap-target(32px);
+  border-radius: var(--radius-pill);
   flex-shrink: 0;
   transition: all 0.2s;
 }
@@ -72,15 +74,15 @@
 // 도구함 — 인풋 바 위에 표시
 .actionMenu {
   @include flex-row(0px);
-  padding: 4px 4px;
-  gap: 4px;
+  padding: var(--space-xs) var(--space-xs);
+  gap: var(--space-xs);
 }
 
 .actionItem {
   @include flex-col-center(4px);
   flex: 1;
-  padding: 10px 4px;
-  border-radius: 14px;
+  padding: 10px var(--space-xs);
+  border-radius: var(--radius-lg);
   transition: background-color 0.15s;
 
   &:active {
@@ -88,15 +90,16 @@
   }
 }
 
+// 워크스페이스 테마 액센트를 따라가는 도구함 아이콘
 .actionIcon {
   @include icon-box(44px, 13px);
-  background-color: var(--primary-light);
-  color: var(--primary);
-  border-radius: 14px;
+  background-color: rgba(var(--theme-accent-rgb), 0.12);
+  color: var(--theme-accent);
+  border-radius: var(--radius-lg);
 }
 
 .actionLabel {
   font-size: 11px;
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
   color: var(--grey-600);
 }

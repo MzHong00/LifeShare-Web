@@ -22,14 +22,14 @@
   align-items: center;
   width: 100%;
   text-align: left;
-  padding: 2px 4px;
+  padding: var(--space-2xs) var(--space-xs);
 }
 
 .sectionTitle {
   @include flex-row(8px);
   align-items: center;
-  font-size: 14px;
-  font-weight: 800;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-extrabold);
   color: var(--grey-800);
   letter-spacing: -0.01em;
 }
@@ -72,13 +72,13 @@
 .row {
   @include flex-row(10px);
   align-items: center;
-  padding: 10px 12px;
-  border-radius: 12px;
+  padding: 10px var(--space-md);
+  border-radius: var(--radius-md);
   background: rgba(255, 255, 255, 0.45);
   border: 1.5px solid rgba(255, 255, 255, 0.3);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.01);
-  font-size: 13px;
-  font-weight: 600;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
   color: var(--grey-800);
   transition:
     border-color 0.2s ease,
@@ -93,10 +93,10 @@
 .eventDate {
   flex-shrink: 0;
   font-size: 11px;
-  font-weight: 800;
+  font-weight: var(--font-weight-extrabold);
   color: var(--primary);
   background: var(--primary-light);
-  padding: 2px 6px;
+  padding: var(--space-2xs) 6px;
   border-radius: 6px;
   text-align: center;
   min-width: 38px;
@@ -118,19 +118,19 @@
 .todoDue {
   flex-shrink: 0;
   font-size: 10px;
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   color: var(--grey-500);
   background: var(--grey-100);
-  padding: 2px 6px;
+  padding: var(--space-2xs) 6px;
   border-radius: 6px;
 }
 
 .more {
   text-align: center;
   font-size: 11px;
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   color: var(--grey-400);
-  padding: 4px 0 2px;
+  padding: var(--space-xs) 0 var(--space-2xs);
 }
 
 .divider {
@@ -146,13 +146,13 @@
 
 // ─── 빈 상태 (Empty State) ──────────────────────────────────────────────────
 .empty {
-  padding: 16px 8px;
+  padding: var(--space-lg) var(--space-sm);
   text-align: center;
-  font-size: 12px;
-  font-weight: 600;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
   color: var(--grey-400);
   background: rgba(var(--grey-100), 0.3);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   border: 1px dashed rgba(var(--grey-300), 0.4);
   letter-spacing: -0.01em;
 }

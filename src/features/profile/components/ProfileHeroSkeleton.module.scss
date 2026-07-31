@@ -7,5 +7,5 @@
 
 // 실제 heroAvatar와 동일한 아래 여백으로 이름 라인과의 간격을 맞춘다
 .avatar {
-  margin-bottom: 4px;
+  margin-bottom: var(--space-xs);
 }

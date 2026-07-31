@@ -4,9 +4,9 @@ import { X } from "lucide-react";
 import { StoryDetailContent } from "@/features/stories/components/StoryDetailContent";
 import { useSwipeDismiss } from "@/features/stories/hooks/useSwipeDismiss";
 
-import type { Story } from "@/features/stories/types/story";
-
 import styles from "./StoryDetailOverlay.module.scss";
+
+import type { Story } from "@/features/stories/types/story";
 
 interface StoryDetailOverlayProps {
   story: Story;

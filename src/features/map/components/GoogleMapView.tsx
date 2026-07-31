@@ -12,9 +12,10 @@ import {
 import { MapLoadState } from "@/features/map/components/MapLoadState";
 import { MemberMarker } from "@/features/map/components/MemberMarker";
 
+import styles from "./GoogleMapView.module.scss";
+
 import type { LocationPoint, Story } from "@/features/stories/types/story";
 import type { MemberLocation } from "@/features/map/types/map";
-import styles from "./GoogleMapView.module.scss";
 
 const SELECTED_STROKE_WEIGHT = 6;
 const UNSELECTED_STROKE_WEIGHT = 4;
@@ -49,13 +50,6 @@ export function GoogleMapView({
 }: GoogleMapViewProps) {
   const { status, loadErrorMessage, mapRef, onMapLoad } = useGoogleMap();
 
-  // focusLocation이 바뀌면 지도 중심을 이동
-  useEffect(() => {
-    if (focusLocation && mapRef.current) {
-      mapRef.current.panTo(focusLocation);
-    }
-  }, [focusLocation, mapRef]);
-
   // 경로가 2개 이상인 스토리만 폴리라인으로 표시 (memberLocations 등 잦은 리렌더에도 재계산 방지)
   const storyPolylines = useMemo(
     () =>
@@ -69,6 +63,13 @@ export function GoogleMapView({
         })),
     [stories, selectedStoryId]
   );
+
+  // focusLocation이 바뀌면 지도 중심을 이동
+  useEffect(() => {
+    if (focusLocation && mapRef.current) {
+      mapRef.current.panTo(focusLocation);
+    }
+  }, [focusLocation, mapRef]);
 
   if (status !== "ready") {
     return <MapLoadState status={status} errorMessage={loadErrorMessage} />;

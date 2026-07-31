@@ -1,5 +1,5 @@
 "use client";
-import { AppHeader } from "@/components/AppHeader";
+import { AppHeader } from "@/components/layout/AppHeader";
 import { useWorkspaceSetupWizard } from "@/features/workspace/hooks/useWorkspaceSetupWizard";
 
 import { SetupInitialStep } from "./SetupInitialStep";

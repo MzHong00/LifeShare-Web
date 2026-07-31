@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 
 import { ROUTES } from "@/constants/routes";
 import { authApi } from "@/features/auth/api/auth";
+import { profileApi } from "@/features/profile/api/profile";
 import { workspaceActions } from "@/features/workspace/stores/useWorkspaceStore";
 import { workspacesApi } from "@/features/workspace/api/workspaces";
 import { isSafeRedirectPath } from "@/utils/route";
@@ -20,6 +21,9 @@ export const useAuthCallback = (redirectPath: string | null) => {
         router.replace(ROUTES.LOGIN.path);
         return;
       }
+
+      // 최초 로그인이면 profiles row가 없으므로 구글 메타데이터로 생성한다 (이후엔 getProfile이 profiles만 읽음)
+      await profileApi.createProfile();
 
       // 워크스페이스 조회 후 분기
       try {

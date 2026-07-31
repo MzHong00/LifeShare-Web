@@ -31,9 +31,8 @@ workspaceStore.subscribe((state, prev) => {
     : `${COOKIE_KEYS.WORKSPACE_ID}=; path=/; max-age=0`;
 });
 
-export const useWorkspaceStore = <T = WorkspaceState>(
-  selector: (state: WorkspaceState) => T = (state) => state as unknown as T
-) => workspaceStore(selector);
+export const useWorkspaceStore = <T>(selector: (state: WorkspaceState) => T) =>
+  workspaceStore(selector);
 
 export const workspaceActions = {
   setCurrentWorkspaceId: (id: string | null) => workspaceStore.setState({ currentWorkspaceId: id }),

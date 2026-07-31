@@ -3,3 +3,10 @@
   overflow: hidden; /* 페이지 자체의 스크롤을 막아 풀스크린 고정 효과 */
   padding: 0;
 }
+
+.errorText {
+  padding: var(--space-4xl) 0;
+  text-align: center;
+  font-size: var(--font-size-lg);
+  color: var(--grey-400);
+}

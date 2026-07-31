@@ -57,6 +57,11 @@ export const isPastDate = (dateStr: string): boolean => {
   return dayjs(dateStr).isBefore(dayjs(), "day");
 };
 
+// isPastDate와 달리 day 단위로 반올림하지 않고, 초/시각까지 정확히 비교한다 (timestamptz 값 비교용)
+export const isPastTimestamp = (timestamp: string): boolean => {
+  return dayjs(timestamp).isBefore(dayjs());
+};
+
 export const isToday = (dateStr: string): boolean => {
   if (!dateStr) return false;
   return dayjs(dateStr).isSame(dayjs(), "day");

@@ -40,7 +40,7 @@
 .skeletonCard {
   width: 90px;
   aspect-ratio: 3 / 4;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   background: linear-gradient(90deg, var(--grey-100) 25%, var(--grey-50) 50%, var(--grey-100) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.4s ease-in-out infinite;
@@ -59,23 +59,23 @@
 }
 
 .errorTitle {
-  font-size: 15px;
-  font-weight: 700;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
   color: var(--grey-700);
 }
 
 .errorRetry {
-  margin-top: 8px;
+  margin-top: var(--space-sm);
   display: flex;
   align-items: center;
   gap: 6px;
   background: var(--primary);
   color: var(--white);
   border: none;
-  padding: 12px 24px;
-  border-radius: 12px;
-  font-size: 14px;
-  font-weight: 600;
+  padding: var(--space-md) var(--space-2xl);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
   cursor: pointer;
   transition: transform 0.1s ease;
 
@@ -98,7 +98,7 @@
 // 중앙 부채꼴 카드 뭉치 컨테이너
 .bigStack {
   position: absolute;
-  bottom: 24px; /* 보드 하단에 밀착 배치 */
+  bottom: var(--space-2xl); /* 보드 하단에 밀착 배치 */
   left: 50%;
   z-index: 2;
   touch-action: none; /* 터치 드래그 시 페이지 스크롤과 충돌 방지 */

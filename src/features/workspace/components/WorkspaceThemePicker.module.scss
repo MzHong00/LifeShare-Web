@@ -13,7 +13,7 @@
   flex: 1;
   align-items: stretch;
   padding: 10px;
-  border-radius: 16px;
+  border-radius: var(--radius-xl);
   background: var(--white);
   box-shadow: var(--shadow-card);
   transition:
@@ -32,25 +32,22 @@
   border-radius: 10px;
 }
 
-.cardPink .swatch {
-  background: linear-gradient(120deg, #f43f5e 0%, var(--pink) 100%);
-}
-
-.cardBlue .swatch {
-  background: linear-gradient(120deg, var(--primary) 0%, #38bdf8 100%);
+// 각 카드는 data-theme 속성으로 해당 테마 토큰을 스코프하므로, 카드마다 그 테마의 --theme-* 변수를 그대로 참조
+.cardPink .swatch,
+.cardBlue .swatch,
+.cardYellow .swatch,
+.cardGreen .swatch {
+  background: linear-gradient(120deg, var(--theme-primary) 0%, var(--theme-accent) 100%);
 }
 
 .cardTwilight .swatch {
   // 실제 오로라 배경과 동일하게 로즈(액센트)가 주인공, 인디고·바이올렛은 가장자리에서 거드는 배분
-  background: linear-gradient(120deg, #6366f1 0%, #8b5cf6 28%, #fb7185 70%);
-}
-
-.cardYellow .swatch {
-  background: linear-gradient(120deg, #f59e0b 0%, #facc15 100%);
-}
-
-.cardGreen .swatch {
-  background: linear-gradient(120deg, #10b981 0%, #4ade80 100%);
+  background: linear-gradient(
+    120deg,
+    var(--theme-primary) 0%,
+    var(--theme-tertiary) 28%,
+    var(--theme-accent) 70%
+  );
 }
 
 // 선택 카드: 살짝 떠오르며 자기 테마색으로 발광
@@ -59,27 +56,15 @@
 }
 
 // 선택 카드: 카드 배경까지 테마 라이트 톤으로 물들여 글로우와 함께 확실하게 구분
-.cardPink.cardSelected {
-  background: var(--pink-light);
-  box-shadow: 0 8px 20px -6px rgba(236, 72, 153, 0.45);
-}
-
-.cardBlue.cardSelected {
-  background: #e0f2fe;
-  box-shadow: 0 8px 20px -6px rgba(56, 189, 248, 0.45);
-}
-
+.cardPink.cardSelected,
+.cardBlue.cardSelected,
 .cardTwilight.cardSelected {
-  background: #ffe4e6;
-  box-shadow: 0 8px 20px -6px rgba(251, 113, 133, 0.45);
+  background: var(--theme-accent-light);
+  box-shadow: 0 8px 20px -6px rgba(var(--theme-accent-rgb), 0.45);
 }
 
-.cardYellow.cardSelected {
-  background: #fef9c3;
-  box-shadow: 0 8px 20px -6px rgba(250, 204, 21, 0.5);
-}
-
+.cardYellow.cardSelected,
 .cardGreen.cardSelected {
-  background: #dcfce7;
-  box-shadow: 0 8px 20px -6px rgba(74, 222, 128, 0.5);
+  background: var(--theme-accent-light);
+  box-shadow: 0 8px 20px -6px rgba(var(--theme-accent-rgb), 0.5);
 }

@@ -7,6 +7,9 @@ export const ENV = {
   SENTRY_DSN: process.env.NEXT_PUBLIC_SENTRY_DSN ?? "", // 클라이언트 노출
   SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL ?? "", // 클라이언트 노출
   SUPABASE_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? "", // 클라이언트 노출
+  // 체험용 공용 테스트 계정 — 누구나 로그인하도록 공개하는 값이라 클라이언트 노출이 의도된 설계
+  TEST_ACCOUNT_EMAIL: process.env.NEXT_PUBLIC_TEST_ACCOUNT_EMAIL ?? "", // 클라이언트 노출
+  TEST_ACCOUNT_PASSWORD: process.env.NEXT_PUBLIC_TEST_ACCOUNT_PASSWORD ?? "", // 클라이언트 노출
 };
 
 export const COOKIE_KEYS = {

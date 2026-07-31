@@ -28,9 +28,7 @@ const storyStore = create<StoryState>()(
   )
 );
 
-export const useStoryStore = <T = StoryState>(
-  selector: (state: StoryState) => T = (state) => state as unknown as T
-) => storyStore(selector);
+export const useStoryStore = <T>(selector: (state: StoryState) => T) => storyStore(selector);
 
 export const storyActions = {
   startRecording: () => storyStore.setState({ isRecording: true, recordingPath: [] }),

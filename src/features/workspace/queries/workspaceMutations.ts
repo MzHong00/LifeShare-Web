@@ -3,7 +3,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { workspacesApi } from "@/features/workspace/api/workspaces";
 import { workspaceQueries } from "@/features/workspace/queries/workspaceQueries";
 
-import type { User } from "@/types/user";
 import type { RoomType, ThemeColor } from "@/features/workspace/types/workspace";
 
 /** 성공 시 내 워크스페이스 목록(mine) 쿼리를 무효화하는 공통 뮤테이션 헬퍼 */
@@ -19,22 +18,13 @@ const useInvalidateMineMutation = <TVariables, TData>(
 
 export const useCreateWorkspaceMutation = () =>
   useInvalidateMineMutation(
-    ({
-      name,
-      type,
-      startDate,
-      user,
-    }: {
-      name: string;
-      type: RoomType;
-      startDate?: string;
-      user: User;
-    }) => workspacesApi.create(name, type, startDate, user)
+    ({ name, type, startDate }: { name: string; type: RoomType; startDate?: string }) =>
+      workspacesApi.create(name, type, startDate)
   );
 
 export const useJoinWorkspaceMutation = () =>
-  useInvalidateMineMutation(({ workspaceId, user }: { workspaceId: string; user: User }) =>
-    workspacesApi.join(workspaceId, user)
+  useInvalidateMineMutation(({ workspaceId }: { workspaceId: string }) =>
+    workspacesApi.join(workspaceId)
   );
 
 export const useUpdateWorkspaceNameMutation = () =>
@@ -63,20 +53,14 @@ export const useUpdateWorkspaceMemberMutation = () =>
     }: {
       workspaceId: string;
       userId: string;
-      updates: { display_name?: string; avatar_url?: string };
+      updates: { displayName?: string; avatarUrl?: string };
     }) => workspacesApi.updateMember(workspaceId, userId, updates)
-  );
-
-export const useUpdateWorkspaceBackgroundMutation = () =>
-  useInvalidateMineMutation(
-    ({ workspaceId, imageUrl }: { workspaceId: string; imageUrl: string }) =>
-      workspacesApi.updateBackground(workspaceId, imageUrl)
   );
 
 export const useCreateInviteCodeMutation = () =>
   useMutation({
-    mutationFn: ({ workspaceId, userId }: { workspaceId: string; userId: string }) =>
-      workspacesApi.createInviteCode(workspaceId, userId),
+    mutationFn: ({ workspaceId }: { workspaceId: string }) =>
+      workspacesApi.createInviteCode(workspaceId),
   });
 
 export const useLeaveWorkspaceMutation = () =>

@@ -71,7 +71,7 @@
 **선언형 UI:** 컴포넌트화를 통해 선언형 UI로 구축 · 명령형 DOM 조작 금지 → 상태 기반 렌더링 · UI의 각 관심사는 독립 컴포넌트로 분리 · `renderXxx` 헬퍼 함수 금지 → JSX에 직접 인라인(`&&`·1depth 삼항), 커지면 독립 컴포넌트로 추출
 **기존 자원 우선:** 구현·수정 전 기존 의존성·컴포넌트·훅·유틸 확인 필수 → 활용 가능하면 반드시 재사용(동일 로직 중복 구현 금지) · 없을 때만 신규 생성
 **타입:** `any` 금지 → `unknown` + 타입 가드 · Props는 파일 상단 `interface [Name]Props`
-**네이밍:** `camelCase` 변수·함수·폴더·타입·파일 · `PascalCase` 컴포넌트(.tsx) · `UPPER_SNAKE_CASE` 상수 · boolean 변수·Props는 의미에 맞는 접두어 필수 `is`/`has`/`can`/`should`(`isOpen` `hasError` `canEdit` `shouldRender`) · API 타입은 요청 `XxxRequest`·응답 `XxxResponse` 접미어(`Dto`·`Req`·`Res` 혼용 금지)
+**네이밍:** `camelCase` 변수·함수·폴더·타입·파일 · `PascalCase` 컴포넌트(.tsx) · `UPPER_SNAKE_CASE` 상수 · boolean 변수·Props는 의미에 맞는 접두어 필수 `is`/`has`/`can`/`should`(`isOpen` `hasError` `canEdit` `shouldRender`) · API 타입은 요청 `XxxRequestDto`·응답 `XxxResponseDto` 접미어(서버 전용 입력 타입도 `XxxInputDto`처럼 `Dto` 접미어 필수)
 **주석 작성:** 값/상태/ref 변수, interface 데이터 프로퍼티(string·number 등) → 선언 오른쪽 인라인(`const x = 1; // 설명`) · 함수·컴포넌트·훅·useEffect·useMemo·useCallback, interface 함수 프로퍼티(콜백·메서드) → 선언 위 JSDoc(`/** 설명 */`) · 커스텀 훅은 선언부 JSDoc + 내부 로직 주석 필수 · 코드를 생성·수정할 때 해당 주석도 함께 추가/갱신할 것
 **하드코딩 금지:** 라우트·문자열·매직값(숫자 등)은 반드시 상수로 분리 · 색상·간격은 디자인 토큰 규칙 따름
 **상태 관리:** Props 2depth 초과 → Context/상태관리로 격상

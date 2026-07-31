@@ -3,6 +3,7 @@ import { Heart } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import { useAnniversaries } from "@/features/anniversary/hooks/useAnniversaries";
+import { ICON_SIZE } from "@/constants/iconSize";
 import { ROUTES } from "@/constants/routes";
 import { cx } from "@/utils/cn";
 
@@ -10,7 +11,6 @@ import styles from "./AnniversaryJourney.module.scss";
 
 import type { CSSProperties } from "react";
 
-const HEART_ICON_SIZE = 11; // 오늘 위치 하트 마커 아이콘 크기(px)
 const JOURNEY_STOP_COUNT = 3; // 레일에 표시할 다가오는 기념일 정거장 수
 
 /** 이전 기념일(또는 시작일)에서 다가오는 기념일 정거장들로 이어지는 여정 레일 — 하트가 실제 경과일 비율 위치에 떠 있다 */
@@ -41,13 +41,17 @@ export const AnniversaryJourney = () => {
       {/* 진행 게이지 — 하트 마커를 게이지 끝에 앵커링해 둘이 항상 같이 움직인다 */}
       <div className={styles.railFill}>
         <span className={styles.todayDot}>
-          <Heart size={HEART_ICON_SIZE} className={styles.todayHeart} />
+          <Heart size={ICON_SIZE.sm} className={styles.todayHeart} />
         </span>
       </div>
 
       <div className={styles.nodes}>
         {/* 여정의 출발점: 가장 최근에 지난 기념일 (없으면 시작일) */}
-        <div className={cx(styles.node, styles.passedNode)}>
+        <div
+          className={cx(styles.node, styles.passedNode)}
+          // 노드(도트+라벨) 전체를 레일 좌표(0~1 비율)에 절대 배치 — 도트와 텍스트가 항상 함께 정렬된다
+          style={{ "--node-ratio": 0 } as CSSProperties}
+        >
           <span className={styles.dot} />
           <span className={styles.nodeLabel}>{previousAnniversary?.title ?? "시작"}</span>
           <span className={styles.nodeSub}>
@@ -57,7 +61,16 @@ export const AnniversaryJourney = () => {
 
         {/* 다가오는 기념일 정거장들 (첫 정거장이 다음 목적지) */}
         {stops.map((stop, index) => (
-          <div key={stop.id} className={cx(styles.node, index === 0 && styles.nextNode)}>
+          <div
+            key={stop.id}
+            // D-Day 당일에는 프로그레스가 도트까지 닿으므로 채워진 도트(passedNode)로 표시
+            className={cx(
+              styles.node,
+              index === 0 && styles.nextNode,
+              index === 0 && stop.daysLeft === 0 && styles.passedNode
+            )}
+            style={{ "--node-ratio": (index + 1) / stops.length } as CSSProperties}
+          >
             <span className={styles.dot} />
             <span className={styles.nodeLabel}>{stop.title}</span>
             <span className={styles.nodeSub}>

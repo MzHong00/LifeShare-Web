@@ -1,0 +1,67 @@
+@use "styles/mixins" as *;
+
+.container {
+  position: fixed;
+  bottom: calc(24px + max(16px, env(safe-area-inset-bottom)));
+  left: 0;
+  right: 0;
+  z-index: 500;
+  @include flex-col-center(8px);
+  padding: 0 16px;
+  pointer-events: none;
+}
+
+.toast {
+  @include flex-row(10px);
+  align-items: center;
+  padding: 10px 14px;
+  border-radius: var(--radius-xl);
+  background-color: var(--grey-900);
+  box-shadow: var(--shadow-toast);
+  max-width: 384px;
+  width: 100%;
+  animation: slideUp 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.iconWrap {
+  flex-shrink: 0;
+  @include flex-center;
+  width: 24px;
+  height: 24px;
+}
+
+.icon {
+  [data-type="success"] & {
+    color: var(--success);
+  }
+
+  [data-type="info"] & {
+    color: var(--primary);
+  }
+
+  [data-type="error"] & {
+    color: var(--error);
+  }
+
+  [data-type="warning"] & {
+    color: var(--warning);
+  }
+}
+
+.message {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.375;
+  color: var(--white);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

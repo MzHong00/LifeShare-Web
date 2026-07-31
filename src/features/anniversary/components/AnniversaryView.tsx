@@ -3,7 +3,7 @@
 import { Heart } from "lucide-react";
 import Image from "next/image";
 
-import { AppHeader } from "@/components/AppHeader";
+import { AppHeader } from "@/components/layout/AppHeader";
 import { formatDate } from "@/utils/date";
 import { useAnniversaries } from "@/features/anniversary/hooks/useAnniversaries";
 import { useCurrentWorkspace } from "@/features/workspace/hooks/useCurrentWorkspace";

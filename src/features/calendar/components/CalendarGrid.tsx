@@ -1,6 +1,6 @@
 import { memo } from "react";
 
-import { Card } from "@/components/Card";
+import { Card } from "@/components/ui/Card";
 import { cx } from "@/utils/cn";
 
 import { CalendarDayCell } from "./CalendarDayCell";

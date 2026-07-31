@@ -1,12 +1,12 @@
 "use client";
 import { memo } from "react";
 
-import { ProfileImage } from "@/components/ProfileImage";
+import { ProfileImage } from "@/components/ui/ProfileImage";
 import { PARTNER_AVATAR_SIZE } from "@/features/chat/constants/chat";
 
-import type { WorkspaceMember } from "@/features/workspace/types/workspace";
-
 import styles from "./ChatHeader.module.scss";
+
+import type { WorkspaceMember } from "@/features/workspace/types/workspace";
 
 interface ChatHeaderProps {
   partners: WorkspaceMember[]; // 나를 제외한 워크스페이스 멤버 전원

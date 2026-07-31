@@ -59,7 +59,8 @@ interface DragPointer {
 export const useScatterCards = (
   offsetParentRef: React.RefObject<HTMLElement | null>,
   wallRef: React.RefObject<HTMLElement | null>,
-  cardCount: number
+  cardCount: number,
+  isReady: boolean // 카드 DOM이 실제로 렌더링된 상태인지 (로딩 중엔 false — 마운트 시점에 재배치하기 위한 플래그)
 ) => {
   const cardRefs = useRef<(HTMLElement | null)[]>([]);
   const physics = useRef<CardPhysics[]>([]);
@@ -158,8 +159,10 @@ export const useScatterCards = (
     applyTransform(index);
   };
 
-  /** 마운트·카드 수 변경·리사이즈 시 모든 카드를 슬롯 위치로 재배치한다 */
+  /** 카드 마운트(isReady)·카드 수 변경·리사이즈 시 모든 카드를 슬롯 위치로 재배치한다 */
   useEffect(() => {
+    // 로딩 중(카드 미렌더링)엔 refs가 비어 있으므로 스킵 — 마운트 후 isReady가 true로 바뀌면 재실행된다
+    if (!isReady) return;
     const offsetParent = offsetParentRef.current;
     if (!offsetParent) return;
 
@@ -169,7 +172,7 @@ export const useScatterCards = (
     window.addEventListener("resize", layout);
     return () => window.removeEventListener("resize", layout);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cardCount]);
+  }, [cardCount, isReady]);
 
   /** 매 프레임 관성 이동·마찰 감속·벽 반사를 계산하고 움직임이 남아 있으면 다음 프레임을 예약한다 */
   const stepPhysics = () => {

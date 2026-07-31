@@ -13,8 +13,8 @@
 }
 
 .sectionTitle {
-  font-size: 14px;
-  font-weight: 800;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-extrabold);
   color: var(--grey-800);
   letter-spacing: -0.01em;
   padding: 0 4px;
@@ -23,7 +23,7 @@
 .storyList {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--space-md);
   width: 100%;
 }
 
@@ -94,18 +94,23 @@
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: linear-gradient(
-    135deg,
-    rgba(var(--theme-primary-rgb), 0.75) 0%,
-    rgba(var(--theme-accent-rgb), 0.7) 60%,
-    rgba(var(--theme-tertiary-rgb), 0.8) 100%
-  );
+  // "함께한 지" 폴라로이드 카드(.polaroidInner)와 동일한 은은한 오로라 톤으로 통일
+  background:
+    radial-gradient(at 10% 15%, rgba(var(--theme-primary-rgb), 0.12) 0px, transparent 65%),
+    radial-gradient(at 90% 10%, rgba(var(--theme-accent-rgb), 0.1) 0px, transparent 65%),
+    radial-gradient(at 50% 100%, rgba(var(--theme-tertiary-rgb), 0.08) 0px, transparent 75%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(250, 250, 252, 0.95) 100%);
 
   &::after {
     content: "";
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.15) 0%, transparent 60%);
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.05) 0%,
+      rgba(0, 0, 0, 0.15) 50%,
+      rgba(0, 0, 0, 0.45) 100%
+    );
   }
 }
 
@@ -127,7 +132,7 @@
 }
 
 .recentStoryTitle {
-  font-size: 18px;
+  font-size: var(--font-size-2xl);
   font-weight: 900;
   color: var(--white);
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
@@ -137,7 +142,7 @@
 
 .recentStoryDate {
   font-size: 11px;
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
   color: rgba(255, 255, 255, 0.65);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
@@ -146,7 +151,7 @@
 
 .emptyStoryCard {
   width: 100%;
-  padding: 24px 20px;
+  padding: var(--space-2xl) var(--space-xl);
   border-radius: 24px;
   background: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(20px);
@@ -180,7 +185,7 @@
   @include flex-center;
   width: 44px;
   height: 44px;
-  border-radius: 14px;
+  border-radius: var(--radius-lg);
   background: rgba(var(--primary-rgb), 0.08);
   color: var(--primary);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
@@ -192,14 +197,14 @@
 }
 
 .emptyTitle {
-  font-size: 15px;
-  font-weight: 800;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-extrabold);
   color: var(--grey-800);
 }
 
 .emptySub {
-  font-size: 12px;
-  font-weight: 500;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
   color: var(--grey-500);
   line-height: 1.4;
   max-width: 240px;
@@ -210,10 +215,10 @@
   align-items: center;
   background: var(--primary);
   color: var(--white);
-  padding: 8px 16px;
-  border-radius: 12px;
-  font-size: 12px;
-  font-weight: 700;
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
   box-shadow: var(--shadow-primary);
   transition:
     transform 0.2s ease,

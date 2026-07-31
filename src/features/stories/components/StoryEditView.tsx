@@ -1,12 +1,19 @@
 "use client";
 
-import { AppHeader } from "@/components/AppHeader";
-import { PathPickerMap } from "@/features/map/components/PathPickerMap";
+import dynamic from "next/dynamic";
+
+import { AppHeader } from "@/components/layout/AppHeader";
 import { useStoryForm } from "@/features/stories/hooks/useStoryForm";
 import { StoryImagePicker } from "@/features/stories/components/StoryImagePicker";
 import { StoryPathField } from "@/features/stories/components/StoryPathField";
 
 import styles from "./StoryEditView.module.scss";
+
+// Google Maps SDK 의존 컴포넌트라 경로 선택 모달을 열 때만 청크를 내려받도록 지연 로딩
+const PathPickerMap = dynamic(
+  () => import("@/features/map/components/PathPickerMap").then((mod) => mod.PathPickerMap),
+  { ssr: false }
+);
 
 export const StoryEditView = () => {
   const {
@@ -30,6 +37,9 @@ export const StoryEditView = () => {
     handlePathConfirm,
     handleSave,
   } = useStoryForm();
+
+  let saveButtonLabel = isEditMode ? "수정하기" : "기록하기";
+  if (isSaving) saveButtonLabel = "저장 중...";
 
   return (
     <>
@@ -91,7 +101,7 @@ export const StoryEditView = () => {
 
         <div className={styles.footer}>
           <button onClick={handleSave} className={styles.saveButton} disabled={isSaving}>
-            {isSaving ? "저장 중..." : isEditMode ? "수정하기" : "기록하기"}
+            {saveButtonLabel}
           </button>
         </div>
       </div>

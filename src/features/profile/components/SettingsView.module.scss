@@ -7,35 +7,23 @@
 
 .profileSection {
   background-color: transparent; // 페이지의 오로라 틴트가 비치도록 투명 처리
-  padding: 32px 32px 24px;
+  padding: var(--space-3xl) var(--space-3xl) var(--space-2xl);
   @include flex-col-center;
+}
+
+.errorText {
+  font-size: var(--font-size-md);
+  color: var(--grey-400);
+  padding: 20px 0;
 }
 
 .avatarButton {
   position: relative;
-  margin-bottom: 16px;
+  margin-bottom: var(--space-lg);
 
   &:disabled {
     cursor: default;
   }
-}
-
-// 사진 업로드 중 아바타 위에 덧씌우는 반투명 오버레이
-.uploadOverlay {
-  position: absolute;
-  inset: 0;
-  border-radius: 9999px;
-  background-color: rgba(0, 0, 0, 0.4);
-  @include flex-center;
-}
-
-.spinner {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  border: 2px solid var(--white);
-  border-top-color: transparent;
-  animation: spin 0.8s linear infinite;
 }
 
 .cameraButton {
@@ -45,7 +33,7 @@
   bottom: -2px;
   background-color: var(--primary);
   border: 2px solid var(--white);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-sm);
   color: var(--white);
 }
 
@@ -55,23 +43,23 @@
 
 .nameButton {
   @include flex-row(6px);
-  margin-bottom: 4px;
+  margin-bottom: var(--space-xs);
   color: var(--grey-400);
 }
 
 .displayName {
   font-size: 22px;
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   color: var(--grey-900);
 }
 
 .email {
-  font-size: 14px;
+  font-size: var(--font-size-md);
   color: var(--grey-400);
 }
 
 .content {
-  padding: 16px 20px;
+  padding: var(--space-lg) var(--space-xl);
 }
 
 .settingCard {
@@ -82,7 +70,7 @@
 .settingRow {
   width: 100%;
   @include flex-between;
-  padding: 16px 20px;
+  padding: var(--space-lg) var(--space-xl);
   @include ripple-effect;
 }
 
@@ -100,15 +88,15 @@
 }
 
 .settingLabel {
-  font-size: 16px;
-  font-weight: 500;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-medium);
   color: var(--grey-900);
 }
 
 .settingDesc {
-  font-size: 12px;
+  font-size: var(--font-size-xs);
   color: var(--grey-400);
-  margin-top: 2px;
+  margin-top: var(--space-2xs);
 }
 
 .divider {
@@ -124,16 +112,16 @@
 }
 
 .nameInputWrap {
-  padding: 0 8px 8px;
+  padding: 0 var(--space-sm) var(--space-sm);
 }
 
 .nameInput {
   width: 100%;
   height: 56px;
   background-color: var(--grey-100);
-  border-radius: 16px;
-  padding: 0 16px;
-  font-size: 16px;
-  font-weight: 600;
+  border-radius: var(--radius-xl);
+  padding: 0 var(--space-lg);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
   color: var(--grey-900);
 }

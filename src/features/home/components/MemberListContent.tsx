@@ -1,9 +1,9 @@
 "use client";
-import { ProfileImage } from "@/components/ProfileImage";
-
-import type { WorkspaceMember } from "@/features/workspace/types/workspace";
+import { ProfileImage } from "@/components/ui/ProfileImage";
 
 import styles from "./MemberListContent.module.scss";
+
+import type { WorkspaceMember } from "@/features/workspace/types/workspace";
 
 const AVATAR_SIZE = 36; // 멤버 아바타 크기(px) — 컴팩트한 리스트 밀도 유지
 

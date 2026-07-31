@@ -1,0 +1,14 @@
+.card {
+  background-color: var(--white);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-card);
+}
+
+.clickable {
+  cursor: pointer;
+  transition: transform 0.15s;
+
+  &:active {
+    transform: scale(0.99);
+  }
+}

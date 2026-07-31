@@ -1,20 +1,22 @@
 "use client";
 import { useRef } from "react";
-import { Bell, Lock, Smartphone, ChevronRight, LogOut, Camera, Pencil } from "lucide-react";
+import { Bell, Lock, ChevronRight, LogOut, Camera, Pencil } from "lucide-react";
 
-import { AppHeader } from "@/components/AppHeader";
-import { Card } from "@/components/Card";
-import { ProfileImage } from "@/components/ProfileImage";
+import { AppHeader } from "@/components/layout/AppHeader";
+import { Card } from "@/components/ui/Card";
+import { ProfileImage } from "@/components/ui/ProfileImage";
+import { ICON_SIZE } from "@/constants/iconSize";
 import { cx } from "@/utils/cn";
 
 import { useProfileUser } from "@/features/profile/hooks/useProfileUser";
 import { useProfileSettings } from "@/features/profile/hooks/useProfileSettings";
+import { ProfileHeroSkeleton } from "@/features/profile/components/ProfileHeroSkeleton";
 import { toastActions } from "@/stores/useToastStore";
 import styles from "./SettingsView.module.scss";
 
 import type { ReactNode } from "react";
 
-const SETTING_ICON_SIZE = 20; // 설정 행 아이콘 크기(px)
+const AVATAR_SIZE = 80; // 프로필 아바타 크기(px)
 
 interface SettingItem {
   id: string; // 항목 고유 키
@@ -28,26 +30,20 @@ const SETTING_ITEMS: SettingItem[] = [
     id: "notifications",
     label: "알림 설정",
     description: "푸시 알림 및 메시지 알림",
-    icon: <Bell size={SETTING_ICON_SIZE} color="var(--grey-900)" />,
+    icon: <Bell size={ICON_SIZE.lg} color="var(--grey-900)" />,
   },
   {
     id: "privacy",
     label: "위치 공유 설정",
     description: "파트너와 위치 공유 여부",
-    icon: <Lock size={SETTING_ICON_SIZE} color="var(--grey-900)" />,
-  },
-  {
-    id: "device",
-    label: "기기 관리",
-    description: "연결된 기기 목록",
-    icon: <Smartphone size={SETTING_ICON_SIZE} color="var(--grey-900)" />,
+    icon: <Lock size={ICON_SIZE.lg} color="var(--grey-900)" />,
   },
 ];
 
 export const SettingsView = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const nameInputRef = useRef<HTMLInputElement>(null);
-  const { user, email, displayName } = useProfileUser();
+  const { user, email, displayName, isLoading, isError } = useProfileUser();
   const { openEditNameModal, changePhoto, confirmLogout } = useProfileSettings();
   // 서버 업로드가 끝나기 전엔 로컬 blob 미리보기가 표시되므로, 이를 업로드 중 상태로 간주한다
   const isUploadingPhoto = !!user?.profileImage?.startsWith("blob:");
@@ -79,34 +75,37 @@ export const SettingsView = () => {
       <AppHeader />
 
       <div className={styles.profileSection}>
-        <button
-          onClick={() => fileInputRef.current?.click()}
-          disabled={isUploadingPhoto}
-          className={styles.avatarButton}
-        >
-          <ProfileImage uri={user?.profileImage} name={displayName} size={80} />
-          {isUploadingPhoto && (
-            <div className={styles.uploadOverlay}>
-              <div className={styles.spinner} />
-            </div>
-          )}
-          <div className={styles.cameraButton}>
-            <Camera size={13} strokeWidth={2.5} />
-          </div>
-        </button>
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept="image/*"
-          className={styles.fileInput}
-          onChange={changePhoto}
-        />
+        {isLoading ? (
+          <ProfileHeroSkeleton />
+        ) : isError ? (
+          <p className={styles.errorText}>프로필 정보를 불러오지 못했습니다.</p>
+        ) : (
+          <>
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              disabled={isUploadingPhoto}
+              className={styles.avatarButton}
+            >
+              <ProfileImage uri={user?.profileImage} name={displayName} size={AVATAR_SIZE} />
+              <div className={styles.cameraButton}>
+                <Camera size={13} strokeWidth={2.5} />
+              </div>
+            </button>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              className={styles.fileInput}
+              onChange={changePhoto}
+            />
 
-        <button onClick={handleEditName} className={styles.nameButton}>
-          <span className={styles.displayName}>{displayName}</span>
-          <Pencil size={14} />
-        </button>
-        <span className={styles.email}>{email}</span>
+            <button onClick={handleEditName} className={styles.nameButton}>
+              <span className={styles.displayName}>{displayName}</span>
+              <Pencil size={14} />
+            </button>
+            <span className={styles.email}>{email}</span>
+          </>
+        )}
       </div>
 
       <div className={styles.content}>
@@ -132,7 +131,7 @@ export const SettingsView = () => {
           <button onClick={confirmLogout} className={styles.settingRow}>
             <div className={styles.settingLeft}>
               <div className={cx(styles.settingIcon, styles.logoutIcon)}>
-                <LogOut size={SETTING_ICON_SIZE} color="var(--error)" />
+                <LogOut size={ICON_SIZE.lg} color="var(--error)" />
               </div>
               <div className={styles.settingInfo}>
                 <p className={cx(styles.settingLabel, styles.logoutLabel)}>로그아웃</p>

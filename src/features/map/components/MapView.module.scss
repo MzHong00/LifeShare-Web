@@ -23,7 +23,7 @@
     rgba(255, 255, 255, 0.3) 85%,
     rgba(255, 255, 255, 0) 100%
   );
-  padding: 10px 16px 24px;
+  padding: 10px var(--space-lg) 24px;
   @include flex-row(6px);
   align-items: flex-start;
   pointer-events: none;
@@ -33,7 +33,7 @@
   pointer-events: auto;
   @include flex-col-center(4px);
   padding: 6px 10px;
-  border-radius: 14px;
+  border-radius: var(--radius-lg);
   transition: background-color 0.15s;
 }
 
@@ -43,7 +43,7 @@
 
 .memberAvatarWrap {
   position: relative;
-  border-radius: 9999px;
+  border-radius: var(--radius-pill);
 }
 
 .focusBadge {
@@ -53,7 +53,7 @@
   width: 18px;
   height: 18px;
   background-color: var(--white);
-  border-radius: 9999px;
+  border-radius: var(--radius-pill);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
   @include flex-center;
   color: var(--grey-500);
@@ -63,12 +63,12 @@
 .memberAvatarActive {
   outline: 2.5px solid var(--primary);
   outline-offset: 2px;
-  border-radius: 9999px;
+  border-radius: var(--radius-pill);
 }
 
 .memberName {
   font-size: 10px;
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
   color: var(--grey-500);
 }
 
@@ -92,8 +92,8 @@
 .recordButton {
   pointer-events: auto;
   @include flex-row(8px);
-  padding: 12px 22px;
-  border-radius: 9999px;
+  padding: var(--space-md) 22px;
+  border-radius: var(--radius-pill);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.14);
   transition:
     background-color 0.15s,
@@ -115,6 +115,6 @@
 }
 
 .recordLabel {
-  font-size: 14px;
-  font-weight: 700;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
 }

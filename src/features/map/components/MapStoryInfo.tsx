@@ -2,9 +2,9 @@ import Image from "next/image";
 
 import { StoryBriefInfo } from "@/features/stories/components/StoryBriefInfo";
 
-import type { Story } from "@/features/stories/types/story";
-
 import styles from "./MapStoryInfo.module.scss";
+
+import type { Story } from "@/features/stories/types/story";
 
 interface MapStoryInfoProps {
   story: Story;

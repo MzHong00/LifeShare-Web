@@ -1,14 +1,14 @@
 @use "styles/mixins" as *;
 
 .wrapper {
-  margin-bottom: 20px;
+  margin-bottom: var(--space-xl);
 }
 
 .title {
-  font-size: 24px;
-  font-weight: 700;
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
   color: var(--grey-900);
-  margin-bottom: 12px;
+  margin-bottom: var(--space-md);
 }
 
 .metaRow {
@@ -18,11 +18,11 @@
 .metaItem {
   @include flex-row(6px);
   color: var(--grey-500);
-  font-size: 14px;
+  font-size: var(--font-size-md);
 }
 
 .pathDot {
   width: 12px;
   height: 12px;
-  border-radius: 9999px;
+  border-radius: var(--radius-pill);
 }

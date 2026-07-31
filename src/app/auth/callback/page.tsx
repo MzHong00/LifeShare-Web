@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 
+import { Spinner } from "@/components/feedback/Spinner";
 import { AuthCallbackView } from "@/features/auth/components/AuthCallbackView";
 
 import styles from "./page.module.scss";
@@ -9,7 +10,7 @@ const AuthCallbackPage = () => {
     <Suspense
       fallback={
         <div className={styles.container}>
-          <div className={styles.spinner} />
+          <Spinner />
         </div>
       }
     >

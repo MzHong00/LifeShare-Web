@@ -3,6 +3,7 @@ import { describe, expect, it, vi, beforeEach } from "vitest";
 
 import { ROUTES } from "@/constants/routes";
 import { authApi } from "@/features/auth/api/auth";
+import { profileApi } from "@/features/profile/api/profile";
 import { workspaceActions } from "@/features/workspace/stores/useWorkspaceStore";
 import { workspacesApi } from "@/features/workspace/api/workspaces";
 import { useAuthCallback } from "./useAuthCallback";
@@ -15,6 +16,10 @@ vi.mock("next/navigation", () => ({
 
 vi.mock("@/features/auth/api/auth", () => ({
   authApi: { getSession: vi.fn() },
+}));
+
+vi.mock("@/features/profile/api/profile", () => ({
+  profileApi: { createProfile: vi.fn() },
 }));
 
 vi.mock("@/features/workspace/api/workspaces", () => ({
@@ -54,6 +59,19 @@ describe("useAuthCallback", () => {
 
     await waitFor(() => expect(replace).toHaveBeenCalledWith(ROUTES.HOME.path));
     expect(workspaceActions.setCurrentWorkspaceId).toHaveBeenCalledWith("ws-1");
+  });
+
+  it("세션 확보 후 profiles가 없으면 생성되도록 createProfile을 호출한다", async () => {
+    vi.mocked(authApi.getSession).mockResolvedValue({
+      access_token: "token",
+    } as unknown as Awaited<ReturnType<typeof authApi.getSession>>);
+    vi.mocked(workspacesApi.listMine).mockResolvedValue(
+      [] as unknown as Awaited<ReturnType<typeof workspacesApi.listMine>>
+    );
+
+    renderHook(() => useAuthCallback(null));
+
+    await waitFor(() => expect(profileApi.createProfile).toHaveBeenCalled());
   });
 
   it("워크스페이스가 없으면 워크스페이스 랜딩으로 이동한다", async () => {

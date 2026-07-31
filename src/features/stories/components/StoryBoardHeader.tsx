@@ -6,9 +6,9 @@ import { LayoutGrid, Sparkles } from "lucide-react";
 import { useCountUp } from "@/features/stories/hooks/useCountUp";
 import { isThisMonth } from "@/utils/date";
 
-import type { Story } from "@/features/stories/types/story";
-
 import styles from "./StoryBoardHeader.module.scss";
+
+import type { Story } from "@/features/stories/types/story";
 
 interface StoryBoardHeaderProps {
   stories: Story[]; // 통계 계산용 실 스토리 목록(껍데기 제외)

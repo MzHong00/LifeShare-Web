@@ -2,14 +2,14 @@
 import { Plus, Sparkles } from "lucide-react";
 import { useRouter } from "next/navigation";
 
+import { ICON_SIZE } from "@/constants/iconSize";
 import { ROUTES } from "@/constants/routes";
 import { useHomeStats } from "@/features/home/hooks/useHomeStats";
 import { formatDate } from "@/utils/date";
-import { Skeleton } from "@/components/Skeleton";
+import { Skeleton } from "@/components/feedback/Skeleton";
 
 import styles from "./ActivityDashboard.module.scss";
 
-const PLUS_ICON_SIZE = 16; // 추가 버튼 아이콘 크기(px)
 const RECENT_STORY_SKELETON_COUNT = 3; // 최근 스토리 로딩 시 표시할 스켈레톤 카드 개수
 
 /** 홈 하단에 두 사람의 최근 추억들을 35mm 필름 스트립 롤 형태로 가로 스냅 스크롤하는 아날로그 감성 위젯 */
@@ -76,7 +76,7 @@ export const ActivityDashboard = () => {
               <p className={styles.emptySub}>소중한 오늘의 추억을 첫 번째 스토리로 기록해 보세요</p>
             </div>
             <div className={styles.writeButton}>
-              <Plus size={PLUS_ICON_SIZE} />
+              <Plus size={ICON_SIZE.md} />
               <span>기록하기</span>
             </div>
           </div>

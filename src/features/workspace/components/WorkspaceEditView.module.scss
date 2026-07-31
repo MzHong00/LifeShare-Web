@@ -6,26 +6,64 @@
 }
 
 .content {
-  padding: 16px 20px;
+  padding: var(--space-lg) var(--space-xl) calc(88px + max(16px, env(safe-area-inset-bottom)));
   @include flex-col(20px);
+}
+
+// 하단 고정 "메인으로 설정" 버튼 — body의 max-width(480px) 컨테이너 폭에 맞춰 중앙 정렬
+.floatingActionWrap {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: var(--space-md) var(--space-xl) calc(12px + max(16px, env(safe-area-inset-bottom)));
+  background: linear-gradient(180deg, transparent 0%, var(--grey-100) 40%);
+}
+
+.setMainButton {
+  width: 100%;
+  height: 56px;
+  @include flex-row(8px);
+  justify-content: center;
+  border-radius: 18px;
+  background-color: var(--item-accent);
+  color: var(--white);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  box-shadow: 0 8px 20px -6px color-mix(in srgb, var(--item-accent) 45%, transparent);
+  transition:
+    transform 0.15s ease,
+    opacity 0.15s ease;
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &:disabled {
+    background-color: var(--grey-300);
+    color: var(--grey-500);
+    box-shadow: none;
+  }
 }
 
 .pageHeader {
   @include flex-col-center;
-  padding: 24px 0;
+  padding: var(--space-2xl) 0;
 }
 
 .badge {
-  font-size: 12px;
-  font-weight: 800;
-  padding: 4px 12px;
-  border-radius: 12px;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-extrabold);
+  padding: var(--space-xs) 12px;
+  border-radius: var(--radius-md);
   margin-bottom: 12px;
 }
 
 .badgeCouple {
-  background-color: var(--pink-light);
-  color: var(--pink);
+  background-color: var(--pink-100);
+  color: var(--pink-500);
 }
 
 .badgeGroup {
@@ -34,17 +72,17 @@
 }
 
 .workspaceName {
-  font-size: 24px;
-  font-weight: 700;
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
   color: var(--grey-900);
 }
 
 .sectionLabel {
-  font-size: 12px;
-  font-weight: 700;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
   color: var(--grey-500);
-  margin-bottom: 8px;
-  margin-left: 4px;
+  margin-bottom: var(--space-sm);
+  margin-left: var(--space-xs);
 }
 
 .settingCard {
@@ -57,19 +95,19 @@
 .settingRow {
   width: 100%;
   @include flex-row(12px);
-  padding: 16px 20px;
+  padding: var(--space-lg) var(--space-xl);
 }
 
 .settingLabel {
-  font-size: 15px;
-  font-weight: 500;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
   color: var(--grey-900);
   flex: 1;
   text-align: left;
 }
 
 .settingValue {
-  font-size: 15px;
+  font-size: var(--font-size-lg);
   color: var(--grey-400);
 }
 
@@ -77,19 +115,35 @@
   @include icon-box(36px, 12px);
 }
 
-.themeRow {
-  @include flex-col(10px);
-  padding: 16px 20px;
+.memberRow {
+  @include flex-row(12px);
+  align-items: center;
+  padding: var(--space-md) var(--space-xl);
 }
 
+.meBadge {
+  font-size: 11px;
+  font-weight: var(--font-weight-bold);
+  color: var(--grey-500);
+  background-color: var(--grey-100);
+  padding: 3px var(--space-sm);
+  border-radius: var(--radius-pill);
+}
+
+.themeRow {
+  @include flex-col(10px);
+  padding: var(--space-lg) var(--space-xl);
+}
+
+// 테마와 무관한 고정 색상 (테마 변경 시 아이콘 색이 함께 바뀌지 않도록)
 .settingIconPrimary {
-  background-color: color-mix(in srgb, var(--item-accent) 12%, var(--white));
-  color: var(--item-accent);
+  background-color: var(--purple-100);
+  color: var(--purple-500);
 }
 
 .settingIconGreen {
-  background-color: var(--green-light);
-  color: var(--green);
+  background-color: var(--green-50);
+  color: var(--green-500);
 }
 
 .divider {
@@ -106,7 +160,7 @@
 .dangerRow {
   width: 100%;
   @include flex-row(16px);
-  padding: 20px;
+  padding: var(--space-xl);
 }
 
 .dangerInfo {
@@ -115,44 +169,49 @@
 }
 
 .dangerTitle {
-  font-size: 15px;
-  font-weight: 600;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
   color: var(--error);
 }
 
 .dangerDesc {
-  font-size: 12px;
+  font-size: var(--font-size-xs);
   color: var(--grey-400);
   margin-top: 2px;
 }
 
 .footer {
-  font-size: 12px;
+  font-size: var(--font-size-xs);
   color: var(--grey-400);
   text-align: center;
   line-height: 1.625;
-  padding-bottom: 16px;
+  padding-bottom: var(--space-lg);
 }
 
 .modalContent {
-  padding: 0 4px 8px;
+  padding: 0 4px var(--space-sm);
+}
+
+.profileModalAvatarWrap {
+  @include flex-col-center;
+  margin-bottom: var(--space-lg);
 }
 
 .modalHelp {
-  font-size: 14px;
+  font-size: var(--font-size-md);
   color: var(--grey-500);
   text-align: center;
-  margin-bottom: 16px;
+  margin-bottom: var(--space-lg);
 }
 
 .modalInput {
   width: 100%;
   height: 56px;
   background-color: var(--grey-100);
-  border-radius: 16px;
-  padding: 0 20px;
-  font-size: 16px;
-  font-weight: 600;
+  border-radius: var(--radius-xl);
+  padding: 0 var(--space-xl);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
   color: var(--grey-900);
 }
 

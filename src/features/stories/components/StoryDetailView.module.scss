@@ -1,8 +1,9 @@
 @use "styles/mixins" as *;
 
 .page {
+  // 홈/채팅/스토리 보드와 동일한 오로라 캔버스 배경 (page-base보다 먼저 선언해 overflow-y: auto 유지)
+  @include aurora-board;
   @include page-base;
-  @include aurora-tint; // 워크스페이스 테마 오로라 배경 적용
 }
 
 .notFound {

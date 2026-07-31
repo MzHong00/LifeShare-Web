@@ -10,7 +10,7 @@ import styles from "./WorkspaceLandingView.module.scss";
 
 export const WorkspaceLandingView = () => {
   const router = useRouter();
-  const { workspaces, isPending } = useCurrentWorkspace();
+  const { workspaces, isPending, isError } = useCurrentWorkspace();
 
   const [inviteCode, setInviteCode] = useState(""); // 입력한 초대 코드
 
@@ -42,42 +42,48 @@ export const WorkspaceLandingView = () => {
       </div>
 
       <div className={styles.content}>
-        <div className={styles.logoWrap}>
-          <Heart size={40} fill="var(--primary)" color="var(--primary)" />
-        </div>
+        {isError ? (
+          <p className={styles.errorText}>라이프룸 정보를 불러오지 못했습니다.</p>
+        ) : (
+          <>
+            <div className={styles.logoWrap}>
+              <Heart size={40} fill="var(--primary)" color="var(--primary)" />
+            </div>
 
-        <div className={styles.textCenter}>
-          <h2 className={styles.heading}>
-            함께하는 {APP_WORKSPACE.KR}이{"\n"}비어있어요
-          </h2>
-          <p className={styles.desc}>
-            우리만의 소중한 기록을 담을{"\n"}첫 번째 {APP_WORKSPACE.KR}을 만들어볼까요?
-          </p>
-        </div>
+            <div className={styles.textCenter}>
+              <h2 className={styles.heading}>
+                함께하는 {APP_WORKSPACE.KR}이{"\n"}비어있어요
+              </h2>
+              <p className={styles.desc}>
+                우리만의 소중한 기록을 담을{"\n"}첫 번째 {APP_WORKSPACE.KR}을 만들어볼까요?
+              </p>
+            </div>
 
-        <button
-          onClick={() => router.push(ROUTES.WORKSPACE.SETUP.path)}
-          className={styles.ctaButton}
-        >
-          새로운 {APP_WORKSPACE.KR} 만들기
-        </button>
+            <button
+              onClick={() => router.push(ROUTES.WORKSPACE.SETUP.path)}
+              className={styles.ctaButton}
+            >
+              새로운 {APP_WORKSPACE.KR} 만들기
+            </button>
 
-        <div className={styles.codeJoin}>
-          <input
-            type="text"
-            value={inviteCode}
-            onChange={(e) => setInviteCode(e.target.value)}
-            placeholder="초대 코드 입력"
-            className={styles.codeInput}
-          />
-          <button
-            onClick={handleJoinByCode}
-            className={styles.codeButton}
-            disabled={!inviteCode.trim()}
-          >
-            참여하기
-          </button>
-        </div>
+            <div className={styles.codeJoin}>
+              <input
+                type="text"
+                value={inviteCode}
+                onChange={(e) => setInviteCode(e.target.value)}
+                placeholder="초대 코드 입력"
+                className={styles.codeInput}
+              />
+              <button
+                onClick={handleJoinByCode}
+                className={styles.codeButton}
+                disabled={!inviteCode.trim()}
+              >
+                참여하기
+              </button>
+            </div>
+          </>
+        )}
       </div>
     </main>
   );

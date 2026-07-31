@@ -23,6 +23,8 @@ export const useSwipeDismiss = (onClose: () => void) => {
   const handlePointerDown = (e: React.PointerEvent) => {
     const el = overlayRef.current;
     if (!el) return;
+    // 버튼 등 인터랙티브 요소 위에서 시작한 포인터는 캡처하지 않음 — 캡처 시 이후 pointerup이 오버레이로 리타겟되어 버튼 클릭이 씹힘
+    if ((e.target as HTMLElement).closest("button")) return;
     el.setPointerCapture(e.pointerId); // 드래그 중 오버레이가 커서 아래에서 벗어나도 move/up 이벤트를 계속 받기 위함
     swipeRef.current = { x: e.clientX, y: e.clientY, engaged: false };
     el.style.animation = "none"; // 등장 애니메이션이 인라인 transform을 덮지 않도록 제거

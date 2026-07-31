@@ -36,7 +36,7 @@ const setup = () => {
   const offsetParentRef = { current: offsetParent } as RefObject<HTMLElement | null>;
   const wallRef = { current: wall } as RefObject<HTMLElement | null>;
 
-  const { result } = renderHook(() => useScatterCards(offsetParentRef, wallRef, 1));
+  const { result } = renderHook(() => useScatterCards(offsetParentRef, wallRef, 1, true));
 
   const cardEl = makeElement({ width: 40, height: 40 });
   cardEl.setPointerCapture = vi.fn();

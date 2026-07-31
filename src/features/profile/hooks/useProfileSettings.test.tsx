@@ -3,7 +3,6 @@ import { renderHook, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi, beforeEach } from "vitest";
 
 import { authApi } from "@/features/auth/api/auth";
-import { workspaceActions } from "@/features/workspace/stores/useWorkspaceStore";
 import { modalActions } from "@/stores/useModalStore";
 import { toastActions } from "@/stores/useToastStore";
 import { useProfileSettings } from "./useProfileSettings";
@@ -18,10 +17,6 @@ vi.mock("next/navigation", () => ({
 
 vi.mock("@/features/auth/api/auth", () => ({
   authApi: { signOut: vi.fn() },
-}));
-
-vi.mock("@/features/workspace/stores/useWorkspaceStore", () => ({
-  workspaceActions: { clearData: vi.fn() },
 }));
 
 vi.mock("@/stores/useModalStore", () => ({
@@ -62,11 +57,10 @@ describe("useProfileSettings - confirmLogout", () => {
         "error"
       )
     );
-    expect(workspaceActions.clearData).not.toHaveBeenCalled();
     expect(routerReplace).not.toHaveBeenCalled();
   });
 
-  it("로그아웃 성공 시 세션을 정리하고 로그인 페이지로 이동한다", async () => {
+  it("로그아웃 성공 시 로그인 페이지로 이동한다 (다음 로그인 시 이전 선택 라이프룸을 유지하기 위해 currentWorkspaceId는 지우지 않는다)", async () => {
     vi.mocked(authApi.signOut).mockResolvedValueOnce(undefined);
 
     const { result } = renderHook(() => useProfileSettings(), { wrapper: createWrapper() });
@@ -75,7 +69,6 @@ describe("useProfileSettings - confirmLogout", () => {
     const { onConfirm } = vi.mocked(modalActions.showModal).mock.calls[0][0];
     await onConfirm?.();
 
-    await waitFor(() => expect(workspaceActions.clearData).toHaveBeenCalled());
-    expect(routerReplace).toHaveBeenCalledWith("/login");
+    await waitFor(() => expect(routerReplace).toHaveBeenCalledWith("/login"));
   });
 });

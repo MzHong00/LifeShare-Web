@@ -7,16 +7,16 @@ import { useQuery } from "@tanstack/react-query";
 import { ROUTES } from "@/constants/routes";
 import { modalActions } from "@/stores/useModalStore";
 import { toastActions } from "@/stores/useToastStore";
-import { AppHeader } from "@/components/AppHeader";
+import { AppHeader } from "@/components/layout/AppHeader";
 import { storyActions } from "@/features/stories/stores/useStoryStore";
 import { storyQueries } from "@/features/stories/queries/storyQueries";
 import { useDeleteStoryMutation } from "@/features/stories/queries/storyMutations";
 import { useCurrentWorkspace } from "@/features/workspace/hooks/useCurrentWorkspace";
 import { StoryDetailContent } from "@/features/stories/components/StoryDetailContent";
 
-import type { Story } from "@/features/stories/types/story";
-
 import styles from "./StoryDetailView.module.scss";
+
+import type { Story } from "@/features/stories/types/story";
 
 export const StoryDetailView = () => {
   const router = useRouter();
@@ -52,7 +52,7 @@ export const StoryDetailView = () => {
   if (!story) {
     return (
       <div className={styles.notFound}>
-        <p>스토리를 찾을 수 없어요.</p>
+        <p>스토리를 찾을 수 없습니다.</p>
       </div>
     );
   }

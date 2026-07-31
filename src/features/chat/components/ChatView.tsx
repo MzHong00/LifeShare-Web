@@ -17,16 +17,16 @@ export const ChatView = () => {
   const [inputText, setInputText] = useState(""); // 입력바 텍스트
   const { currentWorkspace, isPending: isWorkspacePending } = useCurrentWorkspace();
   const { data: user } = useQuery(authQueries.user());
-  // 나를 제외한 채팅 상대 전원 — memo로 참조를 고정해 ChatHeader의 memo가 유효하게 유지
-  const partners = useMemo(
-    () => currentWorkspace?.members?.filter((m) => m.id !== user?.id) ?? [],
-    [currentWorkspace?.members, user?.id]
-  );
   const { messages, isLoading, isError, sendMessage } = useChatMessages(
     currentWorkspace?.id ?? "",
     user?.id ?? ""
   );
   const { bottomRef } = useChatViewport(messages);
+  // 나를 제외한 채팅 상대 전원 — memo로 참조를 고정해 ChatHeader의 memo가 유효하게 유지
+  const partners = useMemo(
+    () => currentWorkspace?.members?.filter((m) => m.id !== user?.id) ?? [],
+    [currentWorkspace?.members, user?.id]
+  );
 
   /** 현재 입력값을 전송하고 입력바를 비운다 (전송 실패 시 입력값 복원) */
   const handleSend = () => {
@@ -54,9 +54,11 @@ export const ChatView = () => {
               className={styles.messages}
             />
 
-            <div className={styles.inputArea}>
-              <ChatInput value={inputText} onChange={setInputText} onSend={handleSend} />
-            </div>
+            {!isLoading && (
+              <div className={styles.inputArea}>
+                <ChatInput value={inputText} onChange={setInputText} onSend={handleSend} />
+              </div>
+            )}
           </>
         )}
       </div>

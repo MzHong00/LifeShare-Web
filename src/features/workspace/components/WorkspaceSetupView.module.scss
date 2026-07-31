@@ -9,7 +9,7 @@
 .inner {
   flex: 1;
   @include flex-col;
-  padding: 0 24px;
+  padding: 0 var(--space-2xl);
 }
 
 .stepContent {
@@ -20,21 +20,21 @@
 .topSection {
   flex: 1;
   @include flex-col;
-  padding-top: 40px;
+  padding-top: var(--space-4xl);
 }
 
 .iconWrap {
   @include icon-box(60px, 20px);
   background-color: rgba(var(--primary-rgb), 0.1);
-  margin-bottom: 20px;
+  margin-bottom: var(--space-xl);
   color: var(--primary);
 }
 
 .heading {
   font-size: 28px;
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   color: var(--grey-900);
-  margin-bottom: 12px;
+  margin-bottom: var(--space-md);
 }
 
 .desc {
@@ -45,7 +45,7 @@
 
 .typeOptions {
   @include flex-col(12px);
-  margin-top: 40px;
+  margin-top: var(--space-4xl);
 }
 
 .typeButton {
@@ -53,7 +53,7 @@
   height: 72px;
   border-radius: 18px;
   @include flex-row(16px);
-  padding: 0 24px;
+  padding: 0 var(--space-2xl);
   border: 1.5px solid;
   transition:
     background-color 0.15s,
@@ -72,7 +72,7 @@
 
 .typeLabel {
   font-size: 17px;
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
 }
 
 .typeLabelActive {
@@ -83,26 +83,26 @@
 }
 
 .formSection {
-  padding-top: 40px;
+  padding-top: var(--space-4xl);
   @include flex-col(12px);
 }
 
 .fieldLabel {
-  font-size: 14px;
-  font-weight: 700;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
   color: var(--grey-600);
-  margin-bottom: 8px;
-  margin-left: 4px;
+  margin-bottom: var(--space-sm);
+  margin-left: var(--space-xs);
 }
 
 .input {
   width: 100%;
   height: 60px;
   background-color: var(--grey-100);
-  border-radius: 16px;
-  padding: 0 20px;
-  font-size: 18px;
-  font-weight: 600;
+  border-radius: var(--radius-xl);
+  padding: 0 var(--space-xl);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
   color: var(--grey-900);
 
   &::placeholder {
@@ -113,10 +113,10 @@
 .inviteCodeBox {
   @include flex-row(12px);
   justify-content: space-between;
-  margin-top: 40px;
+  margin-top: var(--space-4xl);
   background-color: var(--grey-100);
-  border-radius: 16px;
-  padding: 0 20px;
+  border-radius: var(--radius-xl);
+  padding: 0 var(--space-xl);
   height: 60px;
   color: var(--grey-400);
 
@@ -127,13 +127,13 @@
 
 .inviteCodeText {
   font-size: 22px;
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   letter-spacing: 4px;
   color: var(--grey-900);
 }
 
 .bottomSection {
-  padding-bottom: 32px;
+  padding-bottom: var(--space-3xl);
   @include flex-col(4px);
 }
 
@@ -147,19 +147,19 @@
 
 .secondaryButton {
   width: 100%;
-  padding: 16px;
+  padding: var(--space-lg);
   color: var(--grey-400);
-  font-size: 16px;
+  font-size: var(--font-size-xl);
 }
 
 .linkBox {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-top: 32px;
+  margin-top: var(--space-3xl);
   background: var(--grey-100);
-  border-radius: 14px;
-  padding: 14px 16px;
+  border-radius: var(--radius-lg);
+  padding: 14px var(--space-lg);
   width: 100%;
   text-align: left;
   cursor: pointer;
@@ -168,14 +168,14 @@
 
 .linkText {
   flex: 1;
-  font-size: 13px;
+  font-size: var(--font-size-sm);
   color: var(--grey-700);
   word-break: break-all;
   line-height: 1.4;
 }
 
 .linkHint {
-  font-size: 12px;
+  font-size: var(--font-size-xs);
   color: var(--grey-400);
-  margin-top: 8px;
+  margin-top: var(--space-sm);
 }

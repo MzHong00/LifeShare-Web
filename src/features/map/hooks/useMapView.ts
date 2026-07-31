@@ -67,7 +67,7 @@ export const useMapView = () => {
   const openDirections = useCallback(() => {
     const partner = memberLocations.find((m) => m.member.id !== myUserId);
     if (!partner) {
-      toastActions.showToast("상대방의 위치를 아직 확인할 수 없어요.", "error");
+      toastActions.showToast("상대방의 위치를 아직 확인할 수 없습니다.", "error");
       return;
     }
     const url = `${DIRECTIONS_BASE_URL}&destination=${partner.lat},${partner.lng}&travelmode=driving`;

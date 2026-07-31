@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { authQueries } from "@/features/auth/queries/authQueries";
 import { useCurrentWorkspace } from "@/features/workspace/hooks/useCurrentWorkspace";
-import { ProfileImage } from "@/components/ProfileImage";
+import { ProfileImage } from "@/components/ui/ProfileImage";
 import { MemberListContent } from "./MemberListContent";
 import { modalActions } from "@/stores/useModalStore";
 

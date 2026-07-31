@@ -1,12 +1,12 @@
 @use "styles/mixins" as *;
 
 .annCard {
-  padding: 16px;
-  @include flex-row(16px);
+  padding: var(--space-lg);
+  @include flex-row(var(--space-lg));
 }
 
 .annIcon {
-  @include icon-box(48px, 16px);
+  @include icon-box(48px, var(--space-lg));
   background-color: var(--primary-light);
   color: var(--primary);
 }
@@ -26,8 +26,8 @@
 }
 
 .annTitle {
-  font-weight: 700;
-  font-size: 15px;
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-lg);
   color: var(--grey-900);
 }
 
@@ -36,9 +36,9 @@
 }
 
 .annDate {
-  font-size: 12px;
+  font-size: var(--font-size-xs);
   color: var(--grey-400);
-  margin-top: 2px;
+  margin-top: var(--space-2xs);
 }
 
 .annStatus {
@@ -46,14 +46,14 @@
 }
 
 .statusPast {
-  font-size: 12px;
+  font-size: var(--font-size-xs);
   color: var(--grey-400);
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
 }
 
 .statusToday,
 .statusDday {
-  font-size: 14px;
-  font-weight: 700;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
   color: var(--primary);
 }

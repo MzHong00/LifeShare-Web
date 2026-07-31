@@ -1,6 +1,6 @@
 import { Heart } from "lucide-react";
 
-import { Card } from "@/components/Card";
+import { Card } from "@/components/ui/Card";
 import { formatDate } from "@/utils/date";
 import { cx } from "@/utils/cn";
 

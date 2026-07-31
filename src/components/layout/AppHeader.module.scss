@@ -1,0 +1,42 @@
+@use "styles/mixins" as *;
+
+.header {
+  @include flex-between;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  padding: 0 var(--space-lg);
+  height: 56px;
+  background-color: transparent; // 부모 배경이 그대로 비치도록 항상 투명
+}
+
+.backButton {
+  @include icon-box(40px);
+  margin-left: -8px;
+
+  &:active {
+    background-color: var(--grey-100);
+  }
+
+  svg {
+    color: var(--grey-900);
+  }
+}
+
+.placeholder {
+  width: 40px;
+}
+
+.title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--grey-900);
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.right {
+  width: 40px;
+  @include flex-end;
+}

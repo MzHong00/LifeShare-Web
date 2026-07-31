@@ -8,7 +8,7 @@
 
 .header {
   @include flex-end;
-  padding: 12px 20px;
+  padding: var(--space-md) var(--space-xl);
 }
 
 .profileButton {
@@ -29,9 +29,16 @@
   padding: 0 40px 80px;
 }
 
+.errorText {
+  padding: var(--space-4xl) 0;
+  text-align: center;
+  font-size: var(--font-size-lg);
+  color: var(--grey-400);
+}
+
 .logoWrap {
   @include icon-box(80px, 24px);
-  margin-bottom: 40px;
+  margin-bottom: var(--space-4xl);
   background-color: var(--primary-light);
   box-shadow: 0 8px 24px rgba(var(--primary-rgb), 0.15);
 }
@@ -43,14 +50,14 @@
 
 .heading {
   font-size: 26px;
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   color: var(--grey-900);
   line-height: 1.3;
-  margin-bottom: 16px;
+  margin-bottom: var(--space-lg);
 }
 
 .desc {
-  font-size: 16px;
+  font-size: var(--font-size-xl);
   color: var(--grey-600);
   line-height: 1.625;
 }
@@ -71,12 +78,12 @@
 .codeInput {
   flex: 1;
   height: 52px;
-  padding: 0 16px;
-  border-radius: 14px;
+  padding: 0 var(--space-lg);
+  border-radius: var(--radius-lg);
   background: white;
   box-shadow: var(--shadow-card);
-  font-size: 15px;
-  font-weight: 500;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
   color: var(--grey-900);
 
   &::placeholder {
@@ -86,12 +93,12 @@
 
 .codeButton {
   height: 52px;
-  padding: 0 20px;
-  border-radius: 14px;
+  padding: 0 var(--space-xl);
+  border-radius: var(--radius-lg);
   background: var(--grey-900);
   color: white;
-  font-size: 15px;
-  font-weight: 600;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
   flex-shrink: 0;
 
   &:disabled {
@@ -100,13 +107,13 @@
 }
 
 .inboxButton {
-  margin-top: 20px;
+  margin-top: var(--space-xl);
   @include flex-row(6px);
   color: var(--grey-600);
-  font-size: 14px;
-  font-weight: 600;
-  padding: 10px 16px;
-  border-radius: 12px;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: var(--radius-md);
   background: white;
   box-shadow: var(--shadow-card);
   position: relative;
@@ -116,7 +123,7 @@
   background: var(--error);
   color: white;
   font-size: 11px;
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   border-radius: 999px;
   padding: 1px 6px;
   margin-left: 2px;
@@ -125,21 +132,21 @@
 .inviteList {
   @include flex-col(10px);
   width: 100%;
-  margin-top: 12px;
+  margin-top: var(--space-md);
 }
 
 .emptyInvite {
-  font-size: 14px;
+  font-size: var(--font-size-md);
   color: var(--grey-400);
   text-align: center;
-  padding: 20px 0;
+  padding: var(--space-xl) 0;
 }
 
 .inviteCard {
   @include flex-row(12px);
   background: white;
-  border-radius: 16px;
-  padding: 14px 16px;
+  border-radius: var(--radius-xl);
+  padding: 14px var(--space-lg);
   box-shadow: var(--shadow-card);
 }
 
@@ -156,14 +163,14 @@
 }
 
 .inviteName {
-  font-size: 14px;
-  font-weight: 700;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
   color: var(--grey-900);
   @include text-ellipsis;
 }
 
 .inviteLabel {
-  font-size: 12px;
+  font-size: var(--font-size-xs);
   color: var(--grey-500);
   margin-top: 2px;
 }
@@ -178,10 +185,10 @@
   background: var(--primary);
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   padding: 7px 12px;
-  font-size: 13px;
-  font-weight: 600;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
   cursor: pointer;
 
   &:disabled {
@@ -194,10 +201,10 @@
   background: var(--grey-100);
   color: var(--grey-600);
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   padding: 7px 12px;
-  font-size: 13px;
-  font-weight: 600;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
   cursor: pointer;
 
   &:disabled {

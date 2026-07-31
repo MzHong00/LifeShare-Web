@@ -3,11 +3,10 @@ import { useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 
-import { authApi } from "@/features/auth/api/auth";
 import { authQueries } from "@/features/auth/queries/authQueries";
 import { useSignOutMutation } from "@/features/auth/queries/authMutations";
-import { workspaceActions } from "@/features/workspace/stores/useWorkspaceStore";
-import { storageApi } from "@/api/storage";
+import { profileApi } from "@/features/profile/api/profile";
+import { storageApi } from "@/lib/supabase/storage";
 
 import { modalActions } from "@/stores/useModalStore";
 import { resizeImageFile } from "@/utils/imageResize";
@@ -58,7 +57,7 @@ export const useProfileSettings = (): UseProfileSettingsResult => {
           if (!nextName) return;
           updateUserCache({ name: nextName });
           try {
-            await authApi.updateProfile({ name: nextName });
+            await profileApi.updateProfile({ name: nextName });
             toastActions.showToast("이름이 성공적으로 변경되었습니다", "success");
           } catch {
             updateUserCache({ name: currentName });
@@ -86,7 +85,7 @@ export const useProfileSettings = (): UseProfileSettingsResult => {
       try {
         const resizedFile = await resizeImageFile(file);
         const uploadedUrl = await storageApi.uploadImage(resizedFile, user.id);
-        await authApi.updateProfile({ profileImage: uploadedUrl });
+        await profileApi.updateProfile({ profileImage: uploadedUrl });
         updateUserCache({ profileImage: uploadedUrl });
         toastActions.showToast("프로필 사진이 변경되었습니다", "success");
       } catch {
@@ -108,7 +107,8 @@ export const useProfileSettings = (): UseProfileSettingsResult => {
       onConfirm: async () => {
         try {
           await signOutMutationAsync();
-          workspaceActions.clearData();
+          // currentWorkspaceId는 지우지 않는다 — 재로그인 시 이전에 선택했던 라이프룸이 그대로 유지되어야 하고,
+          // 다른 계정으로 로그인하는 경우엔 useCurrentWorkspace가 목록에 없는 ID를 감지해 안전하게 폴백한다
           queryClient.clear();
           router.replace(ROUTES.LOGIN.path);
         } catch {

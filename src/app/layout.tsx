@@ -1,11 +1,13 @@
-import type { Metadata } from "next";
 import "../styles/globals.scss";
 import { QueryProvider } from "@/lib/QueryProvider";
 import { SessionProvider } from "@/lib/SessionProvider";
-import { Modal } from "@/components/Modal";
-import { Toast } from "@/components/Toast";
+import { Modal } from "@/components/ui/Modal";
+import { Toast } from "@/components/feedback/Toast";
+import { GlobalLoadingOverlay } from "@/components/feedback/GlobalLoadingOverlay";
 import { NOINDEX_ROBOTS } from "@/constants/seo";
 import { APP_BRAND_NAME, SITE_URL } from "@/constants/config";
+
+import type { Metadata } from "next";
 
 const SITE_DESCRIPTION = "우리의 소중한 일상을 함께 나누는 공간"; // 기본 메타 설명
 const APP_ICON_PATH = "/app_icon.png"; // 파비콘·OG 이미지 공용 경로
@@ -39,6 +41,7 @@ const RootLayout = ({
           <SessionProvider>{children}</SessionProvider>
           <Modal />
           <Toast />
+          <GlobalLoadingOverlay />
         </QueryProvider>
       </body>
     </html>

@@ -14,8 +14,9 @@ import {
 } from "@/features/map/constants/mapConfig";
 import { MapLoadState } from "@/features/map/components/MapLoadState";
 
-import type { LocationPoint } from "@/features/stories/types/story";
 import styles from "./PathPickerMap.module.scss";
+
+import type { LocationPoint } from "@/features/stories/types/story";
 
 const ENDPOINT_DOT_SIZE = 18;
 const WAYPOINT_DOT_SIZE = 12;
@@ -126,7 +127,12 @@ export function PathPickerMap({
       </button>
 
       {/* 내 위치 FAB */}
-      <button type="button" onClick={handleMyLocation} className={styles.locationFab}>
+      <button
+        type="button"
+        onClick={handleMyLocation}
+        className={styles.locationFab}
+        aria-label="내 위치로 이동"
+      >
         <Navigation size={17} />
       </button>
 

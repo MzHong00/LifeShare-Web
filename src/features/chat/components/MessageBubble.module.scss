@@ -7,11 +7,11 @@
 
 // 같은 발신자·같은 분 묶음의 두 번째 메시지부터는 간격을 좁혀 카카오톡처럼 한 덩어리로 보이게 함
 .rowGrouped {
-  margin-bottom: 2px;
+  margin-bottom: var(--space-2xs);
 }
 
 .partnerAvatar {
-  margin-bottom: 2px;
+  margin-bottom: var(--space-2xs);
   flex-shrink: 0;
 }
 
@@ -38,7 +38,7 @@
   font-size: 10px;
   color: var(--grey-400);
   flex-shrink: 0;
-  margin-bottom: 2px;
+  margin-bottom: var(--space-2xs);
 }
 
 // 테마 액센트를 낮은 opacity로 tint한 단색 반투명 카드(장식 없이 심플하게)
@@ -46,15 +46,17 @@
   background-color: rgba(var(--theme-accent-rgb), 0.2);
   color: var(--grey-900);
   padding: 10px 14px;
-  border-radius: 16px;
+  border-radius: var(--radius-xl);
   border-bottom-right-radius: 4px;
 }
 
-// 중립 라이트 그레이 단색 카드로 내 말풍선(테마색)과 명확히 구분
+// 오로라 배경 위에 떠 있는 글라스 화이트 카드 — 내 말풍선(테마 틴트)과 명확히 구분
 .bubblePartner {
-  background-color: var(--grey-100);
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.05); // 밝은 배경에서도 윤곽이 보이도록 뉴트럴 헤어라인
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.07);
   padding: 10px 14px;
-  border-radius: 16px;
+  border-radius: var(--radius-xl);
   border-bottom-left-radius: 4px;
 }
 

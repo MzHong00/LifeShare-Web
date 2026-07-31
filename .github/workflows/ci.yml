@@ -44,8 +44,15 @@ jobs:
       - name: 🧹 Lint # 코드 스타일 검사
         run: npm run lint
 
-      - name: 🧪 Test # vitest 유닛 테스트
-        run: npm run test
+      - name: 🧪 Test # vitest 유닛 테스트 + 커버리지 리포트 생성
+        run: npm run test:coverage
+
+      - name: 📊 Upload coverage report # HTML 리포트를 아티팩트로 보관(대시보드 연동 없이 PR에서 다운로드해 확인)
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage/
+          retention-days: 14
 
   # 프로덕션 빌드 검증: 품질 게이트와 병렬 실행해 전체 CI 시간 단축
   build:

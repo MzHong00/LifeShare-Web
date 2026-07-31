@@ -49,7 +49,13 @@ export const useChatMessages = (workspaceId: string, userId: string): UseChatMes
           );
         }
       )
-      .subscribe();
+      .subscribe((status) => {
+        // 재구독(네트워크 단절·탭 복귀 등) 시 끊긴 동안 놓친 메시지를 refetch로 복구한다
+        // (staleTime이 Infinity라 invalidate 없이는 갭이 채워지지 않음)
+        if (status === "SUBSCRIBED") {
+          queryClient.invalidateQueries({ queryKey: listQuery.queryKey });
+        }
+      });
 
     return () => {
       supabase.removeChannel(channel);
@@ -60,10 +66,10 @@ export const useChatMessages = (workspaceId: string, userId: string): UseChatMes
   const sendMessage = (text: string, onError?: () => void) => {
     if (!text.trim() || !workspaceId || !userId) return;
     sendMutate(
-      { workspaceId, senderId: userId, text: text.trim() },
+      { workspaceId, text: text.trim() },
       {
         onError: () => {
-          toastActions.showToast("메시지 전송에 실패했어요.", "error");
+          toastActions.showToast("메시지 전송에 실패했습니다.", "error");
           onError?.();
         },
       }

@@ -8,7 +8,8 @@ const makePointerEvent = (x: number, y: number, pointerId = 1) =>
     clientX: x,
     clientY: y,
     pointerId,
-  }) as React.PointerEvent;
+    target: document.createElement("div"), // 버튼이 아닌 요소에서 시작한 포인터(인터랙티브 요소 가드 통과)
+  }) as unknown as React.PointerEvent;
 
 const setup = (onClose: () => void) => {
   const { result } = renderHook(() => useSwipeDismiss(onClose));

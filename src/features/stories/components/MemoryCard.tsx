@@ -7,15 +7,15 @@ import Image from "next/image";
 import { cx } from "@/utils/cn";
 import { formatDate } from "@/utils/date";
 
-import type { Story } from "@/features/stories/types/story";
-
 import styles from "./MemoryCard.module.scss";
+
+import type { Story } from "@/features/stories/types/story";
 
 interface MemoryCardProps {
   story: Story;
   isExpanded?: boolean;
   onClose?: (e: React.MouseEvent) => void;
-  showDate?: boolean;
+  shouldShowDate?: boolean;
   isShell?: boolean; // 예시(껍데기) 카드 여부 — 점선 표시로 구분
 }
 
@@ -25,7 +25,7 @@ const MemoryCardComponent = ({
   story,
   isExpanded,
   onClose,
-  showDate,
+  shouldShowDate,
   isShell,
 }: MemoryCardProps) => {
   const cardTitle = story.title || story.description || "제목 없음";
@@ -80,7 +80,7 @@ const MemoryCardComponent = ({
       )}
 
       <div className={styles.overlay}>
-        {showDate && story.date && (
+        {shouldShowDate && story.date && (
           <span className={styles.dateBadge}>{formatDate(story.date, "YYYY.MM.DD")}</span>
         )}
         <p className={styles.caption}>{cardTitle}</p>

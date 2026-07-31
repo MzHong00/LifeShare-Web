@@ -8,9 +8,9 @@ import { storyActions } from "@/features/stories/stores/useStoryStore";
 import { isShellStory } from "@/features/stories/constants/previewMockStories";
 import { formatDate } from "@/utils/date";
 
-import type { Story } from "@/features/stories/types/story";
-
 import styles from "./StoryDetailContent.module.scss";
+
+import type { Story } from "@/features/stories/types/story";
 
 interface StoryDetailContentProps {
   story: Story;

@@ -4,16 +4,16 @@ import { useRouter } from "next/navigation";
 
 import { ROUTES } from "@/constants/routes";
 import { cx } from "@/utils/cn";
-import { Skeleton } from "@/components/Skeleton";
+import { Skeleton } from "@/components/feedback/Skeleton";
 
 import { FILTERS, useFilteredTodos } from "@/features/todo/hooks/useFilteredTodos";
 import { TodoItem } from "@/features/todo/components/TodoItem";
 
+import styles from "./TodoList.module.scss";
+
 import type { Filter } from "@/features/todo/hooks/useFilteredTodos";
 import type { Todo } from "@/features/todo/types/todo";
 import type { Workspace } from "@/features/workspace/types/workspace";
-
-import styles from "./TodoList.module.scss";
 
 // 캘린더 등 외부 소비자 호환을 위해 Filter 타입을 재노출한다.
 export type { Filter };
@@ -34,6 +34,7 @@ interface TodoListProps {
   // 현재 활성 필터. 부모(페이지)에서 URL 쿼리스트링과 동기화해 관리한다.
   filter: Filter;
   isPending?: boolean; // 할 일 목록 로딩 여부(true면 스켈레톤 표시)
+  isError?: boolean; // 할 일 목록 조회 실패 여부(true면 에러 안내 표시)
   /** 필터 변경 핸들러 */
   onFilterChange: (filter: Filter) => void;
   /** 완료 여부 토글 핸들러 */
@@ -46,6 +47,7 @@ export const TodoList = ({
   initialDate,
   filter,
   isPending = false,
+  isError = false,
   onFilterChange,
   onToggle,
 }: TodoListProps) => {
@@ -67,7 +69,7 @@ export const TodoList = ({
 
   // initialDate가 있으면 해당 날짜를 기본값으로 세팅한 채로 생성 화면으로 이동한다.
   const addHref = initialDate ? ROUTES.TODO.CREATE.query({ initialDate }) : ROUTES.TODO.CREATE.path;
-  const isEmpty = !isPending && displayedTodos.length === 0;
+  const isEmpty = !isPending && !isError && displayedTodos.length === 0;
 
   return (
     <div className={styles.container}>
@@ -96,6 +98,8 @@ export const TodoList = ({
             </div>
           ))}
 
+        {isError && <p className={styles.errorText}>할 일 목록을 불러오지 못했습니다.</p>}
+
         {isEmpty && (
           <div className={styles.empty}>
             <p className={styles.emptyText}>
@@ -111,6 +115,7 @@ export const TodoList = ({
         )}
 
         {!isPending &&
+          !isError &&
           !isEmpty &&
           displayedTodos.map((todo) => (
             <TodoItem

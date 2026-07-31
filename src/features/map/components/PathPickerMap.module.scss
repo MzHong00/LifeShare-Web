@@ -21,7 +21,7 @@
   @include icon-box(38px);
   position: absolute;
   top: max(16px, calc(env(safe-area-inset-top) + 10px));
-  left: 16px;
+  left: var(--space-lg);
   z-index: 30;
   background: rgba(0, 0, 0, 0.45);
   backdrop-filter: blur(6px);
@@ -39,7 +39,7 @@
 .locationFab {
   @include icon-box(42px);
   position: absolute;
-  right: 16px;
+  right: var(--space-lg);
   bottom: calc(max(20px, calc(20px + env(safe-area-inset-bottom))) + 76px);
   z-index: 20;
   background: rgba(255, 255, 255, 0.95);
@@ -59,8 +59,8 @@
 .toolCard {
   position: absolute;
   bottom: max(20px, calc(20px + env(safe-area-inset-bottom)));
-  left: 16px;
-  right: 16px;
+  left: var(--space-lg);
+  right: var(--space-lg);
   z-index: 20;
   background: rgba(255, 255, 255, 0.97);
   backdrop-filter: blur(14px);
@@ -75,7 +75,7 @@
 // ── 상단: 힌트 or 툴바 ──
 
 .toolMain {
-  padding: 14px 16px;
+  padding: 14px var(--space-lg);
   min-height: 52px;
   @include flex-row;
 }
@@ -83,8 +83,8 @@
 .hint {
   flex: 1;
   text-align: center;
-  font-size: 14px;
-  font-weight: 500;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
   color: var(--grey-500);
 }
 
@@ -103,8 +103,8 @@
   @include flex-row(5px);
   padding: 7px 11px;
   border-radius: 10px;
-  font-size: 13px;
-  font-weight: 600;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
   transition: background 0.12s;
 
   span {
@@ -135,8 +135,8 @@
 }
 
 .count {
-  font-size: 13px;
-  font-weight: 700;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
 }
 
 .confirmBtn {
@@ -144,8 +144,8 @@
   padding: 0 18px;
   border-radius: 10px;
   color: var(--white);
-  font-size: 14px;
-  font-weight: 700;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
   transition:
     opacity 0.12s,
     transform 0.1s;
@@ -166,7 +166,7 @@
 
 .colorRow {
   @include flex-row(10px);
-  padding: 12px 16px;
+  padding: var(--space-md) var(--space-lg);
   overflow-x: auto;
   @include scrollbar-hide;
 }

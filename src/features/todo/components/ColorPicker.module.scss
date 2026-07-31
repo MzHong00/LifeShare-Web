@@ -3,11 +3,12 @@
 .colorPicker {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: var(--space-md);
 }
 
 .colorButton {
   @include icon-box(36px);
+  @include expand-tap-target(36px);
   background-color: var(--color-button-bg);
   transition: transform 0.1s;
 }

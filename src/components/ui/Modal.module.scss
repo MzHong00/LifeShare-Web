@@ -1,0 +1,166 @@
+@use "styles/mixins" as *;
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  @include flex-center;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  background-color: var(--overlay-scrim);
+  backdrop-filter: blur(6px) saturate(140%);
+  -webkit-backdrop-filter: blur(6px) saturate(140%);
+  animation: backdropFadeIn 0.2s ease-out;
+}
+
+.container {
+  position: relative;
+  background-color: var(--white);
+  border-radius: 28px;
+  width: 85%;
+  max-width: 384px;
+  overflow: hidden;
+  box-shadow:
+    0 8px 24px -8px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(0, 0, 0, 0.04);
+  animation: modalPop 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.body {
+  padding: 28px var(--space-2xl) var(--space-lg);
+}
+
+.title {
+  font-size: 19px;
+  font-weight: var(--font-weight-extrabold);
+  letter-spacing: -0.02em;
+  color: var(--grey-900);
+  text-align: center;
+  margin-bottom: var(--space-sm);
+}
+
+.message {
+  font-size: var(--font-size-md);
+  color: var(--grey-600);
+  text-align: center;
+  line-height: 1.6;
+  white-space: pre-line;
+  // 한국어가 어절 중간에서 끊기지 않도록 (긴 워크스페이스 이름 등으로 넘칠 때만 강제 분리)
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+.content {
+  margin-top: var(--space-lg);
+}
+
+// ─── 확인 문구 입력 (되돌릴 수 없는 작업) ─────────────────────────────────────
+
+.phraseField {
+  margin-top: var(--space-xl);
+  @include flex-col(var(--space-sm));
+}
+
+.phraseHint {
+  font-size: var(--font-size-md);
+  color: var(--grey-600);
+  text-align: center;
+}
+
+// 따라 입력해야 할 문구 — 문장 안에서 눈에 띄도록 굵기만 올린다
+.phraseWord {
+  font-weight: var(--font-weight-bold);
+  color: var(--grey-900);
+}
+
+.phraseInput {
+  width: 100%;
+  height: 52px;
+  background-color: var(--grey-100);
+  border: 1px solid transparent;
+  border-radius: var(--radius-lg);
+  padding: 0 var(--space-lg);
+  text-align: center;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--grey-900);
+  transition: border-color 0.15s ease;
+
+  &::placeholder {
+    color: var(--grey-400);
+    font-weight: var(--font-weight-regular);
+  }
+
+  &:focus {
+    border-color: var(--error);
+  }
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-sm);
+  padding: var(--space-lg) var(--space-xl) var(--space-xl);
+}
+
+.cancelButton {
+  flex: 1;
+  padding: 14px 0;
+  border-radius: var(--radius-lg);
+  background-color: var(--grey-100);
+  color: var(--grey-700);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-lg);
+  transition: transform 0.15s ease;
+
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+.confirmButton {
+  flex: 1;
+  padding: 14px 0;
+  border-radius: var(--radius-lg);
+  background-color: var(--theme-accent);
+  color: var(--white);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-lg);
+  box-shadow: 0 4px 14px -4px rgba(var(--theme-accent-rgb), 0.5);
+  transition: transform 0.15s ease;
+
+  &:active {
+    transform: scale(0.97);
+  }
+
+  // 확인 문구가 아직 일치하지 않은 상태 — 눌러도 진행되지 않음을 시각적으로 알린다
+  &:disabled {
+    background-color: var(--grey-200);
+    color: var(--grey-400);
+    box-shadow: none;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+@keyframes backdropFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalPop {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}

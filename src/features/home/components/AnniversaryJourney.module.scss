@@ -1,22 +1,26 @@
+@use "sass:math";
 @use "styles/mixins" as *;
 
 // 레일 지오메트리 상수
 $dot-size: 10px; // 정거장 도트 지름
 $today-dot-size: 22px; // 오늘 하트 마커 지름
 $rail-top: 11px; // 레일 세로 위치(오늘 마커 중심선)
-$rail-inset: 24px; // 첫/마지막 노드 중심에 레일 끝을 맞추기 위한 좌우 여백
+$rail-inset: 24px; // 레일 끝 좌우 여백 (.journey 패딩 박스 기준)
+$journey-pad-x: 8px; // .journey 좌우 패딩 — 도트 좌표를 .nodes(콘텐츠 박스) 기준으로 환산할 때 차감
+$nodes-rail-inset: $rail-inset - $journey-pad-x; // .nodes 기준 레일 끝 여백
 
 // 이전 기념일 → 다가오는 기념일 정거장들을 잇는 여정 레일 (프레임리스, 오로라 배경 위에 직접 배치)
 .journey {
   position: relative;
   display: block;
   width: 100%;
-  padding: 4px 8px 2px;
+  margin-top: var(--space-sm); // 위 스포트라이트 카드와의 간격을 형제 gap(16px)보다 더 벌림
+  padding: var(--space-xs) var(--space-sm) var(--space-2xs);
   text-align: left;
-  transition: opacity 0.15s ease;
 
-  &:active {
-    opacity: 0.7;
+  // 전역 button 호버(brightness 0.9)로 인한 회색빛 해제
+  &:hover {
+    filter: none;
   }
 }
 
@@ -27,7 +31,7 @@ $rail-inset: 24px; // 첫/마지막 노드 중심에 레일 끝을 맞추기 위
   left: $rail-inset;
   right: $rail-inset;
   height: 3px;
-  border-radius: 9999px;
+  border-radius: var(--radius-pill);
   background: rgba(var(--theme-primary-rgb), 0.12);
 }
 
@@ -38,9 +42,13 @@ $rail-inset: 24px; // 첫/마지막 노드 중심에 레일 끝을 맞추기 위
   left: $rail-inset;
   width: calc((100% - #{$rail-inset * 2}) * var(--heart-ratio, 0));
   height: 3px;
-  border-radius: 9999px;
-  background: linear-gradient(90deg, var(--theme-primary) 0%, var(--theme-accent) 100%);
-  box-shadow: 0 0 8px rgba(var(--theme-accent-rgb), 0.4);
+  border-radius: var(--radius-pill);
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--theme-primary) 55%, var(--white)) 0%,
+    color-mix(in srgb, var(--theme-accent) 55%, var(--white)) 100%
+  );
+  box-shadow: 0 0 8px rgba(var(--theme-accent-rgb), 0.2);
 }
 
 // 오늘 위치의 글라스 하트 마커 — 게이지(.railFill) 오른쪽 끝에 앵커링되어 게이지와 항상 함께 움직인다
@@ -53,7 +61,7 @@ $rail-inset: 24px; // 첫/마지막 노드 중심에 레일 끝을 맞추기 위
   z-index: 1;
   width: $today-dot-size;
   height: $today-dot-size;
-  border-radius: 9999px;
+  border-radius: var(--radius-pill);
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -66,32 +74,36 @@ $rail-inset: 24px; // 첫/마지막 노드 중심에 레일 끝을 맞추기 위
   fill: var(--theme-accent);
 }
 
-// 노드(이전 기념일 + 다가오는 정거장)들을 레일 위에 균등 배치
+// 노드(이전 기념일 + 다가오는 정거장)들을 담는 컨테이너 — 각 노드는 내부에서 레일 비율 좌표에 절대 배치된다
 .nodes {
   position: relative;
-  @include flex-between;
-  align-items: flex-start;
+  height: $rail-top + math.div($dot-size, 2) + 34px; // 도트 중심(레일 세로 위치)까지 + 라벨·D-day 2줄 높이
 }
 
+// 노드(도트+라벨+D-day) 전체를 레일 위 비율 좌표(--node-ratio 0~1)에 절대 배치 — 텍스트 폭과 무관하게 도트와 항상 함께 정렬된다
 .node {
   @include flex-col-center(4px);
+  position: absolute;
+  top: 0;
+  left: calc(#{$nodes-rail-inset} + (100% - #{$nodes-rail-inset * 2}) * var(--node-ratio, 0));
+  transform: translateX(-50%);
   min-width: 0;
 }
 
-// 기념일 정거장 도트 (기본: 아직 먼 정거장)
+// 기념일 정거장 도트 (기본: 아직 먼 정거장) — 도트 중심이 하트 마커와 같은 세로선($rail-top)에 오도록 상단 여백 확보
 .dot {
   width: $dot-size;
   height: $dot-size;
-  margin: calc(($today-dot-size - $dot-size) / 2) 0; // 하트 마커와 세로 중심선 정렬
-  border-radius: 9999px;
+  margin-top: $rail-top - math.div($dot-size, 2);
+  border-radius: var(--radius-pill);
   background: var(--white);
-  border: 2px solid rgba(var(--theme-primary-rgb), 0.25);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  border: 2px solid rgba(var(--theme-primary-rgb), 0.15);
+  box-shadow: var(--shadow-xs);
 }
 
 .nodeLabel {
-  font-size: 12px;
-  font-weight: 700;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
   color: var(--grey-700);
   letter-spacing: -0.01em;
   @include text-ellipsis;
@@ -100,37 +112,35 @@ $rail-inset: 24px; // 첫/마지막 노드 중심에 레일 끝을 맞추기 위
 
 .nodeSub {
   font-size: 11px;
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
   color: var(--grey-500);
 }
 
-// 이미 지나온 출발점(이전 기념일/시작): 진행 구간과 이어지도록 테마 색으로 채운 도트
+// 프로그레스가 닿은 정거장: 게이지(.railFill)와 동일한 시그니처 그라데이션으로 채운 도트
 .passedNode {
   .dot {
     border: none;
-    background: linear-gradient(135deg, var(--theme-primary) 0%, var(--theme-accent) 100%);
-    box-shadow: 0 0 6px rgba(var(--theme-primary-rgb), 0.35);
+    background: linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--theme-primary) 55%, var(--white)) 0%,
+      color-mix(in srgb, var(--theme-accent) 55%, var(--white)) 100%
+    );
+    box-shadow: 0 0 4px rgba(var(--theme-primary-rgb), 0.12);
   }
 
   .nodeLabel {
-    color: var(--theme-primary);
+    color: rgba(var(--theme-primary-rgb), 0.85);
   }
 
   .nodeSub {
-    color: rgba(var(--theme-primary-rgb), 0.65);
+    color: rgba(var(--theme-primary-rgb), 0.55);
   }
 }
 
-// 다음 목적지 정거장: 그라데이션 도트 + D-day 강조
+// 다음 목적지 정거장: 아직 프로그레스가 닿지 않았으므로 도트는 빈 점 유지, D-day 텍스트만 강조
 .nextNode {
-  .dot {
-    border: none;
-    background: linear-gradient(135deg, var(--theme-primary) 0%, var(--theme-accent) 100%);
-    box-shadow: 0 0 8px rgba(var(--theme-accent-rgb), 0.45);
-  }
-
   .nodeSub {
-    font-weight: 800;
+    font-weight: var(--font-weight-extrabold);
     background: linear-gradient(135deg, var(--theme-primary) 0%, var(--theme-accent) 100%);
     background-clip: text;
     -webkit-background-clip: text;

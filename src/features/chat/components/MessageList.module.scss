@@ -4,15 +4,24 @@
   @include flex-center;
   height: 100%;
   color: var(--grey-400);
-  font-size: 14px;
+  font-size: var(--font-size-md);
 }
 
-.skeletonRowMe {
-  @include flex-end;
-  margin-bottom: 10px;
+.loadingWrap {
+  @include flex-center;
+  height: 100%;
 }
 
-.skeletonRowPartner {
-  @include flex-row(8px);
-  margin-bottom: 10px;
+// 가상화 전체 높이를 잡는 sizer — 실제 높이(px)는 동적 계산값이라 인라인 style로 지정
+.virtualSizer {
+  position: relative;
+  width: 100%;
+}
+
+// 가상화된 개별 메시지 — top 위치(translateY)는 동적 계산값이라 인라인 style로 지정
+.virtualItem {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
 }

@@ -1,7 +1,9 @@
+import { Spinner } from "@/components/feedback/Spinner";
 import { cx } from "@/utils/cn";
 
-import type { MapLoadStatus } from "@/features/map/hooks/useGoogleMap";
 import styles from "./MapLoadState.module.scss";
+
+import type { MapLoadStatus } from "@/features/map/hooks/useGoogleMap";
 
 interface MapLoadStateProps {
   status: Exclude<MapLoadStatus, "ready">;
@@ -31,7 +33,7 @@ export const MapLoadState = ({ status, errorMessage }: MapLoadStateProps) => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.spinner} />
+      <Spinner />
     </div>
   );
 };

@@ -12,8 +12,8 @@
 }
 
 .title {
-  font-size: 14px;
-  font-weight: 500;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
   color: var(--grey-500);
 }
 
@@ -22,15 +22,6 @@
 }
 
 .desc {
-  font-size: 12px;
+  font-size: var(--font-size-xs);
   color: var(--grey-400);
-}
-
-.spinner {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border: 2px solid var(--primary);
-  border-top-color: transparent;
-  animation: spin 0.8s linear infinite;
 }

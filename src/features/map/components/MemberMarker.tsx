@@ -6,9 +6,9 @@ import Image from "next/image";
 import { cx } from "@/utils/cn";
 import { getInitials } from "@/utils/format";
 
-import type { WorkspaceMember } from "@/features/workspace/types/workspace";
-
 import styles from "./MemberMarker.module.scss";
+
+import type { WorkspaceMember } from "@/features/workspace/types/workspace";
 
 interface MemberMarkerProps {
   member: WorkspaceMember;

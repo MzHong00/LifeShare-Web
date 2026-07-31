@@ -66,7 +66,11 @@ export const StoriesView = () => {
           placeholder="추억을 검색해보세요"
           className={styles.searchInput}
         />
-        <button onClick={() => router.push(ROUTES.STORIES.EDIT.path)} className={styles.addButton}>
+        <button
+          onClick={() => router.push(ROUTES.STORIES.EDIT.path)}
+          className={styles.addButton}
+          aria-label="스토리 추가"
+        >
           <Plus size={22} strokeWidth={2.5} />
         </button>
       </div>
@@ -74,7 +78,7 @@ export const StoriesView = () => {
       <div className={styles.grid}>
         {filteredStories.length === 0 ? (
           <div className={styles.empty}>
-            <p>{searchQuery ? "검색 결과가 없어요." : "아직 스토리가 없어요."}</p>
+            <p>{searchQuery ? "검색 결과가 없습니다." : "아직 스토리가 없습니다."}</p>
             {!searchQuery && (
               <button
                 onClick={() => router.push(ROUTES.STORIES.EDIT.path)}

@@ -9,35 +9,31 @@ interface ToastItem {
 }
 
 interface ToastState {
-  toasts: ToastItem[];
+  toast: ToastItem | null;
 }
 
-const TOAST_DURATION_MS = 3000; // 토스트 자동 제거까지의 시간(ms)
+const TOAST_DURATION_MS = 2000; // 토스트 자동 제거까지의 시간(ms)
 
-const toastStore = create<ToastState>()(() => ({ toasts: [] }));
+const toastStore = create<ToastState>()(() => ({ toast: null }));
 
-/** 토스트 상태 셀렉터 훅. selector 생략 시 전체 상태를 반환한다 */
-export const useToastStore = <T = ToastState>(
-  selector: (state: ToastState) => T = (state) => state as unknown as T
-) => toastStore(selector);
+let hideTimer: ReturnType<typeof setTimeout> | null = null; // 자동 제거 타이머(새 토스트가 뜨면 이전 타이머를 취소하고 갱신)
+
+/** 토스트 상태 셀렉터 훅 */
+export const useToastStore = <T>(selector: (state: ToastState) => T) => toastStore(selector);
 
 export const toastActions = {
-  /** 토스트를 추가하고 TOAST_DURATION_MS 후 자동 제거한다 */
+  /** 토스트를 표시한다. 이전 토스트가 있다면 즉시 교체하고 TOAST_DURATION_MS 후 자동 제거한다 */
   showToast: (message: string, type: ToastType = "info") => {
     const id = `toast-${crypto.randomUUID()}`;
-    toastStore.setState((state) => ({
-      toasts: [...state.toasts, { id, message, type }],
-    }));
-    setTimeout(() => {
-      toastStore.setState((state) => ({
-        toasts: state.toasts.filter((t) => t.id !== id),
-      }));
+    if (hideTimer) clearTimeout(hideTimer);
+    toastStore.setState({ toast: { id, message, type } });
+    hideTimer = setTimeout(() => {
+      toastStore.setState({ toast: null });
     }, TOAST_DURATION_MS);
   },
-  /** id로 토스트를 즉시 제거한다 */
+  /** id가 현재 토스트와 일치하면 즉시 제거한다 */
   removeToast: (id: string) => {
-    toastStore.setState((state) => ({
-      toasts: state.toasts.filter((t) => t.id !== id),
-    }));
+    if (hideTimer) clearTimeout(hideTimer);
+    toastStore.setState((state) => (state.toast?.id === id ? { toast: null } : state));
   },
 };

@@ -35,6 +35,7 @@ export const WorkspaceThemePicker = ({ value, onChange }: WorkspaceThemePickerPr
           <button
             key={option.value}
             type="button"
+            data-theme={option.value}
             onClick={() => onChange(option.value)}
             className={cx(
               styles.card,

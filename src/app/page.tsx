@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 
 import { COOKIE_KEYS } from "@/constants/config";
 import { ROUTES } from "@/constants/routes";
-import { createServerSupabase } from "@/lib/supabase/server";
+import { createServerSupabase } from "@/server/common/utils/supabaseClient";
 
 export default async function RootPage() {
   const supabase = await createServerSupabase();

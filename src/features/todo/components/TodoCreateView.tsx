@@ -2,7 +2,7 @@
 import { useSearchParams } from "next/navigation";
 import { Trash2 } from "lucide-react";
 
-import { AppHeader } from "@/components/AppHeader";
+import { AppHeader } from "@/components/layout/AppHeader";
 import { getDateWithOffset } from "@/utils/date";
 
 import { useTodoForm } from "@/features/todo/hooks/useTodoForm";

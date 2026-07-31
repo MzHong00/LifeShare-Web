@@ -1,0 +1,68 @@
+@use "styles/mixins" as *;
+
+.wrapper {
+  padding-bottom: 8px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-xs) 0 var(--space-md);
+}
+
+.monthTitle {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--grey-900);
+  text-align: center;
+}
+
+.controlButton {
+  @include icon-box(32px, 10px);
+  color: var(--grey-700);
+  transition: transform 0.15s ease;
+
+  &:active {
+    transform: scale(0.92);
+  }
+}
+
+.calendarBody {
+  background-color: var(--white);
+  border: 1px solid var(--grey-100);
+  border-radius: var(--radius-xl);
+  padding: var(--space-md);
+}
+
+.weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: var(--space-sm);
+}
+
+.weekday {
+  text-align: center;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  padding: var(--space-xs) 0;
+  color: var(--grey-500);
+}
+
+.weekdaySun {
+  color: var(--error);
+}
+
+.weekdaySat {
+  color: var(--primary);
+}
+
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(
+    6,
+    1fr
+  ); // 5주/6주 달에 관계없이 항상 6행으로 고정해 모달 높이가 흔들리지 않게 한다
+  gap: var(--space-xs) 0;
+}

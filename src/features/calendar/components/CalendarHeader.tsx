@@ -2,14 +2,13 @@ import { memo } from "react";
 
 import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
 
+import { ICON_SIZE } from "@/constants/iconSize";
 import { formatYearMonth } from "@/utils/date";
 
 import styles from "./CalendarHeader.module.scss";
 
 const PREV_MONTH = -1; // 이전 달 이동 delta
 const NEXT_MONTH = 1; // 다음 달 이동 delta
-const NAV_ICON_SIZE = 18; // 월 이동 아이콘 크기
-const ADD_ICON_SIZE = 20; // 추가 아이콘 크기
 
 interface CalendarHeaderProps {
   currentMonth: string; // 표시 중인 월 (YYYY-MM)
@@ -34,17 +33,17 @@ const CalendarHeaderComponent = ({
           className={styles.controlButton}
           aria-label="이전 달"
         >
-          <ChevronLeft size={NAV_ICON_SIZE} />
+          <ChevronLeft size={ICON_SIZE.md} />
         </button>
         <button
           onClick={() => onMoveMonth(NEXT_MONTH)}
           className={styles.controlButton}
           aria-label="다음 달"
         >
-          <ChevronRight size={NAV_ICON_SIZE} />
+          <ChevronRight size={ICON_SIZE.md} />
         </button>
         <button onClick={onAddEvent} className={styles.controlButton} aria-label="일정 추가">
-          <Plus size={ADD_ICON_SIZE} />
+          <Plus size={ICON_SIZE.lg} />
         </button>
       </div>
     </div>

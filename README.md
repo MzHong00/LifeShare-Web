@@ -95,26 +95,28 @@ src/
 │   │   ├── map/          # CSR (Google Maps)
 │   │   ├── todo/         # SSR: 할일 prefetch
 │   │   └── profile/
+│   ├── api/              # BFF Route Handlers (컨트롤러 역할, DB 직접 접근 금지 시 유일한 진입점)
 │   ├── auth/callback/    # OAuth 콜백
 │   ├── chat/             # 채팅 (CSR)
 │   └── workspace/        # 워크스페이스 (landing·setup·list·join·edit)
 ├── features/             # 도메인별 슬라이스
-│   └── [feature]/        # api · components · hooks · queries · stores · types
-├── api/                  # 스토리지 등 공용 API
+│   └── [feature]/        # api(BFF fetch) · components · hooks · queries · stores · types
+├── server/               # 서버 전용 코드 (`server-only`로 클라이언트 번들 유입 차단)
+│   ├── db/               # Supabase 서버 클라이언트 생성
+│   ├── auth/             # 세션 조회(session.ts) · 미들웨어 세션 갱신(middleware.ts)
+│   └── http/              # API Route 공통 응답 헬퍼·타입
 ├── components/           # 재사용 컴포넌트
 ├── constants/            # 상수 및 설정
 ├── hooks/                # 커스텀 훅
-├── lib/                  # 외부 연동
-│   ├── supabase/         # client·server(SSR)·middleware
-│   ├── api.ts            # fetch 클라이언트
-│   ├── getQueryClient.ts # 서버 컴포넌트용 QueryClient (React cache)
-│   └── QueryProvider.tsx / SessionProvider.tsx
+├── lib/                  # 외부 연동 및 클라이언트 유틸
+│   ├── supabase/         # 브라우저 Supabase 클라이언트, 스토리지 업로드
+│   └── api/              # BFF 호출 fetch 클라이언트(bffClient), 목 fetch
 ├── stores/               # 전역 Zustand 스토어
 ├── styles/               # 전역 스타일, 믹스인
 ├── types/                # 공유 타입
 ├── utils/                # 유틸리티 함수
 └── assets/               # 아이콘 등 에셋
-middleware.ts             # 쿠키 세션 갱신 + 비로그인 라우트 보호
+proxy.ts                  # 쿠키 세션 갱신 + 비로그인 라우트 보호 (middleware)
 ```
 
 ### 데이터 패칭 전략
@@ -122,6 +124,7 @@ middleware.ts             # 쿠키 세션 갱신 + 비로그인 라우트 보호
 - `features/[feature]/queries`에 정의된 `queryOptions`는 서버(prefetch)·클라이언트(useQuery) 양쪽에서 공유됩니다.
 - 서버 컴포넌트가 워크스페이스 쿠키 기준으로 `prefetchQuery` 후 `HydrationBoundary`로 감싸면, 클라이언트의 `useQuery`가 이어받아 첫 페인트부터 데이터가 채워집니다.
 - 지도(`map`)·채팅(`chat`)처럼 실시간·상호작용 중심 화면은 SSR 대상에서 제외하고 CSR로 유지합니다.
+- 클라이언트는 Supabase를 직접 호출하지 않고 `app/api`(BFF)를 경유합니다. 예외는 파일 업로드(`lib/supabase/storage.ts`)로, 바이너리 이중 전송을 피하기 위해 RLS로 보호된 Supabase Storage에 직접 업로드합니다.
 
 <br />
 

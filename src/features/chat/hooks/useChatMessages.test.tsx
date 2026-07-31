@@ -95,7 +95,7 @@ describe("useChatMessages", () => {
     result.current.sendMessage("  안녕  ");
 
     expect(mutate).toHaveBeenCalledWith(
-      { workspaceId: "ws-1", senderId: "me", text: "안녕" },
+      { workspaceId: "ws-1", text: "안녕" },
       expect.objectContaining({ onError: expect.any(Function) })
     );
   });
@@ -117,7 +117,7 @@ describe("useChatMessages", () => {
     result.current.sendMessage("안녕", onError);
     capturedOptions.onError?.();
 
-    expect(toastActions.showToast).toHaveBeenCalledWith("메시지 전송에 실패했어요.", "error");
+    expect(toastActions.showToast).toHaveBeenCalledWith("메시지 전송에 실패했습니다.", "error");
     expect(onError).toHaveBeenCalled();
   });
 

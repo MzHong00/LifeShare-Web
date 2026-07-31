@@ -3,7 +3,7 @@ import { Heart, Users } from "lucide-react";
 
 import { APP_WORKSPACE } from "@/constants/config";
 import { cx } from "@/utils/cn";
-import { Checkbox } from "@/components/Checkbox";
+import { Checkbox } from "@/components/ui/Checkbox";
 import styles from "./WorkspaceSetupView.module.scss";
 
 import type { RoomType } from "@/features/workspace/types/workspace";

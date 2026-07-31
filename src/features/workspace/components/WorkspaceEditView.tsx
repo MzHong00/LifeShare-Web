@@ -1,35 +1,68 @@
 "use client";
 import type { CSSProperties } from "react";
 import { useSearchParams } from "next/navigation";
-import { ChevronRight, Trash2, User, UserPlus } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { ChevronRight, Star, Trash2, User, UserPlus } from "lucide-react";
 
+import { authQueries } from "@/features/auth/queries/authQueries";
 import { useCurrentWorkspace } from "@/features/workspace/hooks/useCurrentWorkspace";
 import { useWorkspaceEditActions } from "@/features/workspace/hooks/useWorkspaceEditActions";
 import { WorkspaceThemePicker } from "@/features/workspace/components/WorkspaceThemePicker";
-import { WORKSPACE_THEME_ACCENT } from "@/features/workspace/utils/workspaceUtils";
+import { WORKSPACE_THEME_ACCENT } from "@/features/workspace/constants/theme";
+import { workspaceActions } from "@/features/workspace/stores/useWorkspaceStore";
 import { modalActions } from "@/stores/useModalStore";
-import { AppHeader } from "@/components/AppHeader";
+import { toastActions } from "@/stores/useToastStore";
+import { AppHeader } from "@/components/layout/AppHeader";
+import { DatePicker } from "@/components/ui/DatePicker";
+import { ProfileImage } from "@/components/ui/ProfileImage";
 import { APP_WORKSPACE } from "@/constants/config";
 import { cx } from "@/utils/cn";
 import styles from "./WorkspaceEditView.module.scss";
+
+const PROFILE_MODAL_AVATAR_SIZE = 72; // 프로필 수정 모달의 아바타 크기(px)
+const LAST_LEAVE_CONFIRM_PHRASE = "삭제하기"; // 마지막 멤버 나가기(=전체 삭제) 모달에서 그대로 입력해야 진행되는 확인 문구
 
 export const WorkspaceEditView = () => {
   const searchParams = useSearchParams();
   const workspaceId = searchParams.get("workspaceId") || "";
 
-  const { workspaces } = useCurrentWorkspace();
+  const { data: user } = useQuery(authQueries.user());
+  const { workspaces, currentWorkspace } = useCurrentWorkspace();
   const workspace = workspaces.find((ws) => ws.id === workspaceId);
-  const actions = useWorkspaceEditActions(workspaceId);
+  const {
+    isInviting,
+    changeName,
+    changeStartDate,
+    changeThemeColor,
+    changeProfileName,
+    invite,
+    leave,
+  } = useWorkspaceEditActions(workspaceId);
+  const isMain = workspace?.id === currentWorkspace?.id;
 
   if (!workspace) return null;
 
+  const members = workspace.members ?? [];
+  const isLastMember = members.length <= 1; // 나 혼자면 나가는 순간 라이프룸과 모든 기록이 삭제된다
+
+  /** 이 라이프룸을 메인으로 설정한다 */
+  const handleSetAsMain = () => {
+    workspaceActions.setCurrentWorkspaceId(workspace.id);
+    toastActions.showToast(`'${workspace.name}'이 메인 라이프룸으로 설정되었습니다`, "success");
+  };
+
+  /** 라이프룸에서 나간다. 마지막 멤버면 라이프룸과 모든 기록이 함께 삭제되므로 확인 문구를 요구한다 */
   const handleLeaveWorkspace = () => {
     modalActions.showModal({
       type: "confirm",
       title: `${APP_WORKSPACE.KR}에서 나가기`,
-      message: `정말로 '${workspace.name}' ${APP_WORKSPACE.KR}에서 나갈까요?\n기존에 기록된 데이터는 삭제되지 않지만 목록에서 사라집니다.`,
+      // 이름 길이에 따라 자연 줄바꿈되므로 \n을 넣지 않는다 (넣으면 이름이 길 때 한 글자만 떨어져 나감)
+      message: isLastMember
+        ? `마지막 멤버라 나가면 '${workspace.name}'의 일정·할 일·스토리·대화가 모두 삭제되며 되돌릴 수 없습니다.`
+        : `정말로 '${workspace.name}'에서 나갈까요? 기록된 데이터는 삭제되지 않지만 목록에서 사라집니다.`,
       confirmText: "나가기",
-      onConfirm: actions.leave,
+      ...(isLastMember && { confirmPhrase: LAST_LEAVE_CONFIRM_PHRASE }),
+      onConfirm: leave,
     });
   };
 
@@ -76,48 +109,73 @@ export const WorkspaceEditView = () => {
 
   const openNameEditModal = () =>
     openTextPromptModal({
-      title: "라이프룸 제목 수정",
+      title: "라이프룸 제목",
       helpText: "이 공간의 이름을 입력해주세요.",
       placeholder: "제목 입력",
       defaultValue: workspace.name,
-      onConfirm: actions.changeName,
+      onConfirm: changeName,
     });
 
   const openStartDateModal = () => {
     let selectedDate = workspace.startDate || "";
     modalActions.showModal({
       type: "confirm",
-      title: "날짜 선택",
+      title: "함께한 날",
       confirmText: "확인",
       content: (
         <div className={styles.modalContent}>
-          <input
-            type="date"
-            defaultValue={selectedDate}
-            autoFocus
-            onChange={(e) => {
-              selectedDate = e.target.value;
+          <p className={styles.modalHelp}>함께하기 시작한 날짜를 선택해주세요.</p>
+          <DatePicker
+            initialDate={selectedDate}
+            onChangeDate={(date) => {
+              selectedDate = date;
             }}
-            className={styles.modalInput}
           />
         </div>
       ),
       onConfirm: async () => {
         if (!selectedDate) return;
-        await actions.changeStartDate(selectedDate);
+        await changeStartDate(selectedDate);
       },
     });
   };
 
   const openProfileEditModal = () => {
-    if (!actions.user) return;
-    const myMember = workspace.members?.find((m) => m.id === actions.user?.id);
-    openTextPromptModal({
+    if (!user) return;
+    const myMember = workspace.members?.find((m) => m.id === user.id);
+    // 프로필 사진은 커스터마이징을 지원하지 않고 항상 전역 프로필(프로필 설정)의 사진을 그대로 보여준다
+    const defaultName = myMember?.name || user.name;
+    let name = defaultName;
+    modalActions.showModal({
+      type: "confirm",
       title: "내 활동 프로필 설정",
-      helpText: "이 공간에서 사용할 이름을 입력해주세요.",
-      placeholder: "이름 입력",
-      defaultValue: myMember?.name || "",
-      onConfirm: actions.changeProfileName,
+      confirmText: "수정하기",
+      content: (
+        <div className={styles.modalContent}>
+          <p className={styles.modalHelp}>이 공간에서 사용할 이름을 입력해주세요.</p>
+          <div className={styles.profileModalAvatarWrap}>
+            <ProfileImage
+              uri={user.profileImage}
+              name={user.name}
+              size={PROFILE_MODAL_AVATAR_SIZE}
+            />
+          </div>
+          <input
+            type="text"
+            defaultValue={name}
+            autoFocus
+            onChange={(e) => {
+              name = e.target.value;
+            }}
+            placeholder="이름 입력"
+            className={styles.modalInput}
+          />
+        </div>
+      ),
+      onConfirm: async () => {
+        if (!name.trim()) return;
+        await changeProfileName(name.trim());
+      },
     });
   };
 
@@ -143,6 +201,22 @@ export const WorkspaceEditView = () => {
         </div>
 
         <div>
+          <p className={styles.sectionLabel}>참여자</p>
+          <div className={styles.settingCard}>
+            {members.map((member, index) => (
+              <div key={member.id}>
+                <div className={styles.memberRow}>
+                  <ProfileImage uri={member.avatar} name={member.name} size={36} />
+                  <span className={styles.settingLabel}>{member.name}</span>
+                  {member.id === user?.id && <span className={styles.meBadge}>나</span>}
+                </div>
+                {index < members.length - 1 && <div className={styles.divider} />}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div>
           <p className={styles.sectionLabel}>기본 설정</p>
           <div className={styles.settingCard}>
             <button onClick={openNameEditModal} className={styles.settingRow}>
@@ -159,10 +233,7 @@ export const WorkspaceEditView = () => {
             <div className={styles.divider} />
             <div className={styles.themeRow}>
               <span className={styles.settingLabel}>테마</span>
-              <WorkspaceThemePicker
-                value={workspace.themeColor}
-                onChange={actions.changeThemeColor}
-              />
+              <WorkspaceThemePicker value={workspace.themeColor} onChange={changeThemeColor} />
             </div>
           </div>
         </div>
@@ -178,11 +249,7 @@ export const WorkspaceEditView = () => {
               <ChevronRight size={16} color="var(--grey-300)" />
             </button>
             <div className={styles.divider} />
-            <button
-              onClick={actions.invite}
-              className={styles.settingRow}
-              disabled={actions.isInviting}
-            >
+            <button onClick={invite} className={styles.settingRow} disabled={isInviting}>
               <div className={cx(styles.settingIcon, styles.settingIconGreen)}>
                 <UserPlus size={18} />
               </div>
@@ -203,7 +270,11 @@ export const WorkspaceEditView = () => {
             <button onClick={handleLeaveWorkspace} className={styles.dangerRow}>
               <div className={styles.dangerInfo}>
                 <p className={styles.dangerTitle}>{APP_WORKSPACE.KR}에서 나가기</p>
-                <p className={styles.dangerDesc}>데이터는 유지되지만 리스트에서 사라집니다.</p>
+                <p className={styles.dangerDesc}>
+                  {isLastMember
+                    ? "마지막 멤버라 나가면 모든 기록이 삭제됩니다."
+                    : "데이터는 유지되지만 리스트에서 사라집니다."}
+                </p>
               </div>
               <Trash2 size={18} color="var(--error)" className={styles.dangerIcon} />
             </button>
@@ -213,6 +284,18 @@ export const WorkspaceEditView = () => {
         <p className={styles.footer}>
           각 공간의 설정은 해당 공간에 참여한 멤버들끼리만{"\n"}공유되며 안전하게 보호됩니다.
         </p>
+      </div>
+
+      <div className={styles.floatingActionWrap}>
+        <button
+          type="button"
+          onClick={handleSetAsMain}
+          disabled={isMain}
+          className={styles.setMainButton}
+        >
+          <Star size={18} fill={isMain ? "currentColor" : "none"} />
+          {isMain ? "이미 메인 라이프룸이에요" : "메인으로 설정"}
+        </button>
       </div>
     </div>
   );

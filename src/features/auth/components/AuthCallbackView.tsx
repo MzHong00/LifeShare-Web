@@ -2,6 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 
+import { Spinner } from "@/components/feedback/Spinner";
 import { useAuthCallback } from "@/features/auth/hooks/useAuthCallback";
 
 import styles from "./AuthCallbackView.module.scss";
@@ -14,7 +15,7 @@ export const AuthCallbackView = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.spinner} />
+      <Spinner />
       <p className={styles.message}>로그인 중입니다...</p>
     </div>
   );

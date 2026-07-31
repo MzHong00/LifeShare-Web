@@ -38,9 +38,11 @@ export const useCalendar = () => {
 
   const { currentWorkspace } = useCurrentWorkspace();
   const { data: events = [] } = useQuery(calendarQueries.list(currentWorkspace?.id ?? ""));
-  const { data: todos = [], isPending: isTodosPending } = useQuery(
-    todoQueries.list(currentWorkspace?.id ?? "")
-  );
+  const {
+    data: todos = [],
+    isPending: isTodosPending,
+    isError: isTodosError,
+  } = useQuery(todoQueries.list(currentWorkspace?.id ?? ""));
   const { toggleTodo } = useTodoToggle(currentWorkspace?.id ?? "", todos);
 
   // 이벤트·할 일을 날짜별 색상 점 맵으로 변환
@@ -89,6 +91,7 @@ export const useCalendar = () => {
     calendarDays,
     selectedDateTodos,
     isTodosPending,
+    isTodosError,
     currentWorkspace,
     selectDate,
     moveMonth,

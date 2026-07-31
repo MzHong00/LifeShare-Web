@@ -1,0 +1,44 @@
+@use "styles/mixins" as *;
+
+.nav {
+  width: 100%;
+  background-color: var(--white);
+  box-shadow: 0 -1px 0 var(--grey-100);
+  z-index: 10;
+}
+
+.navList {
+  display: flex;
+  padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
+}
+
+.navLink {
+  flex: 1;
+  @include flex-center;
+  color: var(--grey-400);
+}
+
+.pill {
+  @include flex-col-center(3px);
+  padding: 6px var(--space-md) 5px;
+  border-radius: var(--radius-lg);
+  transition:
+    background-color 0.15s,
+    color 0.15s;
+  min-width: 52px;
+}
+
+.pillActive {
+  background-color: rgba(var(--theme-accent-rgb), 0.08);
+  color: var(--theme-accent);
+}
+
+.navLabel {
+  font-size: 10px;
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+}
+
+.navLabelActive {
+  font-weight: var(--font-weight-bold);
+}

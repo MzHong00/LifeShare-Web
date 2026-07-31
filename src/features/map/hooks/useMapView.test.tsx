@@ -175,7 +175,7 @@ describe("useMapView", () => {
     });
 
     expect(toastActions.showToast).toHaveBeenCalledWith(
-      "상대방의 위치를 아직 확인할 수 없어요.",
+      "상대방의 위치를 아직 확인할 수 없습니다.",
       "error"
     );
     expect(openSpy).not.toHaveBeenCalled();
@@ -196,7 +196,7 @@ describe("useMapView", () => {
 
     expect(openSpy).not.toHaveBeenCalled();
     expect(toastActions.showToast).toHaveBeenCalledWith(
-      "상대방의 위치를 아직 확인할 수 없어요.",
+      "상대방의 위치를 아직 확인할 수 없습니다.",
       "error"
     );
     openSpy.mockRestore();

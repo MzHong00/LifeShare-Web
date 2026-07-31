@@ -1,196 +1,131 @@
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { todosApi } from "@/features/todo/api/todos";
 
-import type { TodoRow } from "@/features/todo/utils/todoUtils";
+import { mockFetch } from "@/lib/api/mockFetch";
 
-const mockSelect = vi.fn();
-const mockEq = vi.fn();
-const mockOrder = vi.fn();
-const mockInsert = vi.fn();
-const mockUpdate = vi.fn();
-const mockDelete = vi.fn();
-const mockSingle = vi.fn();
-const mockFrom = vi.fn();
+import type { Todo } from "@/features/todo/types/todo";
 
-vi.mock("@/lib/supabase/client", () => ({
-  supabase: {
-    from: (...args: unknown[]) => mockFrom(...args),
-  },
-}));
-
-const todoRow: TodoRow = {
+const todo: Todo = {
   id: "todo-1",
-  workspace_id: "workspace-1",
+  workspaceId: "workspace-1",
   title: "제목",
   description: "설명",
-  is_completed: false,
-  assignee_id: "user-1",
-  start_date: "2026-07-01",
-  end_date: "2026-07-02",
+  isCompleted: false,
+  assigneeId: "user-1",
+  startDate: "2026-07-01",
+  endDate: "2026-07-02",
   color: "#fff",
-  created_at: "2026-07-01T00:00:00Z",
+  createdAt: "2026-07-01T00:00:00Z",
 };
 
+afterEach(() => {
+  vi.restoreAllMocks();
+});
+
 describe("todosApi.list", () => {
-  it("workspaceId로 필터링해 최신순 목록을 조회하고 Todo로 변환한다", async () => {
-    mockOrder.mockResolvedValueOnce({ data: [todoRow], error: null });
-    mockEq.mockReturnValue({ order: mockOrder });
-    mockSelect.mockReturnValue({ eq: mockEq });
-    mockFrom.mockReturnValue({ select: mockSelect });
+  it("workspaceId 쿼리로 GET /api/todos를 호출하고 Todo 목록을 반환한다", async () => {
+    const fetchSpy = mockFetch(200, [todo]);
 
     const result = await todosApi.list("workspace-1");
 
-    expect(mockFrom).toHaveBeenCalledWith("todos");
-    expect(mockSelect).toHaveBeenCalledWith("*");
-    expect(mockEq).toHaveBeenCalledWith("workspace_id", "workspace-1");
-    expect(mockOrder).toHaveBeenCalledWith("created_at", { ascending: false });
-    expect(result).toEqual([
-      expect.objectContaining({ id: "todo-1", workspaceId: "workspace-1", title: "제목" }),
-    ]);
+    expect(fetchSpy).toHaveBeenCalledWith(
+      "/api/todos?workspaceId=workspace-1",
+      expect.objectContaining({
+        headers: expect.objectContaining({ "Content-Type": "application/json" }),
+      })
+    );
+    expect(result).toEqual([todo]);
   });
 
-  it("조회 실패 시 에러를 throw한다", async () => {
-    mockOrder.mockResolvedValueOnce({ data: null, error: new Error("list failed") });
-    mockEq.mockReturnValue({ order: mockOrder });
-    mockSelect.mockReturnValue({ eq: mockEq });
-    mockFrom.mockReturnValue({ select: mockSelect });
+  it("조회 실패 시 서버 메시지로 에러를 throw한다", async () => {
+    mockFetch(500, { message: "할 일 목록 조회에 실패했습니다." });
 
-    await expect(todosApi.list("workspace-1")).rejects.toThrow("list failed");
+    await expect(todosApi.list("workspace-1")).rejects.toThrow("할 일 목록 조회에 실패했습니다.");
   });
 });
 
 describe("todosApi.create", () => {
-  it("todo 필드를 snake_case로 변환해 insert하고 생성된 Todo를 반환한다", async () => {
-    mockSingle.mockResolvedValueOnce({ data: todoRow, error: null });
-    const mockSelectAfterInsert = vi.fn().mockReturnValue({ single: mockSingle });
-    mockInsert.mockReturnValue({ select: mockSelectAfterInsert });
-    mockFrom.mockReturnValue({ insert: mockInsert });
+  it("POST /api/todos로 생성 요청을 보내고 생성된 Todo를 반환한다", async () => {
+    const fetchSpy = mockFetch(201, todo);
+    const { id: _id, createdAt: _createdAt, ...createInput } = todo;
 
-    const result = await todosApi.create({
-      workspaceId: "workspace-1",
-      title: "제목",
-      description: "설명",
-      isCompleted: false,
-      assigneeId: "user-1",
-      startDate: "2026-07-01",
-      endDate: "2026-07-02",
-      color: "#fff",
-    });
+    const result = await todosApi.create(createInput);
 
-    expect(mockFrom).toHaveBeenCalledWith("todos");
-    expect(mockInsert).toHaveBeenCalledWith({
-      workspace_id: "workspace-1",
-      title: "제목",
-      description: "설명",
-      is_completed: false,
-      assignee_id: "user-1",
-      start_date: "2026-07-01",
-      end_date: "2026-07-02",
-      color: "#fff",
-    });
-    expect(result).toEqual(expect.objectContaining({ id: "todo-1", title: "제목" }));
+    expect(fetchSpy).toHaveBeenCalledWith(
+      "/api/todos",
+      expect.objectContaining({ method: "POST", body: JSON.stringify(createInput) })
+    );
+    expect(result).toEqual(todo);
   });
 
   it("생성 실패 시 에러를 throw한다", async () => {
-    mockSingle.mockResolvedValueOnce({ data: null, error: new Error("create failed") });
-    const mockSelectAfterInsert = vi.fn().mockReturnValue({ single: mockSingle });
-    mockInsert.mockReturnValue({ select: mockSelectAfterInsert });
-    mockFrom.mockReturnValue({ insert: mockInsert });
+    mockFetch(500, { message: "할 일 생성에 실패했습니다." });
+    const { id: _id, createdAt: _createdAt, ...createInput } = todo;
 
-    await expect(
-      todosApi.create({
-        workspaceId: "workspace-1",
-        title: "제목",
-        isCompleted: false,
-        startDate: "2026-07-01",
-        endDate: "2026-07-02",
-      })
-    ).rejects.toThrow("create failed");
+    await expect(todosApi.create(createInput)).rejects.toThrow("할 일 생성에 실패했습니다.");
   });
 });
 
 describe("todosApi.update", () => {
-  it("변경된 필드를 update하고 수정된 Todo를 반환한다", async () => {
-    mockSingle.mockResolvedValueOnce({ data: todoRow, error: null });
-    const mockSelectAfterUpdate = vi.fn().mockReturnValue({ single: mockSingle });
-    mockEq.mockReturnValue({ select: mockSelectAfterUpdate });
-    mockUpdate.mockReturnValue({ eq: mockEq });
-    mockFrom.mockReturnValue({ update: mockUpdate });
+  it("PATCH /api/todos/[id]로 변경 필드를 보내고 수정된 Todo를 반환한다", async () => {
+    const fetchSpy = mockFetch(200, { ...todo, title: "수정된 제목" });
 
     const result = await todosApi.update("todo-1", { title: "수정된 제목" });
 
-    expect(mockFrom).toHaveBeenCalledWith("todos");
-    expect(mockUpdate).toHaveBeenCalledWith({
-      title: "수정된 제목",
-      description: undefined,
-      is_completed: undefined,
-      assignee_id: undefined,
-      start_date: undefined,
-      end_date: undefined,
-      color: undefined,
-    });
-    expect(mockEq).toHaveBeenCalledWith("id", "todo-1");
-    expect(result).toEqual(expect.objectContaining({ id: "todo-1" }));
+    expect(fetchSpy).toHaveBeenCalledWith(
+      "/api/todos/todo-1",
+      expect.objectContaining({ method: "PATCH", body: JSON.stringify({ title: "수정된 제목" }) })
+    );
+    expect(result.title).toBe("수정된 제목");
   });
 
   it("수정 실패 시 에러를 throw한다", async () => {
-    mockSingle.mockResolvedValueOnce({ data: null, error: new Error("update failed") });
-    const mockSelectAfterUpdate = vi.fn().mockReturnValue({ single: mockSingle });
-    mockEq.mockReturnValue({ select: mockSelectAfterUpdate });
-    mockUpdate.mockReturnValue({ eq: mockEq });
-    mockFrom.mockReturnValue({ update: mockUpdate });
+    mockFetch(500, { message: "할 일 수정에 실패했습니다." });
 
     await expect(todosApi.update("todo-1", { title: "수정된 제목" })).rejects.toThrow(
-      "update failed"
+      "할 일 수정에 실패했습니다."
     );
   });
 });
 
 describe("todosApi.toggle", () => {
-  it("is_completed만 업데이트하고 변경된 Todo를 반환한다", async () => {
-    mockSingle.mockResolvedValueOnce({ data: { ...todoRow, is_completed: true }, error: null });
-    const mockSelectAfterUpdate = vi.fn().mockReturnValue({ single: mockSingle });
-    mockEq.mockReturnValue({ select: mockSelectAfterUpdate });
-    mockUpdate.mockReturnValue({ eq: mockEq });
-    mockFrom.mockReturnValue({ update: mockUpdate });
+  it("PATCH /api/todos/[id]로 isCompleted만 보내고 변경된 Todo를 반환한다", async () => {
+    const fetchSpy = mockFetch(200, { ...todo, isCompleted: true });
 
     const result = await todosApi.toggle("todo-1", true);
 
-    expect(mockUpdate).toHaveBeenCalledWith({ is_completed: true });
-    expect(mockEq).toHaveBeenCalledWith("id", "todo-1");
+    expect(fetchSpy).toHaveBeenCalledWith(
+      "/api/todos/todo-1",
+      expect.objectContaining({ method: "PATCH", body: JSON.stringify({ isCompleted: true }) })
+    );
     expect(result.isCompleted).toBe(true);
   });
 
   it("토글 실패 시 에러를 throw한다", async () => {
-    mockSingle.mockResolvedValueOnce({ data: null, error: new Error("toggle failed") });
-    const mockSelectAfterUpdate = vi.fn().mockReturnValue({ single: mockSingle });
-    mockEq.mockReturnValue({ select: mockSelectAfterUpdate });
-    mockUpdate.mockReturnValue({ eq: mockEq });
-    mockFrom.mockReturnValue({ update: mockUpdate });
+    mockFetch(500, { message: "할 일 상태 변경에 실패했습니다." });
 
-    await expect(todosApi.toggle("todo-1", true)).rejects.toThrow("toggle failed");
+    await expect(todosApi.toggle("todo-1", true)).rejects.toThrow(
+      "할 일 상태 변경에 실패했습니다."
+    );
   });
 });
 
 describe("todosApi.delete", () => {
-  it("id로 delete 요청을 보낸다", async () => {
-    mockEq.mockResolvedValueOnce({ error: null });
-    mockDelete.mockReturnValue({ eq: mockEq });
-    mockFrom.mockReturnValue({ delete: mockDelete });
+  it("DELETE /api/todos/[id]로 삭제 요청을 보낸다", async () => {
+    const fetchSpy = mockFetch(204, null);
 
     await todosApi.delete("todo-1");
 
-    expect(mockFrom).toHaveBeenCalledWith("todos");
-    expect(mockDelete).toHaveBeenCalled();
-    expect(mockEq).toHaveBeenCalledWith("id", "todo-1");
+    expect(fetchSpy).toHaveBeenCalledWith(
+      "/api/todos/todo-1",
+      expect.objectContaining({ method: "DELETE" })
+    );
   });
 
   it("삭제 실패 시 에러를 throw한다", async () => {
-    mockEq.mockResolvedValueOnce({ error: new Error("delete failed") });
-    mockDelete.mockReturnValue({ eq: mockEq });
-    mockFrom.mockReturnValue({ delete: mockDelete });
+    mockFetch(500, { message: "할 일 삭제에 실패했습니다." });
 
-    await expect(todosApi.delete("todo-1")).rejects.toThrow("delete failed");
+    await expect(todosApi.delete("todo-1")).rejects.toThrow("할 일 삭제에 실패했습니다.");
   });
 });

@@ -4,7 +4,7 @@
 .header {
   flex-shrink: 0;
   z-index: 10;
-  padding: 20px 20px 12px;
+  padding: var(--space-xl) var(--space-xl) var(--space-md);
 }
 
 .headerInfo {
@@ -19,7 +19,7 @@
 
 .stackedAvatar {
   border: 2px solid var(--white);
-  border-radius: 9999px;
+  border-radius: var(--radius-pill);
 
   &:not(:first-child) {
     margin-left: -10px; // 아바타 크기 36px에 맞춘 겹침 폭
@@ -28,7 +28,7 @@
 
 .partnerName {
   font-size: 17px;
-  font-weight: 800;
+  font-weight: var(--font-weight-extrabold);
   letter-spacing: -0.02em;
   color: var(--grey-900);
   line-height: 1.2;

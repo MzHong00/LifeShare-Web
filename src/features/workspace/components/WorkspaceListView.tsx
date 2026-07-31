@@ -1,19 +1,19 @@
 "use client";
-import type { CSSProperties } from "react";
 import { useRouter } from "next/navigation";
+import { Plus, Users, Heart } from "lucide-react";
+
 import { ROUTES } from "@/constants/routes";
-import { Plus, Users, Heart, Star } from "lucide-react";
-import { workspaceActions } from "@/features/workspace/stores/useWorkspaceStore";
 import { useCurrentWorkspace } from "@/features/workspace/hooks/useCurrentWorkspace";
-import { WORKSPACE_THEME_ACCENT } from "@/features/workspace/utils/workspaceUtils";
-import { toastActions } from "@/stores/useToastStore";
-import { AppHeader } from "@/components/AppHeader";
-import { Card } from "@/components/Card";
-import { ProfileImage } from "@/components/ProfileImage";
-import { Skeleton } from "@/components/Skeleton";
+import { WORKSPACE_THEME_ACCENT } from "@/features/workspace/constants/theme";
+import { AppHeader } from "@/components/layout/AppHeader";
+import { Card } from "@/components/ui/Card";
+import { ProfileImage } from "@/components/ui/ProfileImage";
+import { Skeleton } from "@/components/feedback/Skeleton";
 import { formatDate, calculateDDay } from "@/utils/date";
 import { APP_WORKSPACE } from "@/constants/config";
 import styles from "./WorkspaceListView.module.scss";
+
+import type { CSSProperties } from "react";
 
 const SKELETON_CARD_KEYS = ["workspace-skeleton-1", "workspace-skeleton-2"]; // 로딩 스켈레톤 카드 개수(2개)
 
@@ -22,13 +22,9 @@ export const WorkspaceListView = () => {
   const { workspaces, currentWorkspace, isPending, isError } = useCurrentWorkspace();
   const isEmpty = !isPending && !isError && workspaces.length === 0;
 
-  const handleSetMain = (id: string, event: React.MouseEvent) => {
-    event.stopPropagation();
-    const workspace = workspaces.find((w) => w.id === id);
-    if (workspace) {
-      workspaceActions.setCurrentWorkspaceId(id);
-      toastActions.showToast(`'${workspace.name}'이 메인 라이프룸으로 설정되었습니다`, "success");
-    }
+  /** 카드 탭 → 해당 워크스페이스 설정 페이지로 이동한다 (메인 설정은 설정 페이지 하단 버튼에서 처리) */
+  const handleGoSettings = (id: string) => {
+    router.push(ROUTES.WORKSPACE.EDIT.query({ workspaceId: id }));
   };
 
   return (
@@ -44,8 +40,17 @@ export const WorkspaceListView = () => {
         {isPending &&
           SKELETON_CARD_KEYS.map((key) => (
             <Card key={key} className={styles.skeletonCard}>
-              <Skeleton width="60%" height={16} />
-              <Skeleton width="40%" height={13} />
+              <div className={styles.skeletonCardTop}>
+                <Skeleton width={48} height={48} radius={16} />
+                <div className={styles.skeletonTextGroup}>
+                  <Skeleton width="60%" height={16} />
+                  <Skeleton width="40%" height={13} />
+                </div>
+              </div>
+              <div className={styles.skeletonMembers}>
+                <Skeleton width={24} height={24} radius="50%" />
+                <Skeleton width={70} height={12} />
+              </div>
             </Card>
           ))}
 
@@ -64,22 +69,8 @@ export const WorkspaceListView = () => {
                 key={ws.id}
                 className={styles.workspaceCard}
                 style={{ "--item-accent": WORKSPACE_THEME_ACCENT[ws.themeColor] } as CSSProperties}
-                onClick={() => router.push(ROUTES.WORKSPACE.EDIT.query({ workspaceId: ws.id }))}
+                onClick={() => handleGoSettings(ws.id)}
               >
-                {!isMain && (
-                  <div className={styles.cardIconActions}>
-                    <button
-                      type="button"
-                      onClick={(event) => handleSetMain(ws.id, event)}
-                      className={styles.setMainButton}
-                      aria-label={`${ws.name} 메인 라이프룸으로 설정`}
-                      title="메인 설정"
-                    >
-                      <Star size={16} />
-                    </button>
-                  </div>
-                )}
-
                 <div className={styles.cardTop}>
                   <div className={styles.wsIcon}>
                     {ws.type === "couple" ? <Heart size={22} /> : <Users size={22} />}

@@ -1,7 +1,10 @@
 import { MapPin, Calendar } from "lucide-react";
-import type { Story } from "@/features/stories/types/story";
+
 import { formatDate } from "@/utils/date";
+
 import styles from "./StoryBriefInfo.module.scss";
+
+import type { Story } from "@/features/stories/types/story";
 
 interface StoryBriefInfoProps {
   story: Story;
