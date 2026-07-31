@@ -9,6 +9,7 @@
     "lint": "eslint src",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
     "format": "prettier --write \"src/**/*.{ts,tsx,scss}\"",
     "check": "npm run format && next build && eslint src && vitest run",
     "seed:test-account": "node --env-file=.env.local scripts/seed-test-account.mjs"
@@ -35,6 +36,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@vitejs/plugin-react": "^6.0.3",
+    "@vitest/coverage-v8": "^4.1.10",
     "eslint": "^9",
     "eslint-config-next": "^16.2.1",
     "eslint-plugin-import": "^2.32.0",
