@@ -42,6 +42,7 @@ const MessageListComponent = ({
   const memberMap = useMemo(() => new Map(members?.map((m) => [m.id, m])), [members]);
 
   // 대량 메시지 렌더링 성능을 위해 화면에 보이는 항목만 DOM에 그린다(리스트 가상화)
+  // eslint-disable-next-line react-hooks/incompatible-library -- TanStack Virtual은 메모이즈 불가능한 함수를 반환하는 라이브러리 특성상 발생하는 경고(로직 문제 아님)
   const virtualizer = useVirtualizer({
     count: messages.length,
     getScrollElement: () => parentRef.current,
