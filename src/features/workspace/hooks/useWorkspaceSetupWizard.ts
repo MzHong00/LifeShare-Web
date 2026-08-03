@@ -14,7 +14,7 @@ import {
   useCreateInviteCodeMutation,
 } from "@/features/workspace/queries/workspaceMutations";
 import { toastActions } from "@/stores/useToastStore";
-import { buildInviteLink } from "@/features/workspace/utils/workspaceUtils";
+import { generateInviteLink } from "@/features/workspace/utils/inviteCode";
 
 import type { RoomType } from "@/features/workspace/types/workspace";
 
@@ -80,7 +80,7 @@ export const useWorkspaceSetupWizard = () => {
     }
   };
 
-  const inviteLink = inviteCode ? buildInviteLink(inviteCode) : ""; // 발급된 초대 코드 기반 초대 링크
+  const inviteLink = inviteCode ? generateInviteLink(inviteCode) : ""; // 발급된 초대 코드 기반 초대 링크
 
   /** 초대 링크를 클립보드에 복사한다 */
   const copyInviteLink = async () => {

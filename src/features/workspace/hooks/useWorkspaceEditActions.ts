@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 
 import { ROUTES } from "@/constants/routes";
-import { buildInviteLink } from "@/features/workspace/utils/workspaceUtils";
+import { generateInviteLink } from "@/features/workspace/utils/inviteCode";
 import { modalActions } from "@/stores/useModalStore";
 import { toastActions } from "@/stores/useToastStore";
 import { globalLoadingActions } from "@/stores/useGlobalLoadingStore";
@@ -93,7 +93,7 @@ export const useWorkspaceEditActions = (workspaceId: string) => {
     if (!user) return;
     try {
       const code = await createInviteCode.mutateAsync({ workspaceId });
-      await navigator.clipboard.writeText(buildInviteLink(code));
+      await navigator.clipboard.writeText(generateInviteLink(code));
       toastActions.showToast("초대 링크를 복사했습니다. 파트너에게 공유해보세요.", "success");
     } catch {
       toastActions.showToast("초대 링크 생성에 실패했습니다.", "error");

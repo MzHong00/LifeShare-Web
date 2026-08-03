@@ -31,8 +31,8 @@ vi.mock("@/features/auth/queries/authQueries", () => ({
   authQueries: { user: vi.fn() },
 }));
 
-vi.mock("@/features/workspace/utils/workspaceUtils", () => ({
-  buildInviteLink: (code: string) => `https://duous.app/invite/${code}`,
+vi.mock("@/features/workspace/utils/inviteCode", () => ({
+  generateInviteLink: (code: string) => `https://duous.app/invite/${code}`,
 }));
 
 vi.mock("@/stores/useModalStore", () => ({
