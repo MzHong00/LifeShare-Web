@@ -67,7 +67,7 @@ describe("WorkspaceLandingView", () => {
     expect(screen.queryByText(/새로운.*만들기/)).not.toBeInTheDocument();
   });
 
-  it("워크스페이스가 없으면 생성 CTA와 초대 코드 입력을 렌더링한다", () => {
+  it("워크스페이스가 없으면 생성 CTA와 초대 코드 참여 진입점을 렌더링한다", () => {
     mockUseCurrentWorkspace.mockReturnValue({
       workspaces: [],
       isPending: false,
@@ -76,7 +76,8 @@ describe("WorkspaceLandingView", () => {
 
     render(<WorkspaceLandingView />);
 
-    expect(screen.getByPlaceholderText("초대 코드 입력")).toBeInTheDocument();
+    expect(screen.getByText(/새로운.*만들기/)).toBeInTheDocument();
+    expect(screen.getByText("초대 코드로 참여하기")).toBeInTheDocument();
   });
 
   it("생성 CTA 클릭 시 워크스페이스 생성 화면으로 이동한다", () => {
@@ -92,7 +93,7 @@ describe("WorkspaceLandingView", () => {
     expect(mockPush).toHaveBeenCalledWith(ROUTES.WORKSPACE.SETUP.path);
   });
 
-  it("초대 코드를 입력하지 않으면 참여하기 버튼이 비활성화된다", () => {
+  it("초대 코드로 참여하기 클릭 시 코드 입력 화면으로 이동한다", () => {
     mockUseCurrentWorkspace.mockReturnValue({
       workspaces: [],
       isPending: false,
@@ -100,23 +101,8 @@ describe("WorkspaceLandingView", () => {
     } as unknown as ReturnType<typeof useCurrentWorkspace>);
 
     render(<WorkspaceLandingView />);
+    fireEvent.click(screen.getByText("초대 코드로 참여하기"));
 
-    expect(screen.getByText("참여하기")).toBeDisabled();
-  });
-
-  it("초대 코드를 입력하고 참여하기를 클릭하면 참여 화면으로 이동한다", () => {
-    mockUseCurrentWorkspace.mockReturnValue({
-      workspaces: [],
-      isPending: false,
-      isError: false,
-    } as unknown as ReturnType<typeof useCurrentWorkspace>);
-
-    render(<WorkspaceLandingView />);
-    fireEvent.change(screen.getByPlaceholderText("초대 코드 입력"), {
-      target: { value: "CODE123" },
-    });
-    fireEvent.click(screen.getByText("참여하기"));
-
-    expect(mockPush).toHaveBeenCalledWith(ROUTES.WORKSPACE.join("CODE123"));
+    expect(mockPush).toHaveBeenCalledWith(ROUTES.WORKSPACE.JOIN.path);
   });
 });

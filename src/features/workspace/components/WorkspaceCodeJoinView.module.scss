@@ -1,0 +1,103 @@
+@use "styles/mixins" as *;
+
+.main {
+  min-height: 100dvh;
+  background-color: var(--white);
+  @include flex-col;
+}
+
+.header {
+  padding: var(--space-md) var(--space-lg);
+}
+
+.backButton {
+  @include expand-tap-target(24px);
+  color: var(--grey-700);
+}
+
+.content {
+  flex: 1;
+  @include flex-col(var(--space-lg));
+  padding: var(--space-2xl) var(--space-2xl) 80px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: var(--font-weight-bold);
+  color: var(--grey-900);
+}
+
+.desc {
+  font-size: var(--font-size-lg);
+  color: var(--grey-600);
+  line-height: 1.6;
+  white-space: pre-line;
+  margin-bottom: var(--space-md);
+}
+
+.codeInput {
+  @include form-input;
+  height: 60px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.12em;
+
+  &::placeholder {
+    letter-spacing: 0.12em;
+    font-weight: var(--font-weight-medium);
+  }
+}
+
+.errorText {
+  font-size: var(--font-size-md);
+  color: var(--error);
+  text-align: center;
+}
+
+.noticeText {
+  font-size: var(--font-size-md);
+  color: var(--grey-600);
+  text-align: center;
+}
+
+.preview {
+  @include flex-row(12px);
+  background-color: var(--grey-100);
+  border-radius: var(--radius-xl);
+  padding: 14px var(--space-lg);
+}
+
+.previewIcon {
+  @include icon-box(40px, 12px);
+  background-color: var(--primary-light);
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.previewInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.previewName {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--grey-900);
+  @include text-ellipsis;
+}
+
+.previewLabel {
+  font-size: var(--font-size-sm);
+  color: var(--grey-500);
+  margin-top: 2px;
+}
+
+.submitButton {
+  @include btn-primary;
+  margin-top: auto;
+
+  &:disabled {
+    opacity: 0.4;
+  }
+}
