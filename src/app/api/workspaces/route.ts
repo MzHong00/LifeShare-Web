@@ -55,11 +55,13 @@ export async function POST(request: NextRequest) {
     .eq("id", sessionUser.id)
     .maybeSingle();
 
+  // 만든 사람이 owner — 초대 발급·강퇴 권한을 갖는다
   const { error: memberError } = await workspaceRepository.insertMember(supabase, ws.id, {
     userId: sessionUser.id,
     name: profile?.name,
     email: sessionUser.email,
     avatarUrl: profile?.avatar_url,
+    role: "owner",
   });
   if (memberError) {
     console.error("[api] 워크스페이스 생성 실패", memberError);

@@ -1,7 +1,21 @@
 import "server-only";
 
 import type { SupabaseClient, PostgrestError } from "@supabase/supabase-js";
-import type { RoomType, Workspace, WorkspaceMember } from "@/features/workspace/types/workspace";
+import type {
+  RoomType,
+  Workspace,
+  WorkspaceMember,
+  WorkspaceInvitePreview,
+  MemberRole,
+} from "@/features/workspace/types/workspace";
+
+// get_invite_preview() 함수가 돌려주는 행 모양 (DB는 snake_case, count는 bigint라 문자열로 올 수 있다)
+interface InvitePreviewRow {
+  id: string;
+  name: string;
+  type: string;
+  member_count: number | string;
+}
 
 // select 시 DB 컬럼(snake_case) → 프론트 타입(camelCase)으로 alias
 const WORKSPACE_COLUMNS =
@@ -17,13 +31,14 @@ const WORKSPACE_CONTENT_TABLES = [
   "calendar_events",
   "workspace_invites",
 ] as const;
-const MEMBER_COLUMNS = "id:user_id, name:display_name, email, avatar:avatar_url";
+const MEMBER_COLUMNS = "id:user_id, name:display_name, email, avatar:avatar_url, role";
 
 interface NewMember {
   userId: string;
   name?: string;
   email?: string;
   avatarUrl?: string;
+  role?: MemberRole; // 미지정 시 DB 기본값(member)
 }
 
 type WorkspaceFields = Omit<Workspace, "members">; // WORKSPACE_COLUMNS로 select한 결과 모양
@@ -151,6 +166,109 @@ export const workspaceRepository = {
     return { isDeleted: true, error: null };
   },
 
+  /** 특정 사용자의 워크스페이스 내 권한을 가져온다 (멤버가 아니면 null — 권한 판별의 단일 창구) */
+  findMemberRole: async (
+    supabase: SupabaseClient,
+    workspaceId: string,
+    userId: string
+  ): Promise<MemberRole | null> => {
+    const { data } = await supabase
+      .from("workspace_members")
+      .select("role")
+      .eq("workspace_id", workspaceId)
+      .eq("user_id", userId)
+      .maybeSingle();
+    return (data?.role as MemberRole | undefined) ?? null;
+  },
+
+  /** 워크스페이스의 현재 초대 코드를 가져온다 (없으면 null) */
+  findInviteByWorkspaceId: async (
+    supabase: SupabaseClient,
+    workspaceId: string
+  ): Promise<string | null> => {
+    const { data } = await supabase
+      .from("workspace_invites")
+      .select("invite_code")
+      .eq("workspace_id", workspaceId)
+      .maybeSingle();
+    return data?.invite_code ?? null;
+  },
+
+  /**
+   * 초대 코드로 라이프룸 요약을 가져온다 (없으면 null).
+   *
+   * 초대받은 사람은 아직 멤버가 아니라 workspaces를 직접 읽을 수 없다(RLS).
+   * 코드를 정확히 아는 경우에만 최소 정보를 돌려주는 SECURITY DEFINER 함수를 경유한다.
+   */
+  findInvitePreviewByCode: async (
+    supabase: SupabaseClient,
+    code: string
+  ): Promise<WorkspaceInvitePreview | null> => {
+    const { data, error } = await supabase.rpc("get_invite_preview", { code });
+    if (error) {
+      console.error("[repository] 초대 코드 조회 실패", error);
+      return null;
+    }
+    const preview = (data as InvitePreviewRow[] | null)?.[0];
+    if (!preview) return null;
+
+    return {
+      id: preview.id,
+      name: preview.name,
+      type: preview.type as RoomType,
+      memberCount: Number(preview.member_count),
+    };
+  },
+
+  /**
+   * 초대 코드로 참여한다. 성공 시 워크스페이스 id를 돌려준다 (이미 멤버여도 성공).
+   *
+   * 멤버 직접 INSERT는 생성 흐름으로만 제한돼 있어(RLS), 초대를 통한 참여는 이 함수가 유일한 경로다.
+   * 코드 검증과 멤버 추가가 함수 안에서 원자적으로 일어난다.
+   */
+  joinByInviteCode: async (
+    supabase: SupabaseClient,
+    code: string,
+    member: { name?: string; email?: string; avatarUrl?: string }
+  ): Promise<{ workspaceId: string | null; error: PostgrestError | null }> => {
+    const { data, error } = await supabase.rpc("join_workspace_with_code", {
+      code,
+      display_name: member.name ?? null,
+      member_email: member.email ?? null,
+      avatar_url: member.avatarUrl ?? null,
+    });
+    return { workspaceId: (data as string | null) ?? null, error };
+  },
+
+  /** 방장이 나가기 전에 남은 멤버에게 방장을 넘긴다 (넘길 대상이 없으면 null) */
+  transferOwnership: async (
+    supabase: SupabaseClient,
+    workspaceId: string
+  ): Promise<PostgrestError | null> => {
+    const { error } = await supabase.rpc("transfer_workspace_ownership", {
+      target_workspace_id: workspaceId,
+    });
+    return error;
+  },
+
+  /**
+   * 워크스페이스의 초대 코드를 발급하거나 교체한다.
+   * workspace_id에 unique 제약이 있어 upsert 한 번으로 "상시 1개" 모델이 유지되고,
+   * 재발급하면 이전 코드는 그 자리에서 덮어써져 즉시 무효가 된다.
+   */
+  upsertInvite: async (
+    supabase: SupabaseClient,
+    workspaceId: string,
+    code: string,
+    createdBy: string
+  ) =>
+    supabase
+      .from("workspace_invites")
+      .upsert(
+        { workspace_id: workspaceId, invite_code: code, created_by: createdBy, expires_at: null },
+        { onConflict: "workspace_id" }
+      ),
+
   /** 멤버를 추가한다 (생성 시 본인 등록, 초대 참여 공용) */
   insertMember: async (supabase: SupabaseClient, workspaceId: string, member: NewMember) =>
     supabase.from("workspace_members").insert({
@@ -159,6 +277,7 @@ export const workspaceRepository = {
       display_name: member.name,
       email: member.email,
       avatar_url: member.avatarUrl,
+      ...(member.role && { role: member.role }),
     }),
 
   /** 특정 사용자가 속한 모든 워크스페이스의 멤버 정보(이름·사진)를 동기화한다 */

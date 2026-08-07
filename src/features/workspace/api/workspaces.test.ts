@@ -70,34 +70,39 @@ describe("workspacesApi.create", () => {
   });
 });
 
-describe("workspacesApi.getByInviteCode", () => {
-  it("GET /api/workspace-invites/[code]로 조회하고 워크스페이스를 반환한다", async () => {
-    const fetchSpy = mockFetch(200, workspace);
+describe("workspacesApi.getInvitePreview", () => {
+  const preview = { id: "workspace-1", name: "우리집", type: "couple", memberCount: 2 };
 
-    const result = await workspacesApi.getByInviteCode("abcd1234");
+  it("GET /api/workspace-invites/[code]로 조회하고 라이프룸 요약을 반환한다", async () => {
+    const fetchSpy = mockFetch(200, preview);
 
-    expect(fetchSpy).toHaveBeenCalledWith("/api/workspace-invites/abcd1234", expect.any(Object));
-    expect(result).toEqual(workspace);
+    const result = await workspacesApi.getInvitePreview("K7M2P9QX");
+
+    expect(fetchSpy).toHaveBeenCalledWith("/api/workspace-invites/K7M2P9QX", expect.any(Object));
+    expect(result).toEqual(preview);
   });
 
-  it("만료·미존재 코드는 null을 반환한다", async () => {
-    mockFetch(200, null);
+  it("미존재 코드는 서버가 내려준 메시지로 에러를 throw한다", async () => {
+    mockFetch(404, { message: "유효하지 않은 초대 코드입니다." });
 
-    const result = await workspacesApi.getByInviteCode("expired1");
-
-    expect(result).toBeNull();
+    await expect(workspacesApi.getInvitePreview("ZZZZZZZZ")).rejects.toThrow(
+      "유효하지 않은 초대 코드입니다."
+    );
   });
 });
 
 describe("workspacesApi.join", () => {
-  it("POST /api/workspaces/[id]/join으로 참여 요청을 보내고 워크스페이스를 반환한다", async () => {
+  it("POST /api/workspaces/[id]/join으로 초대 코드를 담아 참여 요청을 보낸다", async () => {
     const fetchSpy = mockFetch(200, workspace);
 
-    const result = await workspacesApi.join("workspace-1");
+    const result = await workspacesApi.join("workspace-1", "K7M2P9QX");
 
     expect(fetchSpy).toHaveBeenCalledWith(
       "/api/workspaces/workspace-1/join",
-      expect.objectContaining({ method: "POST" })
+      expect.objectContaining({
+        method: "POST",
+        body: JSON.stringify({ inviteCode: "K7M2P9QX" }),
+      })
     );
     expect(result).toEqual(workspace);
   });
@@ -105,7 +110,7 @@ describe("workspacesApi.join", () => {
   it("참여 실패 시 에러를 throw한다", async () => {
     mockFetch(500, { message: "워크스페이스 참여에 실패했습니다." });
 
-    await expect(workspacesApi.join("workspace-1")).rejects.toThrow(
+    await expect(workspacesApi.join("workspace-1", "K7M2P9QX")).rejects.toThrow(
       "워크스페이스 참여에 실패했습니다."
     );
   });
