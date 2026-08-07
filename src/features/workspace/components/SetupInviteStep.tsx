@@ -1,5 +1,5 @@
 "use client";
-import { UserPlus, Copy } from "lucide-react";
+import { UserPlus, Copy, Link2 } from "lucide-react";
 
 import styles from "./WorkspaceSetupView.module.scss";
 
@@ -8,16 +8,19 @@ import type { RoomType } from "@/features/workspace/types/workspace";
 interface SetupInviteStepProps {
   workspaceName: string; // 생성된 워크스페이스 이름
   roomType: RoomType; // 생성된 워크스페이스 유형 (문구 분기용)
-  inviteCode: string; // 생성된 초대 코드
+  inviteCode: string; // 발급된 초대 코드 (하이픈 표기)
+  /** 초대 코드 복사 핸들러 */
+  onCopyCode: () => void;
   /** 초대 링크 복사 핸들러 */
-  onCopy: () => void;
+  onCopyLink: () => void;
 }
 
 export const SetupInviteStep = ({
   workspaceName,
   roomType,
   inviteCode,
-  onCopy,
+  onCopyCode,
+  onCopyLink,
 }: SetupInviteStepProps) => {
   const inviteeLabel = roomType === "couple" ? "파트너" : "멤버"; // 유형별 초대 대상 명칭
 
@@ -31,10 +34,21 @@ export const SetupInviteStep = ({
         {workspaceName}이(가) 생성되었습니다!{"\n"}아래 초대 코드를 {inviteeLabel}에게{"\n"}
         공유해보세요.
       </p>
-      <button type="button" onClick={onCopy} className={styles.inviteCodeBox}>
+
+      <div className={styles.inviteCodeBox}>
         <span className={styles.inviteCodeText}>{inviteCode}</span>
-        <Copy size={20} />
-      </button>
+      </div>
+
+      <div className={styles.inviteActions}>
+        <button type="button" onClick={onCopyCode} className={styles.inviteActionButton}>
+          <Copy size={16} />
+          코드 복사
+        </button>
+        <button type="button" onClick={onCopyLink} className={styles.inviteActionButton}>
+          <Link2 size={16} />
+          링크 복사
+        </button>
+      </div>
     </div>
   );
 };

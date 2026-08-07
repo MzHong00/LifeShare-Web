@@ -56,7 +56,8 @@ export const WorkspaceSetupView = () => {
               workspaceName={wizard.workspaceName}
               roomType={wizard.roomType}
               inviteCode={wizard.inviteCode}
-              onCopy={wizard.copyInviteLink}
+              onCopyCode={wizard.copyInviteCode}
+              onCopyLink={wizard.copyInviteLink}
             />
             <div className={styles.bottomSection}>
               <button onClick={wizard.skipInvite} className={styles.primaryButton}>

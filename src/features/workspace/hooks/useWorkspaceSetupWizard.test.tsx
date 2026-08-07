@@ -27,8 +27,8 @@ vi.mock("@/features/auth/queries/authQueries", () => ({
   authQueries: { user: vi.fn() },
 }));
 
-vi.mock("@/features/workspace/utils/inviteCode", () => ({
-  generateInviteLink: (code: string) => `https://duous.app/invite/${code}`,
+vi.mock("@/features/workspace/hooks/useInviteShare", () => ({
+  useInviteShare: () => mockInviteShare,
 }));
 
 vi.mock("@/stores/useModalStore", () => ({
@@ -49,6 +49,17 @@ vi.mock("@/features/workspace/queries/workspaceMutations", () => ({
 }));
 
 const mockUserRef = { current: mockUser as { id: string } | undefined };
+
+// 초대 코드 공유는 useInviteShare가 전담하므로 위저드 테스트에서는 경계만 확인한다
+const mockInviteShare = {
+  code: null,
+  displayCode: "",
+  isPending: false,
+  isRegenerating: false,
+  copyCode: vi.fn(),
+  copyLink: vi.fn(),
+  regenerate: vi.fn(),
+};
 
 const createMutation = (mutateAsync = vi.fn()) => ({ mutateAsync, isPending: false });
 
@@ -146,7 +157,6 @@ describe("useWorkspaceSetupWizard", () => {
     });
     expect(workspaceActions.setCurrentWorkspaceId).toHaveBeenCalledWith("workspace-1");
     expect(createInviteCodeMutateAsync).toHaveBeenCalledWith({ workspaceId: "workspace-1" });
-    expect(result.current.inviteCode).toBe("abc123");
     expect(result.current.step).toBe("invite");
   });
 
@@ -202,53 +212,6 @@ describe("useWorkspaceSetupWizard", () => {
     expect(result.current.step).toBe("invite");
   });
 
-  it("copyInviteLink: inviteCode가 없으면 아무 동작도 하지 않는다", async () => {
-    const { result } = renderHook(() => useWorkspaceSetupWizard());
-
-    await act(async () => {
-      await result.current.copyInviteLink();
-    });
-
-    expect(navigator.clipboard.writeText).not.toHaveBeenCalled();
-  });
-
-  it("copyInviteLink 성공 시 클립보드에 복사하고 성공 토스트를 띄운다", async () => {
-    createWorkspaceMutateAsync.mockResolvedValueOnce({ workspace: { id: "workspace-1" } });
-    createInviteCodeMutateAsync.mockResolvedValueOnce("abc123");
-    const { result } = renderHook(() => useWorkspaceSetupWizard());
-
-    act(() => result.current.setWorkspaceName("우리집"));
-    await act(async () => {
-      await result.current.completeCreate();
-    });
-    await act(async () => {
-      await result.current.copyInviteLink();
-    });
-
-    expect(navigator.clipboard.writeText).toHaveBeenCalledWith("https://duous.app/invite/abc123");
-    expect(toastActions.showToast).toHaveBeenCalledWith("초대 링크를 복사했습니다.", "success");
-  });
-
-  it("copyInviteLink 실패 시 에러 토스트를 띄운다", async () => {
-    createWorkspaceMutateAsync.mockResolvedValueOnce({ workspace: { id: "workspace-1" } });
-    createInviteCodeMutateAsync.mockResolvedValueOnce("abc123");
-    vi.mocked(navigator.clipboard.writeText).mockRejectedValueOnce(new Error("fail"));
-    const { result } = renderHook(() => useWorkspaceSetupWizard());
-
-    act(() => result.current.setWorkspaceName("우리집"));
-    await act(async () => {
-      await result.current.completeCreate();
-    });
-    await act(async () => {
-      await result.current.copyInviteLink();
-    });
-
-    expect(toastActions.showToast).toHaveBeenCalledWith(
-      "복사에 실패했습니다. 코드를 직접 전달해주세요.",
-      "error"
-    );
-  });
-
   it("goBack: create 단계의 name 세부 단계에서는 type 세부 단계로 되돌아간다", () => {
     const { result } = renderHook(() => useWorkspaceSetupWizard());
 
@@ -296,9 +259,13 @@ describe("useWorkspaceSetupWizard", () => {
     await waitFor(() => expect(result.current.isSaving).toBe(true));
   });
 
-  it("inviteLink는 inviteCode가 없으면 빈 문자열이다", () => {
+  it("초대 코드 복사는 useInviteShare에 위임한다", () => {
     const { result } = renderHook(() => useWorkspaceSetupWizard());
 
-    expect(result.current.inviteLink).toBe("");
+    result.current.copyInviteCode();
+    result.current.copyInviteLink();
+
+    expect(mockInviteShare.copyCode).toHaveBeenCalled();
+    expect(mockInviteShare.copyLink).toHaveBeenCalled();
   });
 });

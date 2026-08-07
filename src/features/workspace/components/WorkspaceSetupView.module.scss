@@ -111,18 +111,29 @@
 }
 
 .inviteCodeBox {
-  @include flex-row(12px);
-  justify-content: space-between;
+  @include flex-center;
   margin-top: var(--space-4xl);
   background-color: var(--grey-100);
   border-radius: var(--radius-xl);
   padding: 0 var(--space-xl);
   height: 60px;
-  color: var(--grey-400);
+}
 
-  svg {
-    flex-shrink: 0;
-  }
+.inviteActions {
+  @include flex-row(8px);
+  margin-top: var(--space-md);
+}
+
+.inviteActionButton {
+  flex: 1;
+  height: 46px;
+  border-radius: var(--radius-lg);
+  background-color: var(--primary-light);
+  color: var(--primary);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  @include flex-center;
+  gap: 6px;
 }
 
 .inviteCodeText {

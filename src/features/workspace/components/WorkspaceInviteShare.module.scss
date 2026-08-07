@@ -1,0 +1,65 @@
+@use "styles/mixins" as *;
+
+.container {
+  @include flex-col(var(--space-md));
+}
+
+.help {
+  font-size: var(--font-size-md);
+  color: var(--grey-600);
+  line-height: 1.6;
+  white-space: pre-line;
+  text-align: center;
+}
+
+.codeBox {
+  @include flex-center;
+  height: 64px;
+  border-radius: var(--radius-lg);
+  background-color: var(--grey-100);
+}
+
+.codeText {
+  font-size: 26px;
+  font-weight: var(--font-weight-bold);
+  color: var(--grey-900);
+  letter-spacing: 0.12em;
+}
+
+.codePlaceholder {
+  font-size: var(--font-size-lg);
+  color: var(--grey-400);
+}
+
+.actions {
+  @include flex-row(8px);
+}
+
+.actionButton {
+  flex: 1;
+  height: 46px;
+  border-radius: var(--radius-lg);
+  background-color: var(--primary-light);
+  color: var(--primary);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  @include flex-center;
+  gap: 6px;
+
+  &:disabled {
+    opacity: 0.4;
+  }
+}
+
+.regenerateButton {
+  @include flex-center;
+  gap: 6px;
+  padding: var(--space-sm);
+  color: var(--grey-500);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+
+  &:disabled {
+    opacity: 0.4;
+  }
+}
