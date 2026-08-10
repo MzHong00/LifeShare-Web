@@ -1,11 +1,11 @@
 import { MapPin } from "lucide-react";
 
 import { PathPreview } from "@/features/map/components/PathPreview";
+import { ICON_SIZE } from "@/constants/style";
 
 import styles from "./StoryPathField.module.scss";
 
 import type { LocationPoint } from "@/features/stories/types/story";
-import { ICON_SIZE } from "@/constants/style";
 
 interface StoryPathFieldProps {
   path: LocationPoint[];

@@ -5,19 +5,17 @@ import { useQuery } from "@tanstack/react-query";
 import { Camera, RotateCcw } from "lucide-react";
 import { useRouter } from "next/navigation";
 
+import { ROUTES } from "@/constants/routes";
+import { ICON_SIZE } from "@/constants/style";
 import { storyQueries } from "@/features/stories/queries/storyQueries";
 import { useCurrentWorkspace } from "@/features/workspace/hooks/useCurrentWorkspace";
-import { ROUTES } from "@/constants/routes";
-
-import { useMemoryBoard } from "../hooks/useMemoryBoard";
-import { useScatterCards } from "../hooks/useScatterCards";
-
-import { SHELL_STORIES, isShellStory } from "@/features/stories/constants/previewMockStories";
+import { useMemoryBoard } from "@/features/stories/hooks/useMemoryBoard";
+import { useScatterCards } from "@/features/stories/hooks/useScatterCards";
+import { createShellStories, isShellStory } from "@/features/stories/constants/previewMockStories";
 import { StoryDetailOverlay } from "@/features/stories/components/StoryDetailOverlay";
+import { MemoryCard } from "@/features/stories/components/MemoryCard";
+import { StoryBoardHeader } from "@/features/stories/components/StoryBoardHeader";
 import { getFanCardDiff, getFanCardStyle } from "@/features/stories/utils/fanCardUtils";
-import { ICON_SIZE } from "@/constants/style";
-import { MemoryCard } from "./MemoryCard";
-import { StoryBoardHeader } from "./StoryBoardHeader";
 
 import styles from "./StoryBoardView.module.scss";
 
@@ -52,7 +50,7 @@ export const StoryBoardView = () => {
   const boardStories = useMemo(
     () => [
       ...stories,
-      ...SHELL_STORIES(currentWorkspace?.id ?? "", BOARD_STORY_COUNT - stories.length),
+      ...createShellStories(currentWorkspace?.id ?? "", BOARD_STORY_COUNT - stories.length),
     ],
     [stories, currentWorkspace?.id]
   );

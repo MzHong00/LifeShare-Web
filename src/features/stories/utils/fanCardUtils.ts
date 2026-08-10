@@ -35,9 +35,10 @@ export const getFanCardStyle = (
   const translateY = Math.abs(diff) * FAN_OFFSET_Y_STEP;
   const zIndex = FAN_BASE_Z_INDEX - Math.abs(diff);
   const scale = Math.max(FAN_MIN_SCALE, 1 - Math.abs(diff) * FAN_SCALE_STEP);
-  const isHidden = Math.abs(diff) > FAN_VISIBLE_RANGE;
-  const opacity = isHidden ? 0 : diff < 0 ? FAN_BEHIND_OPACITY : 1;
-  const pointerEvents: CSSProperties["pointerEvents"] = opacity === 0 ? "none" : "auto";
+  const isHidden = Math.abs(diff) > FAN_VISIBLE_RANGE; // 가시 범위를 벗어나 완전히 숨기는 카드인지
+  const visibleOpacity = diff < 0 ? FAN_BEHIND_OPACITY : 1; // 지나간(왼쪽) 카드는 살짝 흐리게
+  const opacity = isHidden ? 0 : visibleOpacity;
+  const pointerEvents: CSSProperties["pointerEvents"] = isHidden ? "none" : "auto";
 
   // 중앙으로 이동한 카드는 부채꼴 위치에 이동량(dx·dy)을 더해 형태·크기 그대로 보드 정중앙으로 보냄
   const offsetX = translateX + (isFocused ? (focus?.dx ?? 0) : 0);

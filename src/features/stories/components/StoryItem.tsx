@@ -3,11 +3,11 @@ import Image from "next/image";
 
 import { formatDate } from "@/utils/date";
 import { cx } from "@/utils/cn";
+import { ICON_SIZE } from "@/constants/style";
 
 import styles from "./StoryItem.module.scss";
 
 import type { Story } from "@/features/stories/types/story";
-import { ICON_SIZE } from "@/constants/style";
 
 interface StoryItemProps {
   story: Story;

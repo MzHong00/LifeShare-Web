@@ -7,11 +7,11 @@ import { ROUTES } from "@/constants/routes";
 import { storyActions } from "@/features/stories/stores/useStoryStore";
 import { isShellStory } from "@/features/stories/constants/previewMockStories";
 import { formatDate } from "@/utils/date";
+import { ICON_SIZE } from "@/constants/style";
 
 import styles from "./StoryDetailContent.module.scss";
 
 import type { Story } from "@/features/stories/types/story";
-import { ICON_SIZE } from "@/constants/style";
 
 interface StoryDetailContentProps {
   story: Story;

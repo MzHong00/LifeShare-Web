@@ -1,6 +1,7 @@
 import { RefObject } from "react";
-import { ICON_SIZE } from "@/constants/style";
 import { Image as ImageIcon, X } from "lucide-react";
+
+import { ICON_SIZE } from "@/constants/style";
 
 import styles from "./StoryImagePicker.module.scss";
 

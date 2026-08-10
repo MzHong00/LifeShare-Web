@@ -13,11 +13,11 @@ import { storyQueries } from "@/features/stories/queries/storyQueries";
 import { useDeleteStoryMutation } from "@/features/stories/queries/storyMutations";
 import { useCurrentWorkspace } from "@/features/workspace/hooks/useCurrentWorkspace";
 import { StoryDetailContent } from "@/features/stories/components/StoryDetailContent";
+import { ICON_SIZE } from "@/constants/style";
 
 import styles from "./StoryDetailView.module.scss";
 
 import type { Story } from "@/features/stories/types/story";
-import { ICON_SIZE } from "@/constants/style";
 
 export const StoryDetailView = () => {
   const router = useRouter();

@@ -1,11 +1,11 @@
 import { MapPin, Calendar } from "lucide-react";
 
 import { formatDate } from "@/utils/date";
+import { ICON_SIZE } from "@/constants/style";
 
 import styles from "./StoryBriefInfo.module.scss";
 
 import type { Story } from "@/features/stories/types/story";
-import { ICON_SIZE } from "@/constants/style";
 
 interface StoryBriefInfoProps {
   story: Story;

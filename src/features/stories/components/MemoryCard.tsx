@@ -6,11 +6,11 @@ import Image from "next/image";
 
 import { cx } from "@/utils/cn";
 import { formatDate } from "@/utils/date";
+import { ICON_SIZE } from "@/constants/style";
 
 import styles from "./MemoryCard.module.scss";
 
 import type { Story } from "@/features/stories/types/story";
-import { ICON_SIZE } from "@/constants/style";
 
 interface MemoryCardProps {
   story: Story;
