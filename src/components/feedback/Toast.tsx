@@ -2,6 +2,7 @@
 import { CheckCircle, AlertCircle, Info, AlertTriangle } from "lucide-react";
 
 import { useToastStore } from "@/stores/useToastStore";
+import { ICON_SIZE } from "@/constants/style";
 
 import styles from "./Toast.module.scss";
 
@@ -24,7 +25,7 @@ export const Toast = () => {
     <div className={styles.container}>
       <div key={toast.id} className={styles.toast} data-type={toast.type}>
         <span className={styles.iconWrap}>
-          <Icon size={16} className={styles.icon} />
+          <Icon size={ICON_SIZE.md} className={styles.icon} />
         </span>
         <span className={styles.message}>{toast.message}</span>
       </div>

@@ -6,6 +6,7 @@ import { normalize, fmtCoord, getWaypointLabel } from "@/features/map/utils/path
 import styles from "./PathPreview.module.scss";
 
 import type { LocationPoint } from "@/features/stories/types/story";
+import { ICON_SIZE } from "@/constants/style";
 
 interface PathPreviewProps {
   path: LocationPoint[];
@@ -113,14 +114,14 @@ export function PathPreview({ path, pathColor, onEdit, onClear }: PathPreviewPro
           <div>
             <p className={styles.infoTitle}>경로 저장됨</p>
             <p className={styles.infoSub}>
-              <MapPin size={11} />
+              <MapPin size={ICON_SIZE.sm} />
               정점 {path.length}개{path.length >= 2 ? " · 경로 완성" : " · 정점을 더 추가하세요"}
             </p>
           </div>
         </div>
         <div className={styles.actions}>
           <button type="button" onClick={onEdit} className={styles.editBtn} aria-label="경로 수정">
-            <Pencil size={14} />
+            <Pencil size={ICON_SIZE.md} />
           </button>
           <button
             type="button"
@@ -128,7 +129,7 @@ export function PathPreview({ path, pathColor, onEdit, onClear }: PathPreviewPro
             className={styles.clearBtn}
             aria-label="경로 삭제"
           >
-            <Trash2 size={14} />
+            <Trash2 size={ICON_SIZE.md} />
           </button>
         </div>
       </div>

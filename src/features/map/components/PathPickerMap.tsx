@@ -17,6 +17,7 @@ import { MapLoadState } from "@/features/map/components/MapLoadState";
 import styles from "./PathPickerMap.module.scss";
 
 import type { LocationPoint } from "@/features/stories/types/story";
+import { ICON_SIZE } from "@/constants/style";
 
 const ENDPOINT_DOT_SIZE = 18;
 const WAYPOINT_DOT_SIZE = 12;
@@ -123,7 +124,7 @@ export function PathPickerMap({
 
       {/* X 버튼 — 좌상단 플로팅 */}
       <button type="button" onClick={onClose} className={styles.closeBtn} aria-label="닫기">
-        <X size={18} />
+        <X size={ICON_SIZE.lg} />
       </button>
 
       {/* 내 위치 FAB */}
@@ -133,7 +134,7 @@ export function PathPickerMap({
         className={styles.locationFab}
         aria-label="내 위치로 이동"
       >
-        <Navigation size={17} />
+        <Navigation size={ICON_SIZE.md} />
       </button>
 
       {/* 하단 툴 카드 */}
@@ -151,7 +152,7 @@ export function PathPickerMap({
                   className={styles.toolBtn}
                   aria-label="되돌리기"
                 >
-                  <RotateCcw size={15} />
+                  <RotateCcw size={ICON_SIZE.md} />
                   <span>되돌리기</span>
                 </button>
                 <button
@@ -160,7 +161,7 @@ export function PathPickerMap({
                   className={styles.toolBtnDanger}
                   aria-label="초기화"
                 >
-                  <Trash2 size={15} />
+                  <Trash2 size={ICON_SIZE.md} />
                   <span>초기화</span>
                 </button>
               </div>

@@ -7,6 +7,7 @@ import { cx } from "@/utils/cn";
 import styles from "./AssigneePicker.module.scss";
 
 import type { WorkspaceMember } from "@/features/workspace/types/workspace";
+import { ICON_SIZE, AVATAR_SIZE } from "@/constants/style";
 
 interface AssigneePickerProps {
   members: WorkspaceMember[];
@@ -27,7 +28,7 @@ export const AssigneePicker = ({ members, assigneeId, onSelect }: AssigneePicker
             isCommon ? styles.assigneeIconActive : styles.assigneeIconInactive
           )}
         >
-          <Users size={22} color={isCommon ? "var(--white)" : "var(--grey-500)"} />
+          <Users size={ICON_SIZE.xl} color={isCommon ? "var(--white)" : "var(--grey-500)"} />
         </div>
         <span
           className={cx(
@@ -49,11 +50,11 @@ export const AssigneePicker = ({ members, assigneeId, onSelect }: AssigneePicker
           >
             <div className={styles.memberWrap}>
               <div className={isActive ? styles.memberAvatarActive : undefined}>
-                <ProfileImage uri={member.avatar} name={member.name} size={56} />
+                <ProfileImage uri={member.avatar} name={member.name} size={AVATAR_SIZE.xl} />
               </div>
               {isActive && (
                 <div className={styles.checkBadge}>
-                  <Check size={10} strokeWidth={3} />
+                  <Check size={ICON_SIZE.sm} strokeWidth={3} />
                 </div>
               )}
             </div>

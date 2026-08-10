@@ -18,10 +18,9 @@ import { DatePicker } from "@/components/ui/DatePicker";
 import { ProfileImage } from "@/components/ui/ProfileImage";
 import { APP_WORKSPACE } from "@/constants/config";
 import { cx } from "@/utils/cn";
+import { ICON_SIZE, AVATAR_SIZE } from "@/constants/style";
 import styles from "./WorkspaceEditView.module.scss";
 
-const PROFILE_MODAL_AVATAR_SIZE = 72; // 프로필 수정 모달의 아바타 크기(px)
-const MEMBER_AVATAR_SIZE = 36; // 참여자 목록의 아바타 크기(px)
 const LAST_LEAVE_CONFIRM_PHRASE = "삭제하기"; // 마지막 멤버 나가기(=전체 삭제) 모달에서 그대로 입력해야 진행되는 확인 문구
 
 export const WorkspaceEditView = () => {
@@ -150,11 +149,7 @@ export const WorkspaceEditView = () => {
         <div className={styles.modalContent}>
           <p className={styles.modalHelp}>이 공간에서 사용할 이름을 입력해주세요.</p>
           <div className={styles.profileModalAvatarWrap}>
-            <ProfileImage
-              uri={user.profileImage}
-              name={user.name}
-              size={PROFILE_MODAL_AVATAR_SIZE}
-            />
+            <ProfileImage uri={user.profileImage} name={user.name} size={AVATAR_SIZE["5xl"]} />
           </div>
           <input
             type="text"
@@ -223,7 +218,7 @@ export const WorkspaceEditView = () => {
             {members.map((member, index) => (
               <div key={member.id}>
                 <div className={styles.memberRow}>
-                  <ProfileImage uri={member.avatar} name={member.name} size={MEMBER_AVATAR_SIZE} />
+                  <ProfileImage uri={member.avatar} name={member.name} size={AVATAR_SIZE.md} />
                   <span className={styles.settingLabel}>{member.name}</span>
                   {member.role === "owner" && <span className={styles.ownerBadge}>방장</span>}
                   {member.id === user?.id && <span className={styles.meBadge}>나</span>}
@@ -233,7 +228,7 @@ export const WorkspaceEditView = () => {
                       aria-label={`${member.name} 내보내기`}
                       className={styles.kickButton}
                     >
-                      <UserMinus size={16} />
+                      <UserMinus size={ICON_SIZE.md} />
                     </button>
                   )}
                 </div>
@@ -249,13 +244,13 @@ export const WorkspaceEditView = () => {
             <button onClick={openNameEditModal} className={styles.settingRow}>
               <span className={styles.settingLabel}>라이프룸 제목</span>
               <span className={styles.settingValue}>{workspace.name}</span>
-              <ChevronRight size={16} color="var(--grey-300)" />
+              <ChevronRight size={ICON_SIZE.md} color="var(--grey-300)" />
             </button>
             <div className={styles.divider} />
             <button onClick={openStartDateModal} className={styles.settingRow}>
               <span className={styles.settingLabel}>함께한 날</span>
               <span className={styles.settingValue}>{workspace.startDate || "날짜 선택"}</span>
-              <ChevronRight size={16} color="var(--grey-300)" />
+              <ChevronRight size={ICON_SIZE.md} color="var(--grey-300)" />
             </button>
             <div className={styles.divider} />
             <div className={styles.themeRow}>
@@ -270,23 +265,23 @@ export const WorkspaceEditView = () => {
           <div className={styles.settingCard}>
             <button onClick={openProfileEditModal} className={styles.settingRow}>
               <div className={cx(styles.settingIcon, styles.settingIconPrimary)}>
-                <User size={18} />
+                <User size={ICON_SIZE.lg} />
               </div>
               <span className={styles.settingLabel}>내 활동 프로필 설정</span>
-              <ChevronRight size={16} color="var(--grey-300)" />
+              <ChevronRight size={ICON_SIZE.md} color="var(--grey-300)" />
             </button>
             {isOwner && (
               <>
                 <div className={styles.divider} />
                 <button onClick={openInviteShareModal} className={styles.settingRow}>
                   <div className={cx(styles.settingIcon, styles.settingIconGreen)}>
-                    <UserPlus size={18} />
+                    <UserPlus size={ICON_SIZE.lg} />
                   </div>
                   <span className={styles.settingLabel}>
                     {workspace.type === "couple" ? "파트너 초대하기" : "멤버 초대하기"}
                   </span>
                   <span className={styles.settingValue}>{members.length}명 참여 중</span>
-                  <ChevronRight size={16} color="var(--grey-300)" />
+                  <ChevronRight size={ICON_SIZE.md} color="var(--grey-300)" />
                 </button>
               </>
             )}
@@ -305,7 +300,7 @@ export const WorkspaceEditView = () => {
                     : "데이터는 유지되지만 리스트에서 사라집니다."}
                 </p>
               </div>
-              <Trash2 size={18} color="var(--error)" className={styles.dangerIcon} />
+              <Trash2 size={ICON_SIZE.lg} color="var(--error)" className={styles.dangerIcon} />
             </button>
           </div>
         </div>
@@ -322,7 +317,7 @@ export const WorkspaceEditView = () => {
           disabled={isMain}
           className={styles.setMainButton}
         >
-          <Star size={18} fill={isMain ? "currentColor" : "none"} />
+          <Star size={ICON_SIZE.lg} fill={isMain ? "currentColor" : "none"} />
           {isMain ? "이미 메인 라이프룸이에요" : "메인으로 설정"}
         </button>
       </div>

@@ -7,6 +7,7 @@ import { useSwipeDismiss } from "@/features/stories/hooks/useSwipeDismiss";
 import styles from "./StoryDetailOverlay.module.scss";
 
 import type { Story } from "@/features/stories/types/story";
+import { ICON_SIZE } from "@/constants/style";
 
 interface StoryDetailOverlayProps {
   story: Story;
@@ -32,7 +33,7 @@ export const StoryDetailOverlay = ({ story, onClose }: StoryDetailOverlayProps) 
       onPointerCancel={handlePointerUp}
     >
       <button type="button" onClick={onClose} className={styles.detailClose} aria-label="상세 닫기">
-        <X size={20} />
+        <X size={ICON_SIZE.lg} />
       </button>
       <StoryDetailContent story={story} />
     </div>

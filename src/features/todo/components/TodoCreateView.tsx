@@ -8,6 +8,7 @@ import { getDateWithOffset } from "@/utils/date";
 import { useTodoForm } from "@/features/todo/hooks/useTodoForm";
 import { ColorPicker } from "@/features/todo/components/ColorPicker";
 import { AssigneePicker } from "@/features/todo/components/AssigneePicker";
+import { ICON_SIZE } from "@/constants/style";
 
 import styles from "./TodoCreateView.module.scss";
 
@@ -47,7 +48,7 @@ export const TodoCreateView = () => {
         rightElement={
           todoId ? (
             <button onClick={handleDelete} className={styles.deleteButton} aria-label="할 일 삭제">
-              <Trash2 size={20} color="var(--error)" />
+              <Trash2 size={ICON_SIZE.lg} color="var(--error)" />
             </button>
           ) : undefined
         }

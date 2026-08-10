@@ -10,6 +10,7 @@ import { formatDate } from "@/utils/date";
 import styles from "./MemoryCard.module.scss";
 
 import type { Story } from "@/features/stories/types/story";
+import { ICON_SIZE } from "@/constants/style";
 
 interface MemoryCardProps {
   story: Story;
@@ -40,7 +41,7 @@ const MemoryCardComponent = ({
             className={styles.closeButton}
             aria-label="상세 닫기"
           >
-            <X size={20} />
+            <X size={ICON_SIZE.lg} />
           </button>
         )}
 
@@ -51,7 +52,7 @@ const MemoryCardComponent = ({
             </div>
           ) : (
             <div className={styles.expandedPlaceholder}>
-              <MapPin size={48} className={styles.expandedPlaceholderIcon} />
+              <MapPin size={ICON_SIZE["4xl"]} className={styles.expandedPlaceholderIcon} />
             </div>
           )}
 
@@ -75,7 +76,7 @@ const MemoryCardComponent = ({
         <Image src={story.thumbnailUrl} alt="" aria-hidden="true" fill className={styles.photo} />
       ) : (
         <div className={styles.photoPlaceholder}>
-          <MapPin size={24} className={styles.photoPlaceholderIcon} />
+          <MapPin size={ICON_SIZE.xl} className={styles.photoPlaceholderIcon} />
         </div>
       )}
 

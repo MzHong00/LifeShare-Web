@@ -17,6 +17,7 @@ import { StoryDetailContent } from "@/features/stories/components/StoryDetailCon
 import styles from "./StoryDetailView.module.scss";
 
 import type { Story } from "@/features/stories/types/story";
+import { ICON_SIZE } from "@/constants/style";
 
 export const StoryDetailView = () => {
   const router = useRouter();
@@ -63,14 +64,14 @@ export const StoryDetailView = () => {
         rightElement={
           <div className={styles.headerButtons}>
             <button onClick={handleDelete} className={styles.headerButton} aria-label="스토리 삭제">
-              <Trash2 size={20} color="var(--error)" />
+              <Trash2 size={ICON_SIZE.lg} color="var(--error)" />
             </button>
             <button
               onClick={() => router.push(ROUTES.STORIES.EDIT.query({ storyId }))}
               className={styles.headerButton}
               aria-label="스토리 수정"
             >
-              <Edit3 size={20} color="var(--grey-900)" />
+              <Edit3 size={ICON_SIZE.lg} color="var(--grey-900)" />
             </button>
           </div>
         }

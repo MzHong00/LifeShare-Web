@@ -12,6 +12,7 @@ import { workspaceQueries } from "@/features/workspace/queries/workspaceQueries"
 import { useJoinWorkspaceMutation } from "@/features/workspace/queries/workspaceMutations";
 import { useCurrentWorkspace } from "@/features/workspace/hooks/useCurrentWorkspace";
 import { normalizeInviteCode } from "@/features/workspace/utils/inviteCode";
+import { ICON_SIZE } from "@/constants/style";
 import styles from "./WorkspaceJoinView.module.scss";
 
 /** 초대 링크(/workspace/join/[code])로 들어온 사용자가 참여를 확정하는 화면 */
@@ -66,7 +67,7 @@ export const WorkspaceJoinView = () => {
   return (
     <main className={styles.main}>
       <div className={styles.logo}>
-        <Heart size={48} fill="var(--primary)" />
+        <Heart size={ICON_SIZE["4xl"]} fill="var(--primary)" />
       </div>
 
       {isPending && <p className={styles.statusText}>초대 확인 중...</p>}

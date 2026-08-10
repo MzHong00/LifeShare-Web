@@ -6,7 +6,7 @@ import { Heart, User } from "lucide-react";
 import { ROUTES } from "@/constants/routes";
 import { APP_WORKSPACE } from "@/constants/config";
 import { useCurrentWorkspace } from "@/features/workspace/hooks/useCurrentWorkspace";
-import { ICON_SIZE } from "@/constants/iconSize";
+import { ICON_SIZE } from "@/constants/style";
 import styles from "./WorkspaceLandingView.module.scss";
 
 export const WorkspaceLandingView = () => {

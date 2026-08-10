@@ -2,7 +2,8 @@ import { memo } from "react";
 
 import { ProfileImage } from "@/components/ui/ProfileImage";
 import { cx } from "@/utils/cn";
-import { AVATAR_FALLBACK_NAME, BUBBLE_AVATAR_SIZE } from "@/features/chat/constants/chat";
+import { AVATAR_FALLBACK_NAME } from "@/features/chat/constants/chat";
+import { AVATAR_SIZE } from "@/constants/style";
 
 import styles from "./MessageBubble.module.scss";
 
@@ -50,7 +51,7 @@ const MessageBubbleComponent = ({
           <ProfileImage
             uri={avatar}
             name={name || AVATAR_FALLBACK_NAME}
-            size={BUBBLE_AVATAR_SIZE}
+            size={AVATAR_SIZE.sm}
             className={styles.partnerAvatar}
           />
         )}

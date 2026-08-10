@@ -2,6 +2,7 @@
 import { Users, Plus } from "lucide-react";
 
 import { APP_WORKSPACE } from "@/constants/config";
+import { ICON_SIZE } from "@/constants/style";
 import styles from "./WorkspaceSetupView.module.scss";
 
 interface SetupInitialStepProps {
@@ -13,7 +14,7 @@ export const SetupInitialStep = ({ onStart }: SetupInitialStepProps) => (
   <div className={styles.stepContent}>
     <div className={styles.topSection}>
       <div className={styles.iconWrap}>
-        <Users size={32} />
+        <Users size={ICON_SIZE["2xl"]} />
       </div>
       <h2 className={styles.heading}>{APP_WORKSPACE.KR} 만들기</h2>
       <p className={styles.desc}>
@@ -22,7 +23,7 @@ export const SetupInitialStep = ({ onStart }: SetupInitialStepProps) => (
     </div>
     <div className={styles.bottomSection}>
       <button onClick={onStart} className={styles.primaryButton}>
-        <Plus size={20} />
+        <Plus size={ICON_SIZE.lg} />
         새로운 {APP_WORKSPACE.KR} 만들기
       </button>
     </div>

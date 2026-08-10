@@ -9,6 +9,7 @@ import { MapPartnerInfo } from "@/features/map/components/MapPartnerInfo";
 import { MapStoryInfo } from "@/features/map/components/MapStoryInfo";
 import { ProfileImage } from "@/components/ui/ProfileImage";
 import { BottomDrawer } from "@/components/layout/BottomDrawer";
+import { ICON_SIZE, AVATAR_SIZE } from "@/constants/style";
 
 import styles from "./MapView.module.scss";
 
@@ -51,9 +52,9 @@ export const MapView = () => {
               className={cx(styles.memberButton, isSelected && styles.memberButtonActive)}
             >
               <div className={cx(styles.memberAvatarWrap, isSelected && styles.memberAvatarActive)}>
-                <ProfileImage uri={member.avatar} name={member.name} size={52} />
+                <ProfileImage uri={member.avatar} name={member.name} size={AVATAR_SIZE.xl} />
                 <span className={styles.focusBadge}>
-                  <Search size={10} strokeWidth={2.5} />
+                  <Search size={ICON_SIZE.sm} strokeWidth={2.5} />
                 </span>
               </div>
               <span className={cx(styles.memberName, isSelected && styles.memberNameActive)}>
@@ -88,12 +89,12 @@ export const MapView = () => {
         >
           {isRecording ? (
             <>
-              <Square size={14} fill="white" color="white" />
+              <Square size={ICON_SIZE.md} fill="white" color="white" />
               <span className={styles.recordLabel}>스토리 기록 종료</span>
             </>
           ) : (
             <>
-              <Route size={14} />
+              <Route size={ICON_SIZE.md} />
               <span className={styles.recordLabel}>스토리 기록 시작</span>
             </>
           )}

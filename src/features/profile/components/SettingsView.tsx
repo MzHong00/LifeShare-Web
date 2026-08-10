@@ -5,7 +5,7 @@ import { Bell, Lock, ChevronRight, LogOut, Camera, Pencil } from "lucide-react";
 import { AppHeader } from "@/components/layout/AppHeader";
 import { Card } from "@/components/ui/Card";
 import { ProfileImage } from "@/components/ui/ProfileImage";
-import { ICON_SIZE } from "@/constants/iconSize";
+import { ICON_SIZE, AVATAR_SIZE } from "@/constants/style";
 import { cx } from "@/utils/cn";
 
 import { useProfileUser } from "@/features/profile/hooks/useProfileUser";
@@ -15,8 +15,6 @@ import { toastActions } from "@/stores/useToastStore";
 import styles from "./SettingsView.module.scss";
 
 import type { ReactNode } from "react";
-
-const AVATAR_SIZE = 80; // 프로필 아바타 크기(px)
 
 interface SettingItem {
   id: string; // 항목 고유 키
@@ -86,9 +84,9 @@ export const SettingsView = () => {
               disabled={isUploadingPhoto}
               className={styles.avatarButton}
             >
-              <ProfileImage uri={user?.profileImage} name={displayName} size={AVATAR_SIZE} />
+              <ProfileImage uri={user?.profileImage} name={displayName} size={AVATAR_SIZE["5xl"]} />
               <div className={styles.cameraButton}>
-                <Camera size={13} strokeWidth={2.5} />
+                <Camera size={ICON_SIZE.sm} strokeWidth={2.5} />
               </div>
             </button>
             <input
@@ -101,7 +99,7 @@ export const SettingsView = () => {
 
             <button onClick={handleEditName} className={styles.nameButton}>
               <span className={styles.displayName}>{displayName}</span>
-              <Pencil size={14} />
+              <Pencil size={ICON_SIZE.md} />
             </button>
             <span className={styles.email}>{email}</span>
           </>
@@ -123,7 +121,7 @@ export const SettingsView = () => {
                     <p className={styles.settingDesc}>{item.description}</p>
                   </div>
                 </div>
-                <ChevronRight size={18} color="var(--grey-400)" />
+                <ChevronRight size={ICON_SIZE.lg} color="var(--grey-400)" />
               </button>
               <div className={styles.divider} />
             </div>

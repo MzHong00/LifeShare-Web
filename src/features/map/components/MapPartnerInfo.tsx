@@ -5,6 +5,7 @@ import { ProfileImage } from "@/components/ui/ProfileImage";
 import styles from "./MapPartnerInfo.module.scss";
 
 import type { WorkspaceMember } from "@/features/workspace/types/workspace";
+import { ICON_SIZE, AVATAR_SIZE } from "@/constants/style";
 
 interface RecentPlace {
   id: string;
@@ -25,7 +26,7 @@ export const MapPartnerInfo = ({ member, onOpenDirections, recentPlaces }: MapPa
       <div className={styles.statusCard}>
         <div className={styles.memberRow}>
           <div className={styles.memberLeft}>
-            <ProfileImage uri={member.avatar} name={member.name} size={44} />
+            <ProfileImage uri={member.avatar} name={member.name} size={AVATAR_SIZE.lg} />
             <span className={styles.memberName}>{member.name}</span>
           </div>
         </div>
@@ -33,7 +34,7 @@ export const MapPartnerInfo = ({ member, onOpenDirections, recentPlaces }: MapPa
 
       <div className={styles.directionsSection}>
         <button type="button" onClick={onOpenDirections} className={styles.directionsButton}>
-          <Navigation size={18} />
+          <Navigation size={ICON_SIZE.lg} />
           <span>경로 찾기</span>
         </button>
       </div>
@@ -45,13 +46,13 @@ export const MapPartnerInfo = ({ member, onOpenDirections, recentPlaces }: MapPa
             {recentPlaces.map((place) => (
               <button type="button" key={place.id} className={styles.placeButton}>
                 <div className={styles.placeIcon}>
-                  <MapPin size={18} />
+                  <MapPin size={ICON_SIZE.lg} />
                 </div>
                 <div className={styles.placeInfo}>
                   <p className={styles.placeName}>{place.name}</p>
                   <p className={styles.placeDate}>{place.date}</p>
                 </div>
-                <ChevronRight size={16} className={styles.chevron} />
+                <ChevronRight size={ICON_SIZE.md} className={styles.chevron} />
               </button>
             ))}
           </div>

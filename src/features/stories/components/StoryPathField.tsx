@@ -5,6 +5,7 @@ import { PathPreview } from "@/features/map/components/PathPreview";
 import styles from "./StoryPathField.module.scss";
 
 import type { LocationPoint } from "@/features/stories/types/story";
+import { ICON_SIZE } from "@/constants/style";
 
 interface StoryPathFieldProps {
   path: LocationPoint[];
@@ -20,7 +21,7 @@ export const StoryPathField = ({ path, pathColor, onEdit, onClear }: StoryPathFi
     return (
       <button type="button" onClick={onEdit} className={styles.pathPlaceholder}>
         <div className={styles.pathPlaceholderIcon}>
-          <MapPin size={22} />
+          <MapPin size={ICON_SIZE.xl} />
         </div>
         <p className={styles.pathPlaceholderText}>경로 추가하기</p>
         <p className={styles.pathPlaceholderSub}>지도를 탭해서 이동 경로를 기록하세요</p>

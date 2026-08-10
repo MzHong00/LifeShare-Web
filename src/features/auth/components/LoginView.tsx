@@ -12,9 +12,9 @@ import { KakaoIcon } from "@/assets/icons/KakaoIcon";
 import { GoogleIcon } from "@/assets/icons/GoogleIcon";
 import { APP_BRAND_NAME } from "@/constants/config";
 import { ROUTES } from "@/constants/routes";
+import { ICON_SIZE } from "@/constants/style";
 import styles from "./LoginView.module.scss";
 
-const LOGO_ICON_SIZE = 40; // 로고 하트 아이콘 크기(px)
 const GOOGLE_LOGIN_ERROR_MESSAGE = "구글 로그인에 실패했습니다. 잠시 후 다시 시도해주세요.";
 const KAKAO_LOGIN_PENDING_MESSAGE = "카카오 로그인은 준비 중입니다.";
 const TEST_ACCOUNT_LOGIN_ERROR_MESSAGE =
@@ -61,7 +61,7 @@ export const LoginView = () => {
       <div className={styles.inner}>
         <div className={styles.logoSection}>
           <div className={styles.logoWrap}>
-            <Heart size={LOGO_ICON_SIZE} fill="var(--primary)" color="var(--primary)" />
+            <Heart size={ICON_SIZE["3xl"]} fill="var(--primary)" color="var(--primary)" />
           </div>
           <h1 className={styles.appName}>{APP_BRAND_NAME.KR}</h1>
           <p className={styles.appDesc}>우리의 소중한 일상을 함께 나누는 공간</p>

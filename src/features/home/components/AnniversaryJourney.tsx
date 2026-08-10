@@ -3,7 +3,7 @@ import { Heart } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import { useAnniversaries } from "@/features/anniversary/hooks/useAnniversaries";
-import { ICON_SIZE } from "@/constants/iconSize";
+import { ICON_SIZE } from "@/constants/style";
 import { ROUTES } from "@/constants/routes";
 import { cx } from "@/utils/cn";
 

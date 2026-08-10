@@ -1,11 +1,12 @@
 import { MapPin } from "lucide-react";
+import { ICON_SIZE } from "@/constants/style";
 import styles from "./MapEmptyState.module.scss";
 
 export const MapEmptyState = () => {
   return (
     <div className={styles.container}>
       <div className={styles.iconWrap}>
-        <MapPin size={28} />
+        <MapPin size={ICON_SIZE["2xl"]} />
       </div>
       <div className={styles.text}>
         <p className={styles.title}>마커를 선택해보세요</p>

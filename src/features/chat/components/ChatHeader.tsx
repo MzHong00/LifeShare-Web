@@ -2,7 +2,7 @@
 import { memo } from "react";
 
 import { ProfileImage } from "@/components/ui/ProfileImage";
-import { PARTNER_AVATAR_SIZE } from "@/features/chat/constants/chat";
+import { AVATAR_SIZE } from "@/constants/style";
 
 import styles from "./ChatHeader.module.scss";
 
@@ -25,7 +25,7 @@ const ChatHeaderComponent = ({ partners }: ChatHeaderProps) => {
         <div className={styles.avatarStack}>
           {partners.map((partner) => (
             <div key={partner.id} className={styles.stackedAvatar}>
-              <ProfileImage uri={partner.avatar} name={partner.name} size={PARTNER_AVATAR_SIZE} />
+              <ProfileImage uri={partner.avatar} name={partner.name} size={AVATAR_SIZE.md} />
             </div>
           ))}
         </div>

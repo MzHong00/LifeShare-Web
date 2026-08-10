@@ -2,7 +2,7 @@
 import { Plus, Sparkles } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-import { ICON_SIZE } from "@/constants/iconSize";
+import { ICON_SIZE } from "@/constants/style";
 import { ROUTES } from "@/constants/routes";
 import { useHomeStats } from "@/features/home/hooks/useHomeStats";
 import { formatDate } from "@/utils/date";
@@ -69,7 +69,7 @@ export const ActivityDashboard = () => {
         >
           <div className={styles.emptyContent}>
             <div className={styles.emptyBadge}>
-              <Sparkles size={18} className={styles.emptyIcon} />
+              <Sparkles size={ICON_SIZE.lg} className={styles.emptyIcon} />
             </div>
             <div className={styles.emptyTexts}>
               <p className={styles.emptyTitle}>아직 함께한 스토리가 없어요</p>

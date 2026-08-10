@@ -2,7 +2,7 @@
 import { CalendarDays, ChevronRight, Circle, ListTodo } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-import { ICON_SIZE } from "@/constants/iconSize";
+import { ICON_SIZE } from "@/constants/style";
 import { ROUTES } from "@/constants/routes";
 import { useHomeDigest } from "@/features/home/hooks/useHomeDigest";
 import { formatDate, getRelativeDateLabel, isToday } from "@/utils/date";

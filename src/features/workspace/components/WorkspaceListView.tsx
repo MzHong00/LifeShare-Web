@@ -11,7 +11,7 @@ import { ProfileImage } from "@/components/ui/ProfileImage";
 import { Skeleton } from "@/components/feedback/Skeleton";
 import { formatDate, calculateDDay } from "@/utils/date";
 import { APP_WORKSPACE } from "@/constants/config";
-import { ICON_SIZE } from "@/constants/iconSize";
+import { ICON_SIZE, AVATAR_SIZE } from "@/constants/style";
 import styles from "./WorkspaceListView.module.scss";
 
 import type { CSSProperties } from "react";
@@ -98,7 +98,11 @@ export const WorkspaceListView = () => {
                     <div className={styles.membersStack}>
                       {[...ws.members].reverse().map((member) => (
                         <div key={member.id} className={styles.memberAvatar}>
-                          <ProfileImage uri={member.avatar} name={member.name} size={24} />
+                          <ProfileImage
+                            uri={member.avatar}
+                            name={member.name}
+                            size={AVATAR_SIZE.xs}
+                          />
                         </div>
                       ))}
                     </div>

@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import { ChevronRight } from "lucide-react";
 
-import { ICON_SIZE } from "@/constants/iconSize";
+import { ICON_SIZE } from "@/constants/style";
 import { cx } from "@/utils/cn";
 
 import styles from "./ProfileView.module.scss";

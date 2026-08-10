@@ -7,6 +7,7 @@ import { cx } from "@/utils/cn";
 import styles from "./StoryItem.module.scss";
 
 import type { Story } from "@/features/stories/types/story";
+import { ICON_SIZE } from "@/constants/style";
 
 interface StoryItemProps {
   story: Story;
@@ -35,7 +36,7 @@ export const StoryItem = ({ story, onPress }: StoryItemProps) => {
             className={styles.thumbnailImage}
           />
         ) : (
-          <MapPin size={32} style={{ color: story.pathColor }} />
+          <MapPin size={ICON_SIZE["2xl"]} style={{ color: story.pathColor }} />
         )}
       </div>
       <div className={styles.info}>

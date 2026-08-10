@@ -1,6 +1,6 @@
 import { ShieldCheck, Megaphone } from "lucide-react";
 
-import { ICON_SIZE } from "@/constants/iconSize";
+import { ICON_SIZE } from "@/constants/style";
 import { ROUTES } from "@/constants/routes";
 import { toastActions } from "@/stores/useToastStore";
 

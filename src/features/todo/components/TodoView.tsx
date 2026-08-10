@@ -15,6 +15,7 @@ import { FILTERS } from "@/features/todo/hooks/useFilteredTodos";
 import styles from "./TodoView.module.scss";
 
 import type { Filter } from "@/features/todo/hooks/useFilteredTodos";
+import { ICON_SIZE } from "@/constants/style";
 
 export const TodoView = () => {
   const router = useRouter();
@@ -43,7 +44,7 @@ export const TodoView = () => {
       <AppHeader
         rightElement={
           <button onClick={() => router.push(ROUTES.TODO.CREATE.path)} className={styles.addButton}>
-            <Plus size={22} />
+            <Plus size={ICON_SIZE.xl} />
           </button>
         }
       />

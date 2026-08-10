@@ -2,6 +2,7 @@
 import { Check } from "lucide-react";
 
 import { cx } from "@/utils/cn";
+import { ICON_SIZE } from "@/constants/style";
 
 import styles from "./Checkbox.module.scss";
 
@@ -25,7 +26,7 @@ export const Checkbox = ({ label, isChecked, onPress, isDisabled, className }: C
       <div
         className={cx(styles.box, isChecked && styles.boxChecked, isDisabled && styles.boxDisabled)}
       >
-        {isChecked && <Check size={14} color="var(--white)" strokeWidth={3} />}
+        {isChecked && <Check size={ICON_SIZE.md} color="var(--white)" strokeWidth={3} />}
       </div>
       <span className={cx(styles.label, isDisabled && styles.labelDisabled)}>{label}</span>
     </button>

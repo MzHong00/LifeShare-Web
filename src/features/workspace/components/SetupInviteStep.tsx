@@ -4,6 +4,7 @@ import { UserPlus, Copy, Link2 } from "lucide-react";
 import styles from "./WorkspaceSetupView.module.scss";
 
 import type { RoomType } from "@/features/workspace/types/workspace";
+import { ICON_SIZE } from "@/constants/style";
 
 interface SetupInviteStepProps {
   workspaceName: string; // 생성된 워크스페이스 이름
@@ -27,7 +28,7 @@ export const SetupInviteStep = ({
   return (
     <div className={styles.topSection}>
       <div className={styles.iconWrap}>
-        <UserPlus size={32} />
+        <UserPlus size={ICON_SIZE["2xl"]} />
       </div>
       <h2 className={styles.heading}>{inviteeLabel} 초대하기</h2>
       <p className={styles.desc}>
@@ -41,11 +42,11 @@ export const SetupInviteStep = ({
 
       <div className={styles.inviteActions}>
         <button type="button" onClick={onCopyCode} className={styles.inviteActionButton}>
-          <Copy size={16} />
+          <Copy size={ICON_SIZE.md} />
           코드 복사
         </button>
         <button type="button" onClick={onCopyLink} className={styles.inviteActionButton}>
-          <Link2 size={16} />
+          <Link2 size={ICON_SIZE.md} />
           링크 복사
         </button>
       </div>

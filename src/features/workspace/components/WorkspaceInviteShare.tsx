@@ -2,6 +2,7 @@
 import { Copy, Link2, RefreshCw } from "lucide-react";
 
 import { useInviteShare } from "@/features/workspace/hooks/useInviteShare";
+import { ICON_SIZE } from "@/constants/style";
 import styles from "./WorkspaceInviteShare.module.scss";
 
 interface WorkspaceInviteShareProps {
@@ -35,7 +36,7 @@ export const WorkspaceInviteShare = ({ workspaceId }: WorkspaceInviteShareProps)
           disabled={!displayCode}
           className={styles.actionButton}
         >
-          <Copy size={16} />
+          <Copy size={ICON_SIZE.md} />
           코드 복사
         </button>
         <button
@@ -44,7 +45,7 @@ export const WorkspaceInviteShare = ({ workspaceId }: WorkspaceInviteShareProps)
           disabled={!displayCode}
           className={styles.actionButton}
         >
-          <Link2 size={16} />
+          <Link2 size={ICON_SIZE.md} />
           링크 복사
         </button>
       </div>
@@ -55,7 +56,7 @@ export const WorkspaceInviteShare = ({ workspaceId }: WorkspaceInviteShareProps)
         disabled={isRegenerating}
         className={styles.regenerateButton}
       >
-        <RefreshCw size={14} />
+        <RefreshCw size={ICON_SIZE.md} />
         {displayCode ? "코드 재발급" : "코드 발급"}
       </button>
     </div>

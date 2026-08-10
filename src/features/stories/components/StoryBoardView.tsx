@@ -15,6 +15,7 @@ import { useScatterCards } from "../hooks/useScatterCards";
 import { SHELL_STORIES, isShellStory } from "@/features/stories/constants/previewMockStories";
 import { StoryDetailOverlay } from "@/features/stories/components/StoryDetailOverlay";
 import { getFanCardDiff, getFanCardStyle } from "@/features/stories/utils/fanCardUtils";
+import { ICON_SIZE } from "@/constants/style";
 import { MemoryCard } from "./MemoryCard";
 import { StoryBoardHeader } from "./StoryBoardHeader";
 
@@ -178,10 +179,10 @@ export const StoryBoardView = () => {
 
           {isStoriesError && (
             <div className={styles.errorState}>
-              <Camera size={40} className={styles.errorIcon} />
+              <Camera size={ICON_SIZE["3xl"]} className={styles.errorIcon} />
               <p className={styles.errorTitle}>기억을 불러오지 못했어요</p>
               <button type="button" onClick={() => refetchStories()} className={styles.errorRetry}>
-                <RotateCcw size={12} />
+                <RotateCcw size={ICON_SIZE.sm} />
                 다시 시도
               </button>
             </div>

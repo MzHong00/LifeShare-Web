@@ -11,7 +11,7 @@ import { workspaceActions } from "@/features/workspace/stores/useWorkspaceStore"
 import { workspaceQueries } from "@/features/workspace/queries/workspaceQueries";
 import { useJoinWorkspaceMutation } from "@/features/workspace/queries/workspaceMutations";
 import { useCurrentWorkspace } from "@/features/workspace/hooks/useCurrentWorkspace";
-import { ICON_SIZE } from "@/constants/iconSize";
+import { ICON_SIZE } from "@/constants/style";
 import {
   normalizeInviteCode,
   formatInviteCode,
