@@ -12,6 +12,7 @@ import styles from "./ProfileWorkspaceSection.module.scss";
 import type { Workspace } from "@/features/workspace/types/workspace";
 
 const VISIBLE_WORKSPACE_COUNT = 3; // 목록에 노출할 최대 라이프룸 개수
+const VISIBLE_MEMBER_COUNT = 3; // 라이프룸 행에 노출할 최대 참여자 아바타 개수
 
 /** 현재 메인 워크스페이스를 맨 위로 고정하고 나머지는 원래 순서를 유지한다 (안정 정렬) */
 const sortWithMainFirst = (workspaces: Workspace[], mainWorkspaceId?: string) =>
@@ -76,7 +77,7 @@ export const ProfileWorkspaceSection = () => {
                   <div className={styles.memberStack}>
                     {[...members]
                       .reverse()
-                      .slice(0, 3)
+                      .slice(0, VISIBLE_MEMBER_COUNT)
                       .map((member) => (
                         <div key={member.id} className={styles.memberAvatar}>
                           <ProfileImage

@@ -73,11 +73,11 @@ export const SettingsView = () => {
       <AppHeader />
 
       <div className={styles.profileSection}>
-        {isLoading ? (
-          <ProfileHeroSkeleton />
-        ) : isError ? (
+        {isLoading && <ProfileHeroSkeleton />}
+        {!isLoading && isError && (
           <p className={styles.errorText}>프로필 정보를 불러오지 못했습니다.</p>
-        ) : (
+        )}
+        {!isLoading && !isError && (
           <>
             <button
               onClick={() => fileInputRef.current?.click()}
