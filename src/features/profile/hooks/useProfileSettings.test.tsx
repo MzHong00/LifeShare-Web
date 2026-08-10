@@ -7,6 +7,7 @@ import { authQueries } from "@/features/auth/queries/authQueries";
 import { profileApi } from "@/features/profile/api/profile";
 import { storageApi } from "@/lib/supabase/storage";
 import { resizeImageFile } from "@/utils/imageResize";
+import { AVATAR_SIZE } from "@/constants/style";
 import { modalActions } from "@/stores/useModalStore";
 import { toastActions } from "@/stores/useToastStore";
 import { useProfileSettings } from "./useProfileSettings";
@@ -249,7 +250,7 @@ describe("useProfileSettings - changePhoto", () => {
 
     await invokeChangePhoto(result.current.changePhoto, createChangeEvent(file));
 
-    expect(resizeImageFile).toHaveBeenCalledWith(file);
+    expect(resizeImageFile).toHaveBeenCalledWith(file, AVATAR_SIZE["5xl"] * 3);
     expect(storageApi.uploadImage).toHaveBeenCalledWith(resizedFile, "user-1");
     expect(profileApi.updateProfile).toHaveBeenCalledWith({ profileImage: "https://cdn/new.jpg" });
     expect(getCachedUser()?.profileImage).toBe("https://cdn/new.jpg");

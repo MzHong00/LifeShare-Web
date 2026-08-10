@@ -45,6 +45,22 @@ describe("resizeImageFile", () => {
     expect(result).not.toBe(file);
   });
 
+  it("maxDimension을 넘기면 그 값을 기준으로 축소 여부를 판단한다", async () => {
+    const file = createFile("avatar.png");
+    mockBitmap(800, 600);
+    vi.spyOn(HTMLCanvasElement.prototype, "getContext").mockReturnValue({
+      drawImage: vi.fn(),
+    } as unknown as CanvasRenderingContext2D);
+    vi.spyOn(HTMLCanvasElement.prototype, "toBlob").mockImplementation((callback: BlobCallback) => {
+      callback(new Blob(["resized"], { type: "image/jpeg" }));
+    });
+
+    const result = await resizeImageFile(file, 320);
+
+    expect(result).not.toBe(file);
+    expect(result.name).toBe("avatar.jpg");
+  });
+
   it("canvas context를 얻지 못하면 원본 파일을 그대로 반환한다", async () => {
     const file = createFile("big.png");
     mockBitmap(3200, 1600);
