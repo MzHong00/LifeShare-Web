@@ -35,7 +35,7 @@
 | 프레임워크 | Next.js 16 (App Router) | 서버에서 미리 받아온 데이터로 첫 화면을 채워 모바일 체감 속도 확보 |
 | 언어 | TypeScript 5 | — |
 | 스타일 | SCSS Modules + CSS Variables | 라이프룸별 테마 색상을 CSS 변수로 런타임 교체 |
-| 서버 상태 | TanStack Query 5 | 서버·클라이언트가 같은 `queryOptions`를 공유해 prefetch와 hydration을 한 벌로 관리 |
+| 서버 상태 | TanStack Query 5 | 쿼리 정의를 도메인별 팩토리로 모아 캐시 무효화 범위를 계층으로 관리 |
 | 클라이언트 상태 | Zustand 5 | 전역 상태가 적어 store 단위로 얇게 유지 |
 | 백엔드 | Supabase (Postgres · Auth · Storage) | 별도 서버 없이 RLS로 데이터 격리 |
 | 인증 | Supabase Auth(쿠키 세션) + Google OAuth | — |
@@ -93,9 +93,9 @@ npm run dev
 
 ### 데이터 패칭
 
-`features/[도메인]/queries`의 `queryOptions`를 **서버와 클라이언트가 공유**합니다. 서버 컴포넌트가 워크스페이스 쿠키를 기준으로 `prefetchQuery` 후 `HydrationBoundary`로 감싸면, 클라이언트 `useQuery`가 그대로 이어받아 첫 페인트부터 데이터가 채워집니다.
+서버 상태는 TanStack Query로 관리합니다. 쿼리 정의는 도메인별 `features/[도메인]/queries`에 `queryOptions` 팩토리로 모아두고, 키를 문자열로 직접 쓰지 않아 무효화 범위를 계층으로 다룹니다.
 
-지도·채팅처럼 실시간 상호작용이 중심인 화면은 SSR 대상에서 빼고 CSR로 둡니다.
+클라이언트는 Supabase를 직접 호출하지 않고 `app/api`(BFF)를 경유합니다. 예외는 파일 업로드(`lib/supabase/storage.ts`)로, 바이너리를 서버에 한 번 더 태우지 않기 위해 Storage로 직접 보냅니다.
 
 ### 라이프룸 초대
 
