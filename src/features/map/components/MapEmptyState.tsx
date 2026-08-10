@@ -1,5 +1,7 @@
 import { MapPin } from "lucide-react";
+
 import { ICON_SIZE } from "@/constants/style";
+
 import styles from "./MapEmptyState.module.scss";
 
 export const MapEmptyState = () => {

@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useMemo } from "react";
 import { GoogleMap, Polyline } from "@react-google-maps/api";
+
 import { useGoogleMap } from "@/features/map/hooks/useGoogleMap";
 import {
   MAP_CONTAINER_STYLE,
@@ -50,17 +51,25 @@ export function GoogleMapView({
 }: GoogleMapViewProps) {
   const { status, loadErrorMessage, mapRef, onMapLoad } = useGoogleMap();
 
-  // 경로가 2개 이상인 스토리만 폴리라인으로 표시 (memberLocations 등 잦은 리렌더에도 재계산 방지)
+  // 경로가 2개 이상인 스토리만 폴리라인으로 표시
+  // path·options 객체까지 여기서 확정해, memberLocations 등 잦은 리렌더에도 Polyline에 동일 참조를 넘겨 재적용을 막는다
   const storyPolylines = useMemo(
     () =>
       stories
         .filter((story) => story.path.length > 1)
-        .map((story) => ({
-          id: story.id,
-          path: toLatLngPath(story.path),
-          isSelected: story.id === selectedStoryId,
-          pathColor: story.pathColor,
-        })),
+        .map((story) => {
+          const isSelected = story.id === selectedStoryId;
+          return {
+            id: story.id,
+            path: toLatLngPath(story.path),
+            options: {
+              strokeColor: story.pathColor,
+              strokeOpacity: isSelected ? 1 : UNSELECTED_STROKE_OPACITY,
+              strokeWeight: isSelected ? SELECTED_STROKE_WEIGHT : UNSELECTED_STROKE_WEIGHT,
+              clickable: true,
+            },
+          };
+        }),
     [stories, selectedStoryId]
   );
 
@@ -85,18 +94,8 @@ export function GoogleMapView({
         onLoad={onMapLoad}
       >
         {/* 스토리 경로 폴리라인 */}
-        {storyPolylines.map(({ id, path, isSelected, pathColor }) => (
-          <Polyline
-            key={id}
-            path={path}
-            options={{
-              strokeColor: pathColor,
-              strokeOpacity: isSelected ? 1 : UNSELECTED_STROKE_OPACITY,
-              strokeWeight: isSelected ? SELECTED_STROKE_WEIGHT : UNSELECTED_STROKE_WEIGHT,
-              clickable: true,
-            }}
-            onClick={() => onStoryClick(id)}
-          />
+        {storyPolylines.map(({ id, path, options }) => (
+          <Polyline key={id} path={path} options={options} onClick={() => onStoryClick(id)} />
         ))}
 
         {/* 실시간 기록 중인 경로 (점선) */}

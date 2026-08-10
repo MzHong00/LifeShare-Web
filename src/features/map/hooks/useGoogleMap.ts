@@ -31,20 +31,13 @@ export function useGoogleMap(): UseGoogleMapResult {
   }, []);
 
   const hasApiKey =
-    Boolean(ENV.GOOGLE_MAPS_API_KEY) && ENV.GOOGLE_MAPS_API_KEY !== API_KEY_PLACEHOLDER;
+    Boolean(ENV.GOOGLE_MAPS_API_KEY) && ENV.GOOGLE_MAPS_API_KEY !== API_KEY_PLACEHOLDER; // .env에 실제 키가 설정됐는지 여부
 
-  /** 키 부재 → 에러 → 로딩 → 완료 순으로 로드 단계를 판정한다 */
-  const getStatus = (): MapLoadStatus => {
-    if (!hasApiKey) return "missing-key";
-    if (loadError) return "error";
-    if (!isLoaded) return "loading";
-    return "ready";
-  };
+  // 키 부재 → 에러 → 로딩 → 완료 순으로 로드 단계를 판정한다
+  let status: MapLoadStatus = "ready";
+  if (!hasApiKey) status = "missing-key";
+  else if (loadError) status = "error";
+  else if (!isLoaded) status = "loading";
 
-  return {
-    status: getStatus(),
-    loadErrorMessage: loadError?.message ?? null,
-    mapRef,
-    onMapLoad,
-  };
+  return { status, loadErrorMessage: loadError?.message ?? null, mapRef, onMapLoad };
 }

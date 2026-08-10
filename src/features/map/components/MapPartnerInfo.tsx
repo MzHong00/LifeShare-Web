@@ -1,11 +1,11 @@
 import { MapPin, Navigation, ChevronRight } from "lucide-react";
 
 import { ProfileImage } from "@/components/ui/ProfileImage";
+import { ICON_SIZE, AVATAR_SIZE } from "@/constants/style";
 
 import styles from "./MapPartnerInfo.module.scss";
 
 import type { WorkspaceMember } from "@/features/workspace/types/workspace";
-import { ICON_SIZE, AVATAR_SIZE } from "@/constants/style";
 
 interface RecentPlace {
   id: string;

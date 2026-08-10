@@ -76,7 +76,8 @@ const MessageListComponent = ({
           const next = messages[virtualRow.index + 1];
           const isFirstInGroup = !prev || !isSameGroup(prev, msg);
           const isLastInGroup = !next || !isSameGroup(next, msg);
-          const senderMember = memberMap.get(msg.senderId);
+          const isPartner = msg.sender === "partner"; // 상대 메시지에만 발신자 아바타·이름을 표시
+          const senderMember = isPartner ? memberMap.get(msg.senderId) : undefined;
 
           return (
             <div
@@ -90,10 +91,8 @@ const MessageListComponent = ({
                 text={msg.text}
                 sender={msg.sender}
                 time={msg.time}
-                avatar={msg.sender === "partner" ? senderMember?.avatar : undefined}
-                name={
-                  msg.sender === "partner" ? (senderMember?.name ?? UNKNOWN_SENDER_NAME) : undefined
-                }
+                avatar={senderMember?.avatar}
+                name={isPartner ? (senderMember?.name ?? UNKNOWN_SENDER_NAME) : undefined}
                 isFirstInGroup={isFirstInGroup}
                 isLastInGroup={isLastInGroup}
               />
