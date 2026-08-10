@@ -112,9 +112,7 @@ export const TodoList = ({
           </div>
         )}
 
-        {!isPending &&
-          !isError &&
-          !isEmpty &&
+        {isLoaded &&
           displayedTodos.map((todo) => (
             <TodoItem
               key={todo.id}

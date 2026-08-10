@@ -21,12 +21,9 @@ export const TodoView = () => {
   const router = useRouter();
   const [params, setParams] = useQueryParams();
   const { currentWorkspace } = useCurrentWorkspace();
-  const {
-    data: todos = [],
-    isPending,
-    isError,
-  } = useQuery(todoQueries.list(currentWorkspace?.id ?? ""));
-  const { toggleTodo: handleToggle } = useTodoToggle(currentWorkspace?.id ?? "", todos);
+  const workspaceId = currentWorkspace?.id ?? ""; // 조회 대상 워크스페이스 id (미선택 시 쿼리 비활성화)
+  const { data: todos = [], isPending, isError } = useQuery(todoQueries.list(workspaceId));
+  const { toggleTodo: handleToggle } = useTodoToggle(workspaceId, todos);
 
   const rawFilter = params.get("filter");
   const filter: Filter = FILTERS.includes(rawFilter as Filter) ? (rawFilter as Filter) : "all";
