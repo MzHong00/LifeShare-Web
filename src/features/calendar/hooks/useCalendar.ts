@@ -13,7 +13,7 @@ import { useResetOnChange } from "@/hooks/useResetOnChange";
 import { addMonths, getCalendarDays, getTodayDateString } from "@/utils/date";
 import { buildMarkedDates } from "@/features/calendar/utils/calendarUtils";
 
-import type { Filter } from "@/features/todo/components/TodoList";
+import type { Filter } from "@/features/todo/hooks/useFilteredTodos";
 
 const MONTH_KEY_LENGTH = 7; // "YYYY-MM" 슬라이스 길이
 
