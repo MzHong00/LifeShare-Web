@@ -12,6 +12,7 @@ import { useCurrentWorkspace } from "@/features/workspace/hooks/useCurrentWorksp
 import { toastActions } from "@/stores/useToastStore";
 import { storageApi } from "@/lib/supabase/storage";
 import { resizeImageFile } from "@/utils/imageResize";
+import { PATH_COLORS } from "@/constants/theme";
 import { getTodayDateString } from "@/utils/date";
 import { useStoryForm } from "./useStoryForm";
 
@@ -318,5 +319,138 @@ describe("useStoryForm", () => {
       "error"
     );
     expect(createMutateAsync).not.toHaveBeenCalled();
+  });
+
+  it("초기 렌더 이후 스토리가 뒤늦게 로드되면 폼 값을 기존 값으로 다시 채운다", async () => {
+    mockSearchParams.set("storyId", "story-1");
+    const { Wrapper, queryClient } = createWrapper();
+    queryClient.setQueryData(storyQueries.list("ws-1").queryKey, [] as unknown as Story[]);
+
+    const { result } = renderHook(() => useStoryForm(), { wrapper: Wrapper });
+    expect(result.current.title).toBe("");
+    expect(result.current.date).toBe(today);
+
+    act(() => {
+      queryClient.setQueryData(storyQueries.list("ws-1").queryKey, [
+        {
+          id: "story-1",
+          title: "나중에 온 제목",
+          description: "나중에 온 설명",
+          date: "2026-02-03T00:00:00.000Z",
+          thumbnailUrl: "https://example.com/late.jpg",
+          path: [{ latitude: 3, longitude: 4, timestamp: 3 }],
+          pathColor: "#F04452",
+        },
+      ] as unknown as Story[]);
+    });
+
+    await waitFor(() => expect(result.current.title).toBe("나중에 온 제목"));
+    expect(result.current.description).toBe("나중에 온 설명");
+    expect(result.current.date).toBe("2026-02-03");
+    expect(result.current.pathColor).toBe("#F04452");
+    expect(result.current.path).toEqual([{ latitude: 3, longitude: 4, timestamp: 3 }]);
+    expect(result.current.previewUrl).toBe("https://example.com/late.jpg");
+  });
+
+  it("뒤늦게 로드된 스토리에 제목·색상·경로가 없으면 기본값으로 채운다", async () => {
+    mockSearchParams.set("storyId", "story-1");
+    const { Wrapper, queryClient } = createWrapper();
+    queryClient.setQueryData(storyQueries.list("ws-1").queryKey, [] as unknown as Story[]);
+
+    const { result } = renderHook(() => useStoryForm(), { wrapper: Wrapper });
+
+    act(() => {
+      queryClient.setQueryData(storyQueries.list("ws-1").queryKey, [
+        {
+          id: "story-1",
+          title: undefined,
+          description: undefined,
+          date: "2026-02-03T00:00:00.000Z",
+          thumbnailUrl: undefined,
+          path: undefined,
+          pathColor: undefined,
+        },
+      ] as unknown as Story[]);
+    });
+
+    await waitFor(() => expect(result.current.date).toBe("2026-02-03"));
+    expect(result.current.title).toBe("");
+    expect(result.current.description).toBe("");
+    expect(result.current.pathColor).toBe(PATH_COLORS[0]);
+    expect(result.current.path).toEqual([]);
+    expect(result.current.previewUrl).toBeUndefined();
+  });
+
+  it("제목·설명이 비어있고 로그인 정보가 없으면 undefined와 빈 userId로 저장한다", async () => {
+    createMutateAsync.mockResolvedValueOnce(undefined);
+    const { Wrapper } = createWrapper();
+    const { result } = renderHook(() => useStoryForm(), { wrapper: Wrapper });
+
+    act(() => {
+      result.current.setTitle("   ");
+    });
+
+    await act(async () => {
+      await result.current.handleSave();
+    });
+
+    expect(createMutateAsync).toHaveBeenCalledWith(
+      expect.objectContaining({ title: undefined, description: undefined, userId: "" })
+    );
+  });
+
+  it("이미지 업로드에 성공하면 업로드된 URL로 저장한다", async () => {
+    createMutateAsync.mockResolvedValueOnce(undefined);
+    vi.mocked(storageApi.uploadImage).mockResolvedValueOnce("https://cdn.example.com/uploaded.jpg");
+    const { Wrapper, queryClient } = createWrapper();
+    queryClient.setQueryData<User>(authQueries.user().queryKey, { id: "user-1", name: "테스트" });
+
+    const { result } = renderHook(() => useStoryForm(), { wrapper: Wrapper });
+
+    const file = new File(["content"], "photo.png", { type: "image/png" });
+    const event = {
+      target: { files: [file], value: "x" },
+    } as unknown as React.ChangeEvent<HTMLInputElement>;
+    await act(async () => {
+      await result.current.handleImageSelect(event);
+    });
+
+    await act(async () => {
+      await result.current.handleSave();
+    });
+
+    expect(storageApi.uploadImage).toHaveBeenCalledWith(file, "user-1");
+    expect(createMutateAsync).toHaveBeenCalledWith(
+      expect.objectContaining({ thumbnailUrl: "https://cdn.example.com/uploaded.jpg" })
+    );
+  });
+
+  it("저장이 진행 중이면 handleSave 호출을 무시한다", async () => {
+    let resolveCreate: () => void = () => {};
+    createMutateAsync.mockImplementationOnce(
+      () =>
+        new Promise<void>((resolve) => {
+          resolveCreate = resolve;
+        })
+    );
+    const { Wrapper } = createWrapper();
+    const { result } = renderHook(() => useStoryForm(), { wrapper: Wrapper });
+
+    let firstSave: Promise<void> = Promise.resolve();
+    act(() => {
+      firstSave = result.current.handleSave();
+    });
+    await waitFor(() => expect(result.current.isSaving).toBe(true));
+
+    await act(async () => {
+      await result.current.handleSave();
+    });
+    expect(createMutateAsync).toHaveBeenCalledTimes(1);
+
+    await act(async () => {
+      resolveCreate();
+      await firstSave;
+    });
+    expect(result.current.isSaving).toBe(false);
   });
 });

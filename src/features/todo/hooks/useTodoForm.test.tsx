@@ -11,6 +11,7 @@ import {
   useDeleteTodoMutation,
 } from "@/features/todo/queries/todoMutations";
 import { useCurrentWorkspace } from "@/features/workspace/hooks/useCurrentWorkspace";
+import { TODO_COLORS } from "@/constants/theme";
 import { getTodayDateString } from "@/utils/date";
 import { useTodoForm } from "./useTodoForm";
 
@@ -334,5 +335,129 @@ describe("useTodoForm", () => {
       "삭제에 실패했습니다. 다시 시도해주세요.",
       "error"
     );
+  });
+
+  it("초기 렌더 이후 할 일이 뒤늦게 로드되면 폼 값을 기존 값으로 다시 채운다", async () => {
+    const { Wrapper, queryClient } = createWrapper();
+    queryClient.setQueryData(todoQueries.list("ws-1").queryKey, [] as unknown as Todo[]);
+
+    const { result } = renderHook(() => useTodoForm("todo-1", "2026-03-01"), { wrapper: Wrapper });
+    expect(result.current.title).toBe("");
+    expect(result.current.startDate).toBe("2026-03-01");
+
+    act(() => {
+      queryClient.setQueryData(todoQueries.list("ws-1").queryKey, [
+        {
+          id: "todo-1",
+          title: "나중에 온 제목",
+          description: "나중에 온 설명",
+          assigneeId: "member-1",
+          startDate: "2026-06-01",
+          endDate: "2026-06-02",
+          color: "#F04452",
+          isCompleted: false,
+        },
+      ] as unknown as Todo[]);
+    });
+
+    await waitFor(() => expect(result.current.title).toBe("나중에 온 제목"));
+    expect(result.current.description).toBe("나중에 온 설명");
+    expect(result.current.assigneeId).toBe("member-1");
+    expect(result.current.startDate).toBe("2026-06-01");
+    expect(result.current.endDate).toBe("2026-06-02");
+    expect(result.current.selectedColor).toBe("#F04452");
+  });
+
+  it("뒤늦게 로드된 할 일에 제목·설명·색상이 없으면 기본값으로 채운다", async () => {
+    const { Wrapper, queryClient } = createWrapper();
+    queryClient.setQueryData(todoQueries.list("ws-1").queryKey, [] as unknown as Todo[]);
+
+    const { result } = renderHook(() => useTodoForm("todo-1", null), { wrapper: Wrapper });
+
+    act(() => {
+      queryClient.setQueryData(todoQueries.list("ws-1").queryKey, [
+        {
+          id: "todo-1",
+          title: "",
+          description: "",
+          assigneeId: undefined,
+          startDate: "2026-06-01",
+          endDate: "2026-06-02",
+          color: "",
+          isCompleted: false,
+        },
+      ] as unknown as Todo[]);
+    });
+
+    await waitFor(() => expect(result.current.startDate).toBe("2026-06-01"));
+    expect(result.current.title).toBe("");
+    expect(result.current.description).toBe("");
+    expect(result.current.assigneeId).toBeUndefined();
+    expect(result.current.selectedColor).toBe(TODO_COLORS[0]);
+  });
+
+  it("존재하지 않는 todoId로 삭제 시도 시 모달 없이 에러 토스트를 띄운다", async () => {
+    const { Wrapper, queryClient } = createWrapper();
+    queryClient.setQueryData(todoQueries.list("ws-1").queryKey, [] as unknown as Todo[]);
+
+    const { result } = renderHook(() => useTodoForm("missing-todo", null), { wrapper: Wrapper });
+
+    act(() => {
+      result.current.handleDelete();
+    });
+
+    expect(toastActions.showToast).toHaveBeenCalledWith("항목을 찾을 수 없습니다.", "error");
+    expect(modalActions.showModal).not.toHaveBeenCalled();
+  });
+
+  it("생성 모드에서 handleDelete를 호출하면 아무 동작도 하지 않는다", () => {
+    const { Wrapper } = createWrapper();
+    const { result } = renderHook(() => useTodoForm(null, null), { wrapper: Wrapper });
+
+    act(() => {
+      result.current.handleDelete();
+    });
+
+    expect(modalActions.showModal).not.toHaveBeenCalled();
+    expect(toastActions.showToast).not.toHaveBeenCalled();
+  });
+
+  it("워크스페이스가 없으면 members는 빈 배열이고 handleSave는 저장하지 않는다", async () => {
+    vi.mocked(useCurrentWorkspace).mockReturnValue({
+      currentWorkspace: undefined,
+      workspaces: [],
+    } as unknown as ReturnType<typeof useCurrentWorkspace>);
+    const { Wrapper } = createWrapper();
+    const { result } = renderHook(() => useTodoForm(null, null), { wrapper: Wrapper });
+
+    expect(result.current.members).toEqual([]);
+
+    act(() => {
+      result.current.setTitle("새 할 일");
+    });
+
+    await act(async () => {
+      await result.current.handleSave();
+    });
+
+    expect(createMutateAsync).not.toHaveBeenCalled();
+    expect(toastActions.showToast).not.toHaveBeenCalled();
+  });
+
+  it("저장이 진행 중이면 handleSave 호출을 무시한다", async () => {
+    vi.mocked(useCreateTodoMutation).mockReturnValue(
+      createMutation(createMutateAsync, true) as unknown as ReturnType<typeof useCreateTodoMutation>
+    );
+    const { Wrapper } = createWrapper();
+    const { result } = renderHook(() => useTodoForm(null, null), { wrapper: Wrapper });
+
+    expect(result.current.isSaving).toBe(true);
+
+    await act(async () => {
+      await result.current.handleSave();
+    });
+
+    expect(createMutateAsync).not.toHaveBeenCalled();
+    expect(toastActions.showToast).not.toHaveBeenCalled();
   });
 });
