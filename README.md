@@ -1,141 +1,140 @@
-# LifeShare Web
+# 듀어스 (Duous)
 
-> 파트너와 일상·일정·추억을 함께 나누는 프리미엄 커플 웹앱
+> 연인·가족이 일정, 추억, 위치, 대화를 한 공간에서 나누는 모바일 웹앱
+
+[**데모 바로가기**](https://duous.vercel.app) · 로그인 화면의 **가입 없이 체험해보기** 버튼으로 바로 둘러볼 수 있습니다.
 
 <br />
 
-## 스크린샷
+## 이런 걸 만들었습니다
 
-| 홈 | 위치 | 채팅 | 스토리 |
-|:---:|:---:|:---:|:---:|
-| ![home](https://via.placeholder.com/120x240/3182F6/ffffff?text=Home) | ![map](https://via.placeholder.com/120x240/3182F6/ffffff?text=Map) | ![chat](https://via.placeholder.com/120x240/3182F6/ffffff?text=Chat) | ![stories](https://via.placeholder.com/120x240/3182F6/ffffff?text=Stories) |
+연인·가족끼리 쓰는 기록은 카카오톡·캘린더·사진첩·지도에 흩어집니다. 나중에 "그때 어디 갔었지"를 찾으려면 앱 네 개를 뒤져야 하죠.
+
+듀어스는 이걸 **라이프룸**이라는 하나의 공간으로 묶습니다. 같은 라이프룸에 속한 사람은 일정·할 일·스토리·대화·위치를 공유하고, 한 명이 남긴 기록이 상대에게 바로 보입니다.
 
 <br />
 
 ## 주요 기능
 
-- **홈** — D-Day 카운터, 최근 캘린더·스토리 요약
-- **캘린더** — 커플 일정 공유 및 관리
-- **기념일** — 100일·주년 등 자동 기념일 계산
-- **스토리** — 위치 경로 기반 추억 기록
-- **위치** — 실시간 파트너 위치 공유 및 지도
-- **채팅** — 1:1 실시간 채팅
-- **프로필** — 구글 소셜 로그인, 워크스페이스 관리
+| 기능 | 설명 |
+|------|------|
+| **홈** | D-Day 카운터, 최근 일정·스토리 요약 |
+| **캘린더** | 일정 공유 및 관리 |
+| **기념일** | 100일·주년 자동 계산 |
+| **스토리** | 이동 경로가 지도에 그려지는 추억 기록 |
+| **위치** | 실시간 위치 공유 |
+| **채팅** | 실시간 메시지 |
+| **라이프룸** | 초대 코드로 참여, 방장의 멤버·권한 관리 |
 
 <br />
 
 ## 기술 스택
 
-| 분류 | 기술 |
-|------|------|
-| 프레임워크 | Next.js 16 (App Router) |
-| 언어 | TypeScript 5 |
-| 스타일 | SCSS Modules + CSS Variables |
-| 상태관리 | Zustand 5 |
-| 서버 상태 | TanStack React Query 5 |
-| HTTP | fetch 기반 커스텀 API 클라이언트 |
-| 아이콘 | Lucide React |
-| 지도 | Google Maps API |
-| 인증 | Supabase Auth(SSR, 쿠키 세션) + Google OAuth 2.0 |
-| 배포 | Vercel (GitHub Actions CI/CD) |
+| 분류 | 기술 | 선택 이유 |
+|------|------|-----------|
+| 프레임워크 | Next.js 16 (App Router) | 서버에서 미리 받아온 데이터로 첫 화면을 채워 모바일 체감 속도 확보 |
+| 언어 | TypeScript 5 | — |
+| 스타일 | SCSS Modules + CSS Variables | 라이프룸별 테마 색상을 CSS 변수로 런타임 교체 |
+| 서버 상태 | TanStack Query 5 | 서버·클라이언트가 같은 `queryOptions`를 공유해 prefetch와 hydration을 한 벌로 관리 |
+| 클라이언트 상태 | Zustand 5 | 전역 상태가 적어 store 단위로 얇게 유지 |
+| 백엔드 | Supabase (Postgres · Auth · Storage) | 별도 서버 없이 RLS로 데이터 격리 |
+| 인증 | Supabase Auth(쿠키 세션) + Google OAuth | — |
+| 모니터링 | Sentry | 에러·세션 리플레이 |
+| 테스트 | Vitest + Testing Library | 1,051개 · 커버리지 86% |
+| 배포 | Vercel + GitHub Actions | — |
 
 <br />
 
-## 시작하기
-
-### 요구사항
-
-- Node.js 20+
-- npm
-
-### 설치 및 실행
+## 빠른 시작
 
 ```bash
-# 저장소 클론
-git clone https://github.com/{username}/lifeshare-web.git
-cd lifeshare-web
+git clone https://github.com/MzHong00/duous.git
+cd duous
 
-# 의존성 설치
-npm install
+npm ci
 
-# 환경변수 설정
 cp .env.example .env.local
-# .env.local 파일을 열어 값 입력
+# .env.local을 열어 Supabase·Google 값을 채웁니다 (파일 안에 발급처가 적혀 있습니다)
 
-# 개발 서버 실행
 npm run dev
 ```
 
-브라우저에서 [http://localhost:3000](http://localhost:3000) 접속
+[http://localhost:3000](http://localhost:3000) 접속
 
-### 환경변수
+**요구사항** — Node.js 22+, npm
 
-```env
-NEXT_PUBLIC_API_URL=
-NEXT_PUBLIC_GOOGLE_CLIENT_ID=
-NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=
-NEXT_PUBLIC_GOOGLE_API_KEY=
-```
+> DB 스키마와 RLS 정책은 Supabase 대시보드에서 직접 관리합니다. 저장소에는 SQL이 없으므로, 새 Supabase 프로젝트에 연결하려면 기존 프로젝트의 스키마·정책·함수를 그대로 옮겨야 합니다.
+
+### 자주 쓰는 명령
+
+| 명령 | 설명 |
+|------|------|
+| `npm run dev` | 개발 서버 |
+| `npm run check` | 포맷 → 빌드 → 린트 → 테스트 일괄 검증 (푸시 전 권장) |
+| `npm test` | 테스트 |
+| `npm run test:coverage` | 커버리지 리포트 |
+| `npm run seed:test-account` | 체험 계정 데이터 초기화 |
 
 <br />
 
-## 프로젝트 구조
+## 아키텍처
 
-Bulletproof React 스타일(공용 자원 최상위 평탄화) + `features/` 도메인 슬라이스로 구성됩니다.
+### 레이어
 
 ```
-src/
-├── app/                  # Next.js App Router (라우트만, SSR prefetch 담당)
-│   ├── (auth)/login/     # 로그인
-│   ├── (main)/           # 메인 (BottomNav 공유)
-│   │   ├── home/         # SSR: 유저·스토리·캘린더·할일 prefetch
-│   │   ├── calendar/     # SSR: 캘린더·할일 prefetch
-│   │   ├── anniversary/
-│   │   ├── stories/      # SSR: 스토리 목록·상세 prefetch
-│   │   ├── map/          # CSR (Google Maps)
-│   │   ├── todo/         # SSR: 할일 prefetch
-│   │   └── profile/
-│   ├── api/              # BFF Route Handlers (컨트롤러 역할, DB 직접 접근 금지 시 유일한 진입점)
-│   ├── auth/callback/    # OAuth 콜백
-│   ├── chat/             # 채팅 (CSR)
-│   └── workspace/        # 워크스페이스 (landing·setup·list·join·edit)
-├── features/             # 도메인별 슬라이스
-│   └── [feature]/        # api(BFF fetch) · components · hooks · queries · stores · types
-├── server/               # 서버 전용 코드 (`server-only`로 클라이언트 번들 유입 차단)
-│   ├── db/               # Supabase 서버 클라이언트 생성
-│   ├── auth/             # 세션 조회(session.ts) · 미들웨어 세션 갱신(middleware.ts)
-│   └── http/              # API Route 공통 응답 헬퍼·타입
-├── components/           # 재사용 컴포넌트
-├── constants/            # 상수 및 설정
-├── hooks/                # 커스텀 훅
-├── lib/                  # 외부 연동 및 클라이언트 유틸
-│   ├── supabase/         # 브라우저 Supabase 클라이언트, 스토리지 업로드
-│   └── api/              # BFF 호출 fetch 클라이언트(bffClient), 목 fetch
-├── stores/               # 전역 Zustand 스토어
-├── styles/               # 전역 스타일, 믹스인
-├── types/                # 공유 타입
-├── utils/                # 유틸리티 함수
-└── assets/               # 아이콘 등 에셋
-proxy.ts                  # 쿠키 세션 갱신 + 비로그인 라우트 보호 (middleware)
+브라우저 ──▶ app/api (BFF) ──▶ server/domain (repository) ──▶ Supabase
+   │                                                              ▲
+   └──────────── 파일 업로드만 직접 (RLS로 보호) ───────────────────┘
 ```
 
-### 데이터 패칭 전략
+- **클라이언트는 Supabase를 직접 호출하지 않습니다.** 모든 접근은 `app/api`의 Route Handler를 거칩니다. 예외는 파일 업로드 하나로, 바이너리를 서버에 한 번 더 태우지 않기 위해 Storage로 직접 보냅니다.
+- **`features/[도메인]/`** 슬라이스로 나뉩니다 — `api`(BFF 호출) · `components` · `hooks` · `queries` · `stores` · `types`. 도메인은 `workspace`, `calendar`, `stories`, `todo`, `chat`, `map`, `anniversary`, `auth`, `profile`, `home`.
+- **`server/`** 는 `server-only`로 잠가 클라이언트 번들 유입을 차단합니다. `domain/[도메인]/repository.ts`가 Supabase 쿼리를 전담하고, Route Handler는 인증·검증·조합만 합니다.
 
-- `features/[feature]/queries`에 정의된 `queryOptions`는 서버(prefetch)·클라이언트(useQuery) 양쪽에서 공유됩니다.
-- 서버 컴포넌트가 워크스페이스 쿠키 기준으로 `prefetchQuery` 후 `HydrationBoundary`로 감싸면, 클라이언트의 `useQuery`가 이어받아 첫 페인트부터 데이터가 채워집니다.
-- 지도(`map`)·채팅(`chat`)처럼 실시간·상호작용 중심 화면은 SSR 대상에서 제외하고 CSR로 유지합니다.
-- 클라이언트는 Supabase를 직접 호출하지 않고 `app/api`(BFF)를 경유합니다. 예외는 파일 업로드(`lib/supabase/storage.ts`)로, 바이너리 이중 전송을 피하기 위해 RLS로 보호된 Supabase Storage에 직접 업로드합니다.
+### 데이터 패칭
+
+`features/[도메인]/queries`의 `queryOptions`를 **서버와 클라이언트가 공유**합니다. 서버 컴포넌트가 워크스페이스 쿠키를 기준으로 `prefetchQuery` 후 `HydrationBoundary`로 감싸면, 클라이언트 `useQuery`가 그대로 이어받아 첫 페인트부터 데이터가 채워집니다.
+
+지도·채팅처럼 실시간 상호작용이 중심인 화면은 SSR 대상에서 빼고 CSR로 둡니다.
+
+### 라이프룸 초대
+
+참여 경로는 두 가지이고 같은 초대 코드를 씁니다.
+
+| 경로 | 화면 |
+|------|------|
+| 코드 직접 입력 | `/workspace/join` |
+| 링크 공유 | `/workspace/join/[code]` |
+
+- **코드 형식** — Crockford Base32 8자리(`K7M2-P9QX`). 헷갈리는 `I·L·O·U`를 뺐고, 입력할 때 대소문자·하이픈·공백을 흡수하며 `I→1` `O→0`으로 교정합니다.
+- **라이프룸당 코드 1개** — 재발급하면 이전 코드와 링크가 즉시 무효가 됩니다. 잘못 공유한 코드를 회수하는 유일한 수단입니다.
+- **권한** — `owner`(방장) / `member`. 초대 발급과 멤버 내보내기는 방장만 할 수 있고, 방장이 다른 멤버를 남기고 나가면 남은 멤버에게 자동으로 위임됩니다.
+
+### 접근 제어 (RLS)
+
+서버 라우트도 익명 키 + 사용자 쿠키로 동작합니다. 즉 **모든 접근 제어가 Postgres RLS에 걸려 있습니다.** 정책과 함수는 Supabase 대시보드에서 관리합니다.
+
+테이블 직접 접근은 전부 멤버십 기준입니다. 다만 초대받은 사람은 아직 멤버가 아니라 라이프룸을 읽을 수 없어서, **코드를 정확히 아는 경우에만** 열리는 `SECURITY DEFINER` 함수로 좁게 뚫었습니다.
+
+| 함수 | 역할 |
+|------|------|
+| `get_invite_preview(code)` | 참여 전 미리보기(이름·유형·인원수). 멤버 목록과 기록은 노출하지 않음 |
+| `join_workspace_with_code(code, ...)` | 코드 검증과 멤버 추가를 원자적으로 처리. 멤버 직접 INSERT는 생성 흐름으로만 제한돼 있어 초대 참여의 유일한 경로 |
+| `transfer_workspace_ownership(id)` | 방장 나가기 시 자동 위임 |
 
 <br />
 
 ## CI/CD
 
-`main` 브랜치에 push되면 GitHub Actions가 자동으로 실행됩니다.
+`main` 브랜치 push 시 GitHub Actions가 실행됩니다.
 
 ```
 push to main
-  └── CI (Type Check → Lint → Build)
-        └── CD (Vercel 프로덕션 배포)
+├── 🔎 Quality   포맷 검사 → 타입 체크 → 린트 → 테스트
+│               커버리지가 기준 아래로 떨어지면 여기서 실패한다
+└── 🛠️ Build     Next.js 빌드 (빌드 캐시 재사용)
+
+Vercel이 저장소를 직접 구독해 프로덕션 배포
 ```
 
 <br />
