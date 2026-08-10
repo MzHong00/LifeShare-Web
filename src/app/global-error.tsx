@@ -1,8 +1,7 @@
 "use client";
 import { useEffect } from "react";
-import * as Sentry from "@sentry/nextjs";
-
 import { ErrorFallback } from "@/components/fallback/ErrorFallback";
+import { captureClientException } from "@/lib/sentry/captureClientException";
 
 // 루트 레이아웃(src/app/layout.tsx)이 렌더링되지 못한 상태라, 거기서 로드하던
 // 디자인 토큰(CSS 변수) 전역 스타일을 여기서 직접 불러와야 ErrorFallback이 정상적으로 보인다
@@ -19,7 +18,7 @@ interface GlobalErrorPageProps {
  */
 const GlobalError = ({ error, reset }: GlobalErrorPageProps) => {
   useEffect(() => {
-    Sentry.captureException(error);
+    captureClientException(error);
   }, [error]);
 
   return (

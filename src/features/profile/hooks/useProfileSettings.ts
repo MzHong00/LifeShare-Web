@@ -12,9 +12,14 @@ import { modalActions } from "@/stores/useModalStore";
 import { resizeImageFile } from "@/utils/imageResize";
 import { toastActions } from "@/stores/useToastStore";
 import { ROUTES } from "@/constants/routes";
+import { AVATAR_SIZE } from "@/constants/style";
 
 import type { ChangeEvent, ReactNode } from "react";
 import type { User } from "@/types/user";
+
+// 아바타는 최대 AVATAR_SIZE["5xl"](88px) 슬롯에만 쓰이므로 고배율(약 3x) 화면을 감안한 크기까지만 남긴다.
+// next.config의 images.unoptimized 설정 때문에 렌더 시점 축소 변환이 없어, 업로드 시점에 줄여야 낭비가 사라진다.
+const AVATAR_UPLOAD_MAX_DIMENSION = AVATAR_SIZE["5xl"] * 3;
 
 interface UseProfileSettingsResult {
   /** 이름 수정 모달을 띄운다 */
@@ -83,7 +88,7 @@ export const useProfileSettings = (): UseProfileSettingsResult => {
       updateUserCache({ profileImage: previewUrl });
 
       try {
-        const resizedFile = await resizeImageFile(file);
+        const resizedFile = await resizeImageFile(file, AVATAR_UPLOAD_MAX_DIMENSION);
         const uploadedUrl = await storageApi.uploadImage(resizedFile, user.id);
         await profileApi.updateProfile({ profileImage: uploadedUrl });
         updateUserCache({ profileImage: uploadedUrl });

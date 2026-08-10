@@ -10,22 +10,18 @@ import { APP_BRAND_NAME, SITE_URL } from "@/constants/config";
 import type { Metadata } from "next";
 
 const SITE_DESCRIPTION = "우리의 소중한 일상을 함께 나누는 공간"; // 기본 메타 설명
-const APP_ICON_PATH = "/app_icon.png"; // 파비콘·OG 이미지 공용 경로
+const OG_IMAGE_PATH = "/app_icon.png"; // OG 공유 카드 이미지 경로 (파비콘은 app/icon.png·app/apple-icon.png 파일 규칙 사용)
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: { default: APP_BRAND_NAME.EN, template: `%s | ${APP_BRAND_NAME.EN}` },
   description: SITE_DESCRIPTION,
-  icons: {
-    icon: APP_ICON_PATH,
-    apple: APP_ICON_PATH,
-  },
   // 대부분의 페이지가 로그인 후에만 접근 가능해 기본은 비노출, 공개 페이지에서만 개별적으로 index: true override
   robots: NOINDEX_ROBOTS,
   openGraph: {
     title: APP_BRAND_NAME.EN,
     description: SITE_DESCRIPTION,
-    images: [APP_ICON_PATH],
+    images: [OG_IMAGE_PATH],
   },
 };
 

@@ -13,7 +13,7 @@ export const ENV = {
 };
 
 export const COOKIE_KEYS = {
-  WORKSPACE_ID: "duous-workspace-id", // 서버(SSR prefetch)가 현재 워크스페이스를 식별하기 위한 쿠키
+  WORKSPACE_ID: "duous-workspace-id", // 루트 서버 컴포넌트(app/page.tsx)가 홈·랜딩 리다이렉트를 분기하기 위해 읽는 쿠키
 };
 
 export const APP_BRAND_NAME = {
