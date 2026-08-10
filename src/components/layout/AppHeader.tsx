@@ -25,13 +25,7 @@ export const AppHeader = ({
 }: AppHeaderProps) => {
   const router = useRouter();
 
-  const handleBack = () => {
-    if (onBack) {
-      onBack();
-    } else {
-      router.back();
-    }
-  };
+  const handleBack = onBack ?? (() => router.back());
 
   return (
     <header className={cx(styles.header, className)}>

@@ -10,7 +10,12 @@
   box-shadow: var(--shadow-drawer);
   z-index: 10;
   overflow: hidden;
+  transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   @include flex-col;
+
+  &[data-dragging="true"] {
+    transition: none;
+  }
 }
 
 .drawerContent {

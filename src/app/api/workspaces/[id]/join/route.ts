@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 
 import { createServerSupabase, getSessionUser } from "@/server/common/utils/supabaseClient";
 import { workspaceRepository } from "@/server/domain/workspace/repository";
+import { profileRepository } from "@/server/domain/profile/repository";
 import {
   normalizeInviteCode,
   isValidInviteCodeFormat,
@@ -30,11 +31,7 @@ export async function POST(request: NextRequest, context: RouteContext<{ id: str
     return NextResponse.json({ message: "유효하지 않은 초대 코드입니다." }, { status: 400 });
 
   // 워크스페이스 멤버의 이름/사진은 profiles 테이블 값을 쓴다 (로그인 콜백에서 항상 생성이 보장됨)
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("name, avatar_url")
-    .eq("id", sessionUser.id)
-    .maybeSingle();
+  const { data: profile } = await profileRepository.findById(supabase, sessionUser.id);
 
   const { workspaceId: joinedId, error } = await workspaceRepository.joinByInviteCode(
     supabase,

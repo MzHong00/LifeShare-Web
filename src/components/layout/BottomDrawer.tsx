@@ -138,11 +138,8 @@ export const BottomDrawer = ({
   return (
     <div
       className={styles.drawer}
-      style={{
-        height: `${drawerHeight}px`,
-        bottom: bottomOffset,
-        transition: isDraggingState ? "none" : "height 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-      }}
+      data-dragging={isDraggingState}
+      style={{ height: `${drawerHeight}px`, bottom: bottomOffset }}
     >
       <button
         ref={handleRef}

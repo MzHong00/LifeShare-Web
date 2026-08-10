@@ -3,6 +3,16 @@ import "server-only";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { StoryCreateRequestDto, StoryUpdateRequestDto } from "@/server/domain/story/dto";
 
+/** DTO(camelCase) → stories 컬럼(snake_case) 변환 (생성·수정 공용) */
+const toRow = (input: StoryCreateRequestDto | StoryUpdateRequestDto) => ({
+  title: input.title,
+  description: input.description,
+  date: input.date,
+  thumbnail_url: input.thumbnailUrl,
+  path: input.path,
+  path_color: input.pathColor,
+});
+
 export const storyRepository = {
   /** 워크스페이스의 스토리 목록을 날짜 역순으로 가져온다 */
   findManyByWorkspaceId: (supabase: SupabaseClient, workspaceId: string) =>
@@ -16,34 +26,13 @@ export const storyRepository = {
   create: (supabase: SupabaseClient, input: StoryCreateRequestDto) =>
     supabase
       .from("stories")
-      .insert({
-        workspace_id: input.workspaceId,
-        user_id: input.userId,
-        title: input.title,
-        description: input.description,
-        date: input.date,
-        thumbnail_url: input.thumbnailUrl,
-        path: input.path,
-        path_color: input.pathColor,
-      })
+      .insert({ workspace_id: input.workspaceId, user_id: input.userId, ...toRow(input) })
       .select()
       .single(),
 
   /** 스토리를 수정한다 */
   update: (supabase: SupabaseClient, id: string, input: StoryUpdateRequestDto) =>
-    supabase
-      .from("stories")
-      .update({
-        title: input.title,
-        description: input.description,
-        date: input.date,
-        thumbnail_url: input.thumbnailUrl,
-        path: input.path,
-        path_color: input.pathColor,
-      })
-      .eq("id", id)
-      .select()
-      .single(),
+    supabase.from("stories").update(toRow(input)).eq("id", id).select().single(),
 
   /** 스토리를 삭제한다 (매칭 행이 없어도 에러를 던지지 않으므로 select로 실제 삭제 여부를 확인) */
   delete: (supabase: SupabaseClient, id: string) =>
