@@ -22,7 +22,7 @@ const workspaceStore = create<WorkspaceState>()(
 
 const WORKSPACE_COOKIE_MAX_AGE_SECONDS = 60 * 60 * 24 * 365; // 워크스페이스 쿠키 유지 기간 (1년)
 
-// currentWorkspaceId 변경 시 쿠키 동기화 — 서버 컴포넌트의 SSR prefetch가 이 쿠키로 워크스페이스를 식별
+// currentWorkspaceId 변경 시 쿠키 동기화 — 루트 서버 컴포넌트(app/page.tsx)가 이 쿠키로 홈·랜딩 리다이렉트를 분기
 workspaceStore.subscribe((state, prev) => {
   const id = state.currentWorkspaceId;
   if (id === prev.currentWorkspaceId) return;
