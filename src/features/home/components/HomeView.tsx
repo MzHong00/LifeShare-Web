@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 
 import { useCurrentWorkspace } from "@/features/workspace/hooks/useCurrentWorkspace";
 import { MemoryFeed } from "@/features/home/components/MemoryFeed";
+import { HomeViewSkeleton } from "@/features/home/components/HomeViewSkeleton";
 import { ROUTES } from "@/constants/routes";
 import styles from "./HomeView.module.scss";
 
@@ -19,7 +20,7 @@ export const HomeView = () => {
     }
   }, [isPending, isError, currentWorkspace, router]);
 
-  if (isPending) return null;
+  if (isPending) return <HomeViewSkeleton />;
   if (isError) return <p className={styles.errorText}>라이프룸 정보를 불러오지 못했습니다.</p>;
   if (!currentWorkspace) return null;
 

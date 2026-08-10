@@ -18,6 +18,10 @@ vi.mock("@/features/home/components/MemoryFeed", () => ({
   MemoryFeed: () => <div>메모리피드</div>,
 }));
 
+vi.mock("@/features/home/components/HomeViewSkeleton", () => ({
+  HomeViewSkeleton: () => <div>홈스켈레톤</div>,
+}));
+
 const mockUseRouter = vi.mocked(useRouter);
 const mockUseCurrentWorkspace = vi.mocked(useCurrentWorkspace);
 
@@ -31,16 +35,16 @@ describe("HomeView", () => {
     } as unknown as ReturnType<typeof useRouter>);
   });
 
-  it("로딩 중이면 아무것도 렌더링하지 않는다", () => {
+  it("로딩 중이면 스켈레톤을 렌더링하고 리다이렉트하지 않는다", () => {
     mockUseCurrentWorkspace.mockReturnValue({
       currentWorkspace: undefined,
       isPending: true,
       isError: false,
     } as unknown as ReturnType<typeof useCurrentWorkspace>);
 
-    const { container } = render(<HomeView />);
+    render(<HomeView />);
 
-    expect(container).toBeEmptyDOMElement();
+    expect(screen.getByText("홈스켈레톤")).toBeInTheDocument();
     expect(mockReplace).not.toHaveBeenCalled();
   });
 

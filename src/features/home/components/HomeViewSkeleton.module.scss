@@ -1,0 +1,41 @@
+@use "styles/mixins" as *;
+
+// MemoryFeed의 .board와 동일한 오로라 배경·전체 높이로 로딩 중에도 배경이 흔들리지 않게 한다
+.page {
+  @include aurora-board;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 540px;
+}
+
+// MemoryFeed의 .content와 동일한 간격·패딩으로 섹션 카드 위치를 맞춘다
+.content {
+  @include flex-col(16px);
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  padding: var(--space-lg) var(--space-lg) 80px;
+}
+
+// MemoryFeed의 .header와 동일한 배치
+.header {
+  @include flex-between;
+  align-items: flex-end;
+}
+
+.headerInfo {
+  @include flex-col(3px);
+}
+
+.membersStack {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+// 실제 아바타 스택과 동일한 겹침 폭
+.memberAvatar {
+  &:not(:last-child) {
+    margin-left: -8px;
+  }
+}
