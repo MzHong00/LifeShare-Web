@@ -13,7 +13,7 @@ import { useResetOnChange } from "@/hooks/useResetOnChange";
 import { addMonths, getCalendarDays, getTodayDateString } from "@/utils/date";
 import { buildMarkedDates } from "@/features/calendar/utils/calendarUtils";
 
-import type { Filter } from "@/features/todo/components/TodoList";
+import type { Filter } from "@/features/todo/hooks/useFilteredTodos";
 
 const MONTH_KEY_LENGTH = 7; // "YYYY-MM" 슬라이스 길이
 
@@ -24,26 +24,28 @@ export const useCalendar = () => {
   const today = getTodayDateString(); // 오늘 날짜 문자열 (YYYY-MM-DD)
   const [params, setParams] = useQueryParams();
   const dateParam = params.get("date") || today; // URL 쿼리의 선택 날짜
+  const monthParam = dateParam.substring(0, MONTH_KEY_LENGTH); // 선택 날짜가 속한 월 (YYYY-MM)
 
   const [selectedDate, setSelectedDate] = useState(dateParam); // 현재 선택된 날짜
-  const [currentMonth, setCurrentMonth] = useState(dateParam.substring(0, MONTH_KEY_LENGTH)); // 표시 중인 월
+  const [currentMonth, setCurrentMonth] = useState(monthParam); // 표시 중인 월
   const [filter, setFilter] = useState<Filter>("all"); // 할 일 목록 필터
   const dateParamChanged = useResetOnChange(dateParam);
 
   // 브라우저 뒤로가기/앞으로가기 등 훅 외부 요인으로 URL의 date가 바뀌면, 표시 중인 선택일/월이 그대로 남는 것을 방지
   if (dateParamChanged) {
     setSelectedDate(dateParam);
-    setCurrentMonth(dateParam.substring(0, MONTH_KEY_LENGTH));
+    setCurrentMonth(monthParam);
   }
 
   const { currentWorkspace } = useCurrentWorkspace();
-  const { data: events = [] } = useQuery(calendarQueries.list(currentWorkspace?.id ?? ""));
+  const workspaceId = currentWorkspace?.id ?? ""; // 조회 대상 워크스페이스 id (미선택 시 쿼리 비활성화)
+  const { data: events = [] } = useQuery(calendarQueries.list(workspaceId));
   const {
     data: todos = [],
     isPending: isTodosPending,
     isError: isTodosError,
-  } = useQuery(todoQueries.list(currentWorkspace?.id ?? ""));
-  const { toggleTodo } = useTodoToggle(currentWorkspace?.id ?? "", todos);
+  } = useQuery(todoQueries.list(workspaceId));
+  const { toggleTodo } = useTodoToggle(workspaceId, todos);
 
   // 이벤트·할 일을 날짜별 색상 점 맵으로 변환
   const markedDates = useMemo(

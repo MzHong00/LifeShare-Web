@@ -2,7 +2,7 @@
 import { Plus, Sparkles } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-import { ICON_SIZE } from "@/constants/iconSize";
+import { ICON_SIZE } from "@/constants/style";
 import { ROUTES } from "@/constants/routes";
 import { useHomeStats } from "@/features/home/hooks/useHomeStats";
 import { formatDate } from "@/utils/date";
@@ -10,26 +10,34 @@ import { Skeleton } from "@/components/feedback/Skeleton";
 
 import styles from "./ActivityDashboard.module.scss";
 
+import type { CSSProperties } from "react";
+
 const RECENT_STORY_SKELETON_COUNT = 3; // 최근 스토리 로딩 시 표시할 스켈레톤 카드 개수
+const SKELETON_HEIGHT = 140; // 스토리 스켈레톤 카드 높이(px)
+const SKELETON_RADIUS = 24; // 스토리 스켈레톤 카드 모서리 반경(px)
 
 /** 홈 하단에 두 사람의 최근 추억들을 35mm 필름 스트립 롤 형태로 가로 스냅 스크롤하는 아날로그 감성 위젯 */
 export const ActivityDashboard = () => {
   const router = useRouter();
   const { recentStories, isLoading } = useHomeStats();
 
+  const hasStories = recentStories.length > 0; // 노출할 최근 스토리 존재 여부
+
   return (
     <div className={styles.dashboard}>
       <h3 className={styles.sectionTitle}>최근 기록한 순간</h3>
 
-      {isLoading ? (
+      {isLoading && (
         <ul className={styles.storyList}>
           {Array.from({ length: RECENT_STORY_SKELETON_COUNT }).map((_, index) => (
             <li key={index} className={styles.storyItem}>
-              <Skeleton height={140} radius={24} />
+              <Skeleton height={SKELETON_HEIGHT} radius={SKELETON_RADIUS} />
             </li>
           ))}
         </ul>
-      ) : recentStories && recentStories.length > 0 ? (
+      )}
+
+      {!isLoading && hasStories && (
         <ul className={styles.storyList}>
           {recentStories.map((story) => (
             <li key={story.id} className={styles.storyItem}>
@@ -42,7 +50,8 @@ export const ActivityDashboard = () => {
                 {story.thumbnailUrl ? (
                   <div
                     className={styles.cardBgImage}
-                    style={{ backgroundImage: `url(${story.thumbnailUrl})` }}
+                    // 썸네일 URL은 런타임 값이라 CSS 변수로만 주입한다 (스타일 선언은 SCSS 모듈에 위치)
+                    style={{ "--story-thumbnail": `url(${story.thumbnailUrl})` } as CSSProperties}
                   />
                 ) : (
                   <div className={styles.cardBgPlaceholder} />
@@ -60,7 +69,9 @@ export const ActivityDashboard = () => {
             </li>
           ))}
         </ul>
-      ) : (
+      )}
+
+      {!isLoading && !hasStories && (
         <button
           type="button"
           onClick={() => router.push(ROUTES.STORIES.path)}
@@ -69,7 +80,7 @@ export const ActivityDashboard = () => {
         >
           <div className={styles.emptyContent}>
             <div className={styles.emptyBadge}>
-              <Sparkles size={18} className={styles.emptyIcon} />
+              <Sparkles size={ICON_SIZE.lg} className={styles.emptyIcon} />
             </div>
             <div className={styles.emptyTexts}>
               <p className={styles.emptyTitle}>아직 함께한 스토리가 없어요</p>

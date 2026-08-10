@@ -5,6 +5,7 @@ import { LayoutGrid, Sparkles } from "lucide-react";
 
 import { useCountUp } from "@/features/stories/hooks/useCountUp";
 import { isThisMonth } from "@/utils/date";
+import { ICON_SIZE } from "@/constants/style";
 
 import styles from "./StoryBoardHeader.module.scss";
 
@@ -36,7 +37,9 @@ export const StoryBoardHeader = ({ stories, onListClick }: StoryBoardHeaderProps
         <div className={styles.statItem}>
           <span className={styles.statLabel}>
             이번달
-            {thisMonthCount > 0 && <Sparkles size={10} className={styles.spark} aria-hidden />}
+            {thisMonthCount > 0 && (
+              <Sparkles size={ICON_SIZE.sm} className={styles.spark} aria-hidden />
+            )}
           </span>
           <span className={styles.statValue}>{monthCount}개</span>
         </div>
@@ -47,7 +50,7 @@ export const StoryBoardHeader = ({ stories, onListClick }: StoryBoardHeaderProps
         className={styles.listButton}
         aria-label="스토리 목록 보기"
       >
-        <LayoutGrid size={18} />
+        <LayoutGrid size={ICON_SIZE.lg} />
       </button>
     </header>
   );

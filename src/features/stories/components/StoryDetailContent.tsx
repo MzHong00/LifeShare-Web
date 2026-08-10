@@ -7,6 +7,7 @@ import { ROUTES } from "@/constants/routes";
 import { storyActions } from "@/features/stories/stores/useStoryStore";
 import { isShellStory } from "@/features/stories/constants/previewMockStories";
 import { formatDate } from "@/utils/date";
+import { ICON_SIZE } from "@/constants/style";
 
 import styles from "./StoryDetailContent.module.scss";
 
@@ -48,7 +49,7 @@ export const StoryDetailContent = ({ story }: StoryDetailContentProps) => {
         </div>
       ) : (
         <div className={styles.placeholder}>
-          <MapPin size={48} className={styles.placeholderIcon} />
+          <MapPin size={ICON_SIZE["4xl"]} className={styles.placeholderIcon} />
         </div>
       )}
 
@@ -74,7 +75,7 @@ export const StoryDetailContent = ({ story }: StoryDetailContentProps) => {
             </p>
             <button onClick={handleCreate} className={styles.mapButton}>
               <div className={styles.mapIconWrap}>
-                <Plus size={24} />
+                <Plus size={ICON_SIZE.xl} />
               </div>
               <div className={styles.mapInfo}>
                 <p className={styles.mapTitle}>직접 기억 기록하기</p>
@@ -85,7 +86,7 @@ export const StoryDetailContent = ({ story }: StoryDetailContentProps) => {
         ) : (
           <button onClick={handleShowOnMap} className={styles.mapButton}>
             <div className={styles.mapIconWrap}>
-              <Map size={24} />
+              <Map size={ICON_SIZE.xl} />
             </div>
             <div className={styles.mapInfo}>
               <p className={styles.mapTitle}>지도에서 경로 보기</p>

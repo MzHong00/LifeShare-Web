@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 
 import { createServerSupabase, getSessionUser } from "@/server/common/utils/supabaseClient";
 import { workspaceRepository } from "@/server/domain/workspace/repository";
+import { profileRepository } from "@/server/domain/profile/repository";
 
 import type { NextRequest } from "next/server";
 import type { WorkspaceCreateRequestDto } from "@/server/domain/workspace/dto";
@@ -37,29 +38,29 @@ export async function POST(request: NextRequest) {
   const sessionUser = await getSessionUser(supabase);
   if (!sessionUser) return NextResponse.json({ message: "로그인이 필요합니다." }, { status: 401 });
 
-  const { data: ws, error: wsError } = await workspaceRepository.create(supabase, {
-    name,
-    type,
-    startDate,
-    createdBy: sessionUser.id,
-  });
+  // 워크스페이스 생성과 프로필 조회는 서로의 입력이 아니므로 병렬로 처리한다
+  // (멤버의 이름/사진은 profiles 테이블 값을 쓴다 — 로그인 콜백에서 항상 생성이 보장됨)
+  const [{ data: ws, error: wsError }, { data: profile }] = await Promise.all([
+    workspaceRepository.create(supabase, {
+      name,
+      type,
+      startDate,
+      createdBy: sessionUser.id,
+    }),
+    profileRepository.findById(supabase, sessionUser.id),
+  ]);
   if (wsError || !ws) {
     console.error("[api] 워크스페이스 생성 실패", wsError);
     return NextResponse.json({ message: "워크스페이스 생성에 실패했습니다." }, { status: 500 });
   }
 
-  // 워크스페이스 멤버의 이름/사진은 profiles 테이블 값을 쓴다 (로그인 콜백에서 항상 생성이 보장됨)
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("name, avatar_url")
-    .eq("id", sessionUser.id)
-    .maybeSingle();
-
+  // 만든 사람이 owner — 초대 발급·강퇴 권한을 갖는다
   const { error: memberError } = await workspaceRepository.insertMember(supabase, ws.id, {
     userId: sessionUser.id,
     name: profile?.name,
     email: sessionUser.email,
     avatarUrl: profile?.avatar_url,
+    role: "owner",
   });
   if (memberError) {
     console.error("[api] 워크스페이스 생성 실패", memberError);

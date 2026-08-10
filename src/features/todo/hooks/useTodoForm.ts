@@ -16,6 +16,14 @@ import {
 } from "@/features/todo/queries/todoMutations";
 import { useCurrentWorkspace } from "@/features/workspace/hooks/useCurrentWorkspace";
 
+const MESSAGES = {
+  notFound: "항목을 찾을 수 없습니다.",
+  titleRequired: "제목을 입력해주세요.",
+  updated: "항목이 수정되었습니다.",
+  saveFailed: "저장에 실패했습니다. 다시 시도해주세요.",
+  deleteFailed: "삭제에 실패했습니다. 다시 시도해주세요.",
+} as const; // 폼 동작 결과를 알리는 토스트 메시지
+
 /**
  * 할 일 생성/수정 폼의 상태와 저장·삭제 로직을 관리하는 훅.
  * todoId가 있으면 수정 모드, 없으면 생성 모드로 동작한다.
@@ -38,12 +46,9 @@ export const useTodoForm = (todoId: string | null, initialDate: string | null) =
   const [title, setTitle] = useState(existingTodo?.title || ""); // 제목
   const [description, setDescription] = useState(existingTodo?.description || ""); // 설명
   const [assigneeId, setAssigneeId] = useState<string | undefined>(existingTodo?.assigneeId); // 담당자 id
-  const [startDate, setStartDate] = useState(
-    existingTodo?.startDate || initialDate || getTodayDateString()
-  ); // 시작일
-  const [endDate, setEndDate] = useState(
-    existingTodo?.endDate || initialDate || getTodayDateString()
-  ); // 종료일
+  const defaultDate = initialDate || getTodayDateString(); // 신규 생성 시 사용할 기본 날짜
+  const [startDate, setStartDate] = useState(existingTodo?.startDate || defaultDate); // 시작일
+  const [endDate, setEndDate] = useState(existingTodo?.endDate || defaultDate); // 종료일
   const [selectedColor, setSelectedColor] = useState(
     () => existingTodo?.color || TODO_COLORS[Math.floor(Math.random() * TODO_COLORS.length)]
   ); // 선택된 색상
@@ -79,7 +84,7 @@ export const useTodoForm = (todoId: string | null, initialDate: string | null) =
   const handleDelete = () => {
     if (!todoId) return;
     if (isExistingTodoMissing) {
-      toastActions.showToast("항목을 찾을 수 없습니다.", "error");
+      toastActions.showToast(MESSAGES.notFound, "error");
       return;
     }
     modalActions.showModal({
@@ -91,7 +96,7 @@ export const useTodoForm = (todoId: string | null, initialDate: string | null) =
           await deleteTodo.mutateAsync(todoId);
           router.back();
         } catch {
-          toastActions.showToast("삭제에 실패했습니다. 다시 시도해주세요.", "error");
+          toastActions.showToast(MESSAGES.deleteFailed, "error");
         }
       },
     });
@@ -103,12 +108,12 @@ export const useTodoForm = (todoId: string | null, initialDate: string | null) =
   const handleSave = async () => {
     if (isSaving) return;
     if (!title.trim()) {
-      toastActions.showToast("제목을 입력해주세요.", "error");
+      toastActions.showToast(MESSAGES.titleRequired, "error");
       return;
     }
     if (!currentWorkspace) return;
     if (isExistingTodoMissing) {
-      toastActions.showToast("항목을 찾을 수 없습니다.", "error");
+      toastActions.showToast(MESSAGES.notFound, "error");
       return;
     }
 
@@ -126,13 +131,13 @@ export const useTodoForm = (todoId: string | null, initialDate: string | null) =
     try {
       if (todoId) {
         await updateTodo.mutateAsync({ id: todoId, updates: todoData });
-        toastActions.showToast("항목이 수정되었습니다.", "success");
+        toastActions.showToast(MESSAGES.updated, "success");
       } else {
         await createTodo.mutateAsync(todoData);
       }
       router.back();
     } catch {
-      toastActions.showToast("저장에 실패했습니다. 다시 시도해주세요.", "error");
+      toastActions.showToast(MESSAGES.saveFailed, "error");
     }
   };
 

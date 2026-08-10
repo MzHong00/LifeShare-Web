@@ -7,6 +7,7 @@ import { cx } from "@/utils/cn";
 import styles from "./AnniversaryItem.module.scss";
 
 import type { Anniversary } from "@/features/anniversary/types/anniversary";
+import { ICON_SIZE } from "@/constants/style";
 
 interface AnniversaryItemProps {
   anniversary: Anniversary;
@@ -21,7 +22,7 @@ export const AnniversaryItem = ({ anniversary }: AnniversaryItemProps) => {
       <div
         className={cx(styles.annIcon, isPast && styles.annIconPast, isToday && styles.annIconToday)}
       >
-        <Heart size={20} fill={isToday ? "currentColor" : "transparent"} />
+        <Heart size={ICON_SIZE.lg} fill={isToday ? "currentColor" : "transparent"} />
       </div>
       <div className={styles.annInfo}>
         <p className={cx(styles.annTitle, isPast && styles.annTitlePast)}>{anniversary.title}</p>

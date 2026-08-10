@@ -26,13 +26,14 @@ const CalendarDayCellComponent = ({
   onSelect,
 }: CalendarDayCellProps) => {
   const dayOfWeek = getDayOfWeek(date); // 요일 인덱스 (0=일 ~ 6=토)
+  const hasWeekendColor = !isSelected && !isToday; // 선택·오늘 강조가 없을 때만 주말 색상을 적용한다
 
   const numberClass = cx(
     styles.dayNumber,
     isSelected && styles.dayNumberSelected,
     !isSelected && isToday && styles.dayNumberToday,
-    !isSelected && !isToday && dayOfWeek === SUNDAY && styles.dayNumberSun,
-    !isSelected && !isToday && dayOfWeek === SATURDAY && styles.dayNumberSat
+    hasWeekendColor && dayOfWeek === SUNDAY && styles.dayNumberSun,
+    hasWeekendColor && dayOfWeek === SATURDAY && styles.dayNumberSat
   );
 
   return (
@@ -40,9 +41,9 @@ const CalendarDayCellComponent = ({
       <span className={numberClass}>{getDayNumber(date)}</span>
       {dotColors.length > 0 && (
         <div className={styles.dots}>
-          {dotColors.slice(0, MAX_DOTS).map((color, i) => (
+          {dotColors.slice(0, MAX_DOTS).map((color) => (
             <div
-              key={i}
+              key={color}
               className={cx(styles.dot, isSelected && styles.dotSelected)}
               style={isSelected ? undefined : { backgroundColor: color }}
             />

@@ -2,7 +2,9 @@
 import { useState, useCallback } from "react";
 import { GoogleMap, Polyline, OverlayView } from "@react-google-maps/api";
 import { X, RotateCcw, Trash2, Navigation } from "lucide-react";
+
 import { cx } from "@/utils/cn";
+import { ICON_SIZE } from "@/constants/style";
 import { PATH_COLORS } from "@/constants/theme";
 import { useGoogleMap } from "@/features/map/hooks/useGoogleMap";
 import {
@@ -22,6 +24,16 @@ const ENDPOINT_DOT_SIZE = 18;
 const WAYPOINT_DOT_SIZE = 12;
 const ENDPOINT_BORDER = 3;
 const WAYPOINT_BORDER = 2;
+const DOT_WHITE = "#ffffff"; // 정점 마커의 흰색(지도 캔버스 인라인 스타일 전용)
+
+/** 현재 위치를 조회해 지도 중심을 이동한다 (미지원·거부 시 무시) */
+const panToCurrentPosition = (map: google.maps.Map) => {
+  if (!navigator.geolocation) return;
+  navigator.geolocation.getCurrentPosition(
+    (pos) => map.panTo({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
+    () => {}
+  );
+};
 
 interface PathPickerMapProps {
   initialPath?: LocationPoint[];
@@ -45,12 +57,7 @@ export function PathPickerMap({
   const handleLoad = useCallback(
     (map: google.maps.Map) => {
       onMapLoad(map);
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (pos) => map.panTo({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
-          () => {}
-        );
-      }
+      panToCurrentPosition(map);
     },
     [onMapLoad]
   );
@@ -63,11 +70,9 @@ export function PathPickerMap({
     ]);
   }, []);
 
+  /** 내 위치 FAB — 현재 위치로 지도 중심 이동 */
   const handleMyLocation = () => {
-    if (!mapRef.current || !navigator.geolocation) return;
-    navigator.geolocation.getCurrentPosition((pos) =>
-      mapRef.current!.panTo({ lat: pos.coords.latitude, lng: pos.coords.longitude })
-    );
+    if (mapRef.current) panToCurrentPosition(mapRef.current);
   };
 
   return (
@@ -108,8 +113,8 @@ export function PathPickerMap({
                         width: size,
                         height: size,
                         borderRadius: "50%",
-                        backgroundColor: isStart ? "#ffffff" : color,
-                        border: `${isEndpoint ? ENDPOINT_BORDER : WAYPOINT_BORDER}px solid ${isStart ? color : "#ffffff"}`,
+                        backgroundColor: isStart ? DOT_WHITE : color,
+                        border: `${isEndpoint ? ENDPOINT_BORDER : WAYPOINT_BORDER}px solid ${isStart ? color : DOT_WHITE}`,
                         boxShadow: "0 2px 8px rgba(0,0,0,0.3)",
                       }}
                     />
@@ -123,7 +128,7 @@ export function PathPickerMap({
 
       {/* X 버튼 — 좌상단 플로팅 */}
       <button type="button" onClick={onClose} className={styles.closeBtn} aria-label="닫기">
-        <X size={18} />
+        <X size={ICON_SIZE.lg} />
       </button>
 
       {/* 내 위치 FAB */}
@@ -133,7 +138,7 @@ export function PathPickerMap({
         className={styles.locationFab}
         aria-label="내 위치로 이동"
       >
-        <Navigation size={17} />
+        <Navigation size={ICON_SIZE.md} />
       </button>
 
       {/* 하단 툴 카드 */}
@@ -151,7 +156,7 @@ export function PathPickerMap({
                   className={styles.toolBtn}
                   aria-label="되돌리기"
                 >
-                  <RotateCcw size={15} />
+                  <RotateCcw size={ICON_SIZE.md} />
                   <span>되돌리기</span>
                 </button>
                 <button
@@ -160,7 +165,7 @@ export function PathPickerMap({
                   className={styles.toolBtnDanger}
                   aria-label="초기화"
                 >
-                  <Trash2 size={15} />
+                  <Trash2 size={ICON_SIZE.md} />
                   <span>초기화</span>
                 </button>
               </div>

@@ -3,9 +3,7 @@ import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 
 import { ROUTES } from "@/constants/routes";
-import { buildInviteLink } from "@/features/workspace/utils/workspaceUtils";
 import { modalActions } from "@/stores/useModalStore";
-import { toastActions } from "@/stores/useToastStore";
 import { globalLoadingActions } from "@/stores/useGlobalLoadingStore";
 import { authQueries } from "@/features/auth/queries/authQueries";
 import { workspaceActions } from "@/features/workspace/stores/useWorkspaceStore";
@@ -16,13 +14,13 @@ import {
   useUpdateWorkspaceThemeMutation,
   useUpdateWorkspaceMemberMutation,
   useLeaveWorkspaceMutation,
-  useCreateInviteCodeMutation,
+  useRemoveMemberMutation,
 } from "@/features/workspace/queries/workspaceMutations";
 
 import type { ThemeColor } from "@/features/workspace/types/workspace";
 
 /**
- * 라이프룸 설정 화면(WorkspaceEditView)의 수정·나가기·초대 액션을 담당하는 훅.
+ * 라이프룸 설정 화면(WorkspaceEditView)의 수정·나가기 액션을 담당하는 훅.
  * 각 액션은 뮤테이션 호출과 실패 시 에러 알림까지 책임지며, 컴포넌트는 모달 UI 구성만 담당한다.
  */
 export const useWorkspaceEditActions = (workspaceId: string) => {
@@ -34,7 +32,7 @@ export const useWorkspaceEditActions = (workspaceId: string) => {
   const updateTheme = useUpdateWorkspaceThemeMutation();
   const updateMember = useUpdateWorkspaceMemberMutation();
   const leaveWorkspace = useLeaveWorkspaceMutation();
-  const createInviteCode = useCreateInviteCodeMutation();
+  const removeMember = useRemoveMemberMutation();
 
   /** 로딩 오버레이를 띄운 채 액션을 실행하고, 실패 시 오류 알림 모달을 띄운다 (수정 계열 액션 공통 처리) */
   const runMutation = async (
@@ -88,17 +86,13 @@ export const useWorkspaceEditActions = (workspaceId: string) => {
     );
   };
 
-  /** 초대 링크를 생성해 클립보드에 복사한다 */
-  const invite = async () => {
-    if (!user) return;
-    try {
-      const code = await createInviteCode.mutateAsync({ workspaceId });
-      await navigator.clipboard.writeText(buildInviteLink(code));
-      toastActions.showToast("초대 링크를 복사했습니다. 파트너에게 공유해보세요.", "success");
-    } catch {
-      toastActions.showToast("초대 링크 생성에 실패했습니다.", "error");
-    }
-  };
+  /** 멤버를 라이프룸에서 내보낸다 (owner만 호출 가능 — 서버가 재검증한다) */
+  const kickMember = (userId: string) =>
+    runMutation(
+      () => removeMember.mutateAsync({ workspaceId, userId }),
+      "멤버를 내보내는 중이에요",
+      "멤버 내보내기에 실패했습니다."
+    );
 
   /** 라이프룸에서 나가고 목록 화면으로 이동한다 */
   const leave = () => {
@@ -117,12 +111,11 @@ export const useWorkspaceEditActions = (workspaceId: string) => {
   };
 
   return {
-    isInviting: createInviteCode.isPending,
     changeName,
     changeStartDate,
     changeThemeColor,
     changeProfileName,
-    invite,
+    kickMember,
     leave,
   };
 };

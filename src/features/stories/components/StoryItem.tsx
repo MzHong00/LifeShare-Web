@@ -3,6 +3,7 @@ import Image from "next/image";
 
 import { formatDate } from "@/utils/date";
 import { cx } from "@/utils/cn";
+import { ICON_SIZE } from "@/constants/style";
 
 import styles from "./StoryItem.module.scss";
 
@@ -35,7 +36,7 @@ export const StoryItem = ({ story, onPress }: StoryItemProps) => {
             className={styles.thumbnailImage}
           />
         ) : (
-          <MapPin size={32} style={{ color: story.pathColor }} />
+          <MapPin size={ICON_SIZE["2xl"]} style={{ color: story.pathColor }} />
         )}
       </div>
       <div className={styles.info}>

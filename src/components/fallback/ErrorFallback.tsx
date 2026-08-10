@@ -1,6 +1,6 @@
 import { AlertCircle } from "lucide-react";
 
-import { ICON_SIZE } from "@/constants/iconSize";
+import { ICON_SIZE } from "@/constants/style";
 import styles from "./ErrorFallback.module.scss";
 
 interface ErrorFallbackProps {

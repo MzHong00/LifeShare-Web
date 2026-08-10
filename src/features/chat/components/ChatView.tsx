@@ -30,8 +30,7 @@ export const ChatView = () => {
 
   /** 현재 입력값을 전송하고 입력바를 비운다 (전송 실패 시 입력값 복원) */
   const handleSend = () => {
-    const textToSend = inputText;
-    sendMessage(textToSend, () => setInputText(textToSend));
+    sendMessage(inputText, () => setInputText(inputText));
     setInputText("");
   };
 

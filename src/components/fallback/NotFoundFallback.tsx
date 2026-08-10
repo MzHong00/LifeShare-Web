@@ -1,7 +1,7 @@
 import { FileQuestion } from "lucide-react";
 import Link from "next/link";
 
-import { ICON_SIZE } from "@/constants/iconSize";
+import { ICON_SIZE } from "@/constants/style";
 import { ROUTES } from "@/constants/routes";
 
 import styles from "./NotFoundFallback.module.scss";

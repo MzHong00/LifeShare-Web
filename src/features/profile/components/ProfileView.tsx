@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { Settings } from "lucide-react";
 
 import { ProfileImage } from "@/components/ui/ProfileImage";
-import { ICON_SIZE } from "@/constants/iconSize";
+import { ICON_SIZE, AVATAR_SIZE } from "@/constants/style";
 import { ROUTES } from "@/constants/routes";
 
 import { useProfileUser } from "@/features/profile/hooks/useProfileUser";
@@ -13,8 +13,6 @@ import { ProfileWorkspaceSection } from "./ProfileWorkspaceSection";
 import { ProfileMenuRow } from "./ProfileMenuRow";
 import { ProfileHeroSkeleton } from "./ProfileHeroSkeleton";
 import styles from "./ProfileView.module.scss";
-
-const HERO_AVATAR_SIZE = 84; // 히어로 영역 아바타 크기(px)
 
 export const ProfileView = () => {
   const router = useRouter();
@@ -30,16 +28,16 @@ export const ProfileView = () => {
         >
           <Settings size={ICON_SIZE.lg} />
         </button>
-        {isLoading ? (
-          <ProfileHeroSkeleton />
-        ) : isError ? (
+        {isLoading && <ProfileHeroSkeleton />}
+        {!isLoading && isError && (
           <p className={styles.errorText}>프로필 정보를 불러오지 못했습니다.</p>
-        ) : (
+        )}
+        {!isLoading && !isError && (
           <>
             <ProfileImage
               uri={user?.profileImage}
               name={displayName}
-              size={HERO_AVATAR_SIZE}
+              size={AVATAR_SIZE["5xl"]}
               className={styles.heroAvatar}
             />
             <h1 className={styles.heroName}>{displayName}</h1>

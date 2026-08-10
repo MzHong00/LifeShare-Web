@@ -14,7 +14,7 @@ import {
   useCreateInviteCodeMutation,
 } from "@/features/workspace/queries/workspaceMutations";
 import { toastActions } from "@/stores/useToastStore";
-import { buildInviteLink } from "@/features/workspace/utils/workspaceUtils";
+import { useInviteShare } from "@/features/workspace/hooks/useInviteShare";
 
 import type { RoomType } from "@/features/workspace/types/workspace";
 
@@ -37,8 +37,10 @@ export const useWorkspaceSetupWizard = () => {
   const [workspaceName, setWorkspaceName] = useState(""); // 입력한 워크스페이스 이름
   const [startDate, setStartDate] = useState(getTodayDateString()); // 시작일/만난 날짜
   const [isMain, setIsMain] = useState(true); // 메인 워크스페이스 설정 여부
-  const [inviteCode, setInviteCode] = useState(""); // 생성된 초대 코드
   const [createdWorkspaceId, setCreatedWorkspaceId] = useState<string | null>(null); // 생성 완료됐지만 초대코드 발급에 실패한 워크스페이스 id (재시도 시 재사용)
+
+  // 발급된 코드는 뮤테이션이 쿼리 캐시에 넣어두므로 공유 훅이 그대로 읽어 쓴다
+  const inviteShare = useInviteShare(createdWorkspaceId ?? "");
 
   /** 유형 선택 → 이름 설정 세부 단계로 진입 */
   const goToNameStep = () => {
@@ -68,8 +70,7 @@ export const useWorkspaceSetupWizard = () => {
         setCreatedWorkspaceId(workspaceId);
         if (isMain) workspaceActions.setCurrentWorkspaceId(workspaceId);
       }
-      const code = await createInviteCode.mutateAsync({ workspaceId });
-      setInviteCode(code);
+      await createInviteCode.mutateAsync({ workspaceId });
       setStep("invite");
     } catch {
       modalActions.showModal({
@@ -77,19 +78,6 @@ export const useWorkspaceSetupWizard = () => {
         title: "알림",
         message: "워크스페이스 생성 중 문제가 발생했습니다.",
       });
-    }
-  };
-
-  const inviteLink = inviteCode ? buildInviteLink(inviteCode) : ""; // 발급된 초대 코드 기반 초대 링크
-
-  /** 초대 링크를 클립보드에 복사한다 */
-  const copyInviteLink = async () => {
-    if (!inviteLink) return;
-    try {
-      await navigator.clipboard.writeText(inviteLink);
-      toastActions.showToast("초대 링크를 복사했습니다.", "success");
-    } catch {
-      toastActions.showToast("복사에 실패했습니다. 코드를 직접 전달해주세요.", "error");
     }
   };
 
@@ -119,13 +107,13 @@ export const useWorkspaceSetupWizard = () => {
     setStartDate,
     isMain,
     setIsMain,
-    inviteCode,
-    inviteLink,
+    inviteCode: inviteShare.displayCode,
     isSaving: createWorkspace.isPending || createInviteCode.isPending,
     startCreate: () => setStep("create"),
     goToNameStep,
     completeCreate,
-    copyInviteLink,
+    copyInviteCode: inviteShare.copyCode,
+    copyInviteLink: inviteShare.copyLink,
     goBack,
     skipInvite,
   };

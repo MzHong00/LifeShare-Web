@@ -10,6 +10,7 @@ import { cx } from "@/utils/cn";
 import { storyQueries } from "@/features/stories/queries/storyQueries";
 import { useCurrentWorkspace } from "@/features/workspace/hooks/useCurrentWorkspace";
 import { StoryItem } from "@/features/stories/components/StoryItem";
+import { ICON_SIZE } from "@/constants/style";
 
 import styles from "./StoriesView.module.scss";
 
@@ -51,14 +52,14 @@ export const StoriesView = () => {
           className={styles.backButton}
           aria-label="보드로 돌아가기"
         >
-          <ChevronLeft size={24} />
+          <ChevronLeft size={ICON_SIZE.xl} />
         </button>
         <p className={styles.headerTitle}>스토리 목록</p>
         <div className={styles.headerRight} />
       </header>
 
       <div className={styles.searchRow}>
-        <Search size={18} className={styles.searchIcon} />
+        <Search size={ICON_SIZE.lg} className={styles.searchIcon} />
         <input
           type="text"
           value={searchQuery}
@@ -71,7 +72,7 @@ export const StoriesView = () => {
           className={styles.addButton}
           aria-label="스토리 추가"
         >
-          <Plus size={22} strokeWidth={2.5} />
+          <Plus size={ICON_SIZE.xl} strokeWidth={2.5} />
         </button>
       </div>
 

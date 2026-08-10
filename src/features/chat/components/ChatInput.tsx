@@ -5,6 +5,7 @@ import { Send, Plus } from "lucide-react";
 import { cx } from "@/utils/cn";
 import { CHAT_ACTION_ITEMS } from "@/features/chat/constants/chat";
 import { toastActions } from "@/stores/useToastStore";
+import { ICON_SIZE } from "@/constants/style";
 
 import styles from "./ChatInput.module.scss";
 
@@ -60,7 +61,7 @@ export const ChatInput = ({ value, onChange, onSend }: ChatInputProps) => {
               onClick={() => handleActionItemClick(label)}
             >
               <div className={styles.actionIcon}>
-                <Icon size={20} />
+                <Icon size={ICON_SIZE.lg} />
               </div>
               <span className={styles.actionLabel}>{label}</span>
             </button>
@@ -75,7 +76,7 @@ export const ChatInput = ({ value, onChange, onSend }: ChatInputProps) => {
           className={cx(styles.plusButton, isMenuOpen && styles.plusButtonActive)}
           aria-label={isMenuOpen ? "도구함 닫기" : "도구함 열기"}
         >
-          <Plus size={18} />
+          <Plus size={ICON_SIZE.lg} />
         </button>
 
         <input
@@ -98,7 +99,7 @@ export const ChatInput = ({ value, onChange, onSend }: ChatInputProps) => {
           )}
           aria-label="메시지 전송"
         >
-          <Send size={14} className={styles.sendIcon} />
+          <Send size={ICON_SIZE.md} className={styles.sendIcon} />
         </button>
       </div>
     </div>

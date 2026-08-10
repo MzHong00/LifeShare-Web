@@ -2,7 +2,7 @@ import { memo } from "react";
 
 import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
 
-import { ICON_SIZE } from "@/constants/iconSize";
+import { ICON_SIZE } from "@/constants/style";
 import { formatYearMonth } from "@/utils/date";
 
 import styles from "./CalendarHeader.module.scss";

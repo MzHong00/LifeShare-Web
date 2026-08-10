@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import { ChevronLeft } from "lucide-react";
 
 import { cx } from "@/utils/cn";
+import { ICON_SIZE } from "@/constants/style";
 
 import styles from "./AppHeader.module.scss";
 
@@ -24,19 +25,13 @@ export const AppHeader = ({
 }: AppHeaderProps) => {
   const router = useRouter();
 
-  const handleBack = () => {
-    if (onBack) {
-      onBack();
-    } else {
-      router.back();
-    }
-  };
+  const handleBack = onBack ?? (() => router.back());
 
   return (
     <header className={cx(styles.header, className)}>
       {isBackVisible ? (
         <button onClick={handleBack} className={styles.backButton} aria-label="뒤로 가기">
-          <ChevronLeft size={24} />
+          <ChevronLeft size={ICON_SIZE.xl} />
         </button>
       ) : (
         <div className={styles.placeholder} />

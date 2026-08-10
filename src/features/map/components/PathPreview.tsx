@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { MapPin, Pencil, Trash2 } from "lucide-react";
 
 import { normalize, fmtCoord, getWaypointLabel } from "@/features/map/utils/pathPreviewUtils";
+import { ICON_SIZE } from "@/constants/style";
 
 import styles from "./PathPreview.module.scss";
 
@@ -17,6 +18,11 @@ interface PathPreviewProps {
 const PAD = 14;
 const VIEW_W = 200;
 const VIEW_H = 80;
+// 경로 선 — 굵은 반투명 글로우 위에 실선을 겹쳐 그린다
+const POLYLINE_LAYERS = [
+  { strokeWidth: 4, opacity: 0.15 },
+  { strokeWidth: 2.5, opacity: 1 },
+];
 
 export function PathPreview({ path, pathColor, onEdit, onClear }: PathPreviewProps) {
   const points = useMemo(() => {
@@ -37,6 +43,9 @@ export function PathPreview({ path, pathColor, onEdit, onClear }: PathPreviewPro
 
   const polylineStr = useMemo(() => points.map((p) => `${p.x},${p.y}`).join(" "), [points]);
 
+  const startPoint = points[0]; // 시작 정점(있을 때만 강조 마커 표시)
+  const endPoint = points.length > 1 ? points[points.length - 1] : undefined; // 도착 정점(정점이 2개 이상일 때만)
+
   return (
     <div className={styles.card}>
       {/* ── SVG 경로 시각화 ── */}
@@ -53,54 +62,36 @@ export function PathPreview({ path, pathColor, onEdit, onClear }: PathPreviewPro
           </defs>
           <rect width={VIEW_W} height={VIEW_H} fill="url(#grid)" />
 
-          {points.length > 1 && (
-            <>
+          {points.length > 1 &&
+            POLYLINE_LAYERS.map(({ strokeWidth, opacity }) => (
               <polyline
+                key={strokeWidth}
                 points={polylineStr}
                 fill="none"
                 stroke={pathColor}
-                strokeWidth="4"
+                strokeWidth={strokeWidth}
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                opacity="0.15"
+                opacity={opacity}
               />
-              <polyline
-                points={polylineStr}
-                fill="none"
-                stroke={pathColor}
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </>
-          )}
+            ))}
 
           {points.slice(1, -1).map((pt, i) => (
             <circle key={i} cx={pt.x} cy={pt.y} r={2.5} fill={pathColor} opacity={0.7} />
           ))}
 
-          {points.length >= 1 && (
+          {startPoint && (
             <>
-              <circle cx={points[0].x} cy={points[0].y} r={6} fill="white" />
-              <circle cx={points[0].x} cy={points[0].y} r={4.5} fill={pathColor} />
-              <circle cx={points[0].x} cy={points[0].y} r={2} fill="white" />
+              <circle cx={startPoint.x} cy={startPoint.y} r={6} fill="white" />
+              <circle cx={startPoint.x} cy={startPoint.y} r={4.5} fill={pathColor} />
+              <circle cx={startPoint.x} cy={startPoint.y} r={2} fill="white" />
             </>
           )}
 
-          {points.length >= 2 && (
+          {endPoint && (
             <>
-              <circle
-                cx={points[points.length - 1].x}
-                cy={points[points.length - 1].y}
-                r={6}
-                fill="white"
-              />
-              <circle
-                cx={points[points.length - 1].x}
-                cy={points[points.length - 1].y}
-                r={4.5}
-                fill={pathColor}
-              />
+              <circle cx={endPoint.x} cy={endPoint.y} r={6} fill="white" />
+              <circle cx={endPoint.x} cy={endPoint.y} r={4.5} fill={pathColor} />
             </>
           )}
         </svg>
@@ -113,14 +104,14 @@ export function PathPreview({ path, pathColor, onEdit, onClear }: PathPreviewPro
           <div>
             <p className={styles.infoTitle}>경로 저장됨</p>
             <p className={styles.infoSub}>
-              <MapPin size={11} />
+              <MapPin size={ICON_SIZE.sm} />
               정점 {path.length}개{path.length >= 2 ? " · 경로 완성" : " · 정점을 더 추가하세요"}
             </p>
           </div>
         </div>
         <div className={styles.actions}>
           <button type="button" onClick={onEdit} className={styles.editBtn} aria-label="경로 수정">
-            <Pencil size={14} />
+            <Pencil size={ICON_SIZE.md} />
           </button>
           <button
             type="button"
@@ -128,7 +119,7 @@ export function PathPreview({ path, pathColor, onEdit, onClear }: PathPreviewPro
             className={styles.clearBtn}
             aria-label="경로 삭제"
           >
-            <Trash2 size={14} />
+            <Trash2 size={ICON_SIZE.md} />
           </button>
         </div>
       </div>

@@ -75,8 +75,14 @@ describe("useCurrentWorkspace", () => {
       {
         ...WORKSPACES[0],
         members: [
-          { id: "user-1", name: "이 방에서 쓰는 이름", email: "me@test.com", avatar: "old.png" },
-          { id: "user-2", name: "파트너", email: "partner@test.com" },
+          {
+            id: "user-1",
+            name: "이 방에서 쓰는 이름",
+            email: "me@test.com",
+            avatar: "old.png",
+            role: "owner",
+          },
+          { id: "user-2", name: "파트너", email: "partner@test.com", role: "member" },
         ],
       },
     ];
@@ -90,8 +96,14 @@ describe("useCurrentWorkspace", () => {
     const { result } = renderHook(() => useCurrentWorkspace(), { wrapper: Wrapper });
 
     expect(result.current.currentWorkspace?.members).toEqual([
-      { id: "user-1", name: "이 방에서 쓰는 이름", email: "me@test.com", avatar: "new.png" },
-      { id: "user-2", name: "파트너", email: "partner@test.com" },
+      {
+        id: "user-1",
+        name: "이 방에서 쓰는 이름",
+        email: "me@test.com",
+        avatar: "new.png",
+        role: "owner",
+      },
+      { id: "user-2", name: "파트너", email: "partner@test.com", role: "member" },
     ]);
   });
 });

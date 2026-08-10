@@ -6,6 +6,7 @@ import { Home, MapPin, Heart, MessageCircle, User } from "lucide-react";
 
 import { ROUTES } from "@/constants/routes";
 import { cx } from "@/utils/cn";
+import { ICON_SIZE } from "@/constants/style";
 
 import styles from "./BottomNav.module.scss";
 
@@ -51,7 +52,7 @@ export const BottomNav = () => {
           return (
             <Link key={href} href={href} className={styles.navLink}>
               <span className={cx(styles.pill, isActive && styles.pillActive)}>
-                <Icon size={20} strokeWidth={isActive ? 2.5 : 1.8} />
+                <Icon size={ICON_SIZE.lg} strokeWidth={isActive ? 2.5 : 1.8} />
                 <span className={cx(styles.navLabel, isActive && styles.navLabelActive)}>
                   {label}
                 </span>

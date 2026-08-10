@@ -5,13 +5,14 @@ import { Heart, Users, ChevronRight } from "lucide-react";
 import { ProfileImage } from "@/components/ui/ProfileImage";
 import { ROUTES } from "@/constants/routes";
 import { useCurrentWorkspace } from "@/features/workspace/hooks/useCurrentWorkspace";
+import { ICON_SIZE, AVATAR_SIZE } from "@/constants/style";
 
 import styles from "./ProfileWorkspaceSection.module.scss";
 
 import type { Workspace } from "@/features/workspace/types/workspace";
 
 const VISIBLE_WORKSPACE_COUNT = 3; // 목록에 노출할 최대 라이프룸 개수
-const MEMBER_AVATAR_SIZE = 22; // 멤버 아바타 미리보기 크기(px)
+const VISIBLE_MEMBER_COUNT = 3; // 라이프룸 행에 노출할 최대 참여자 아바타 개수
 
 /** 현재 메인 워크스페이스를 맨 위로 고정하고 나머지는 원래 순서를 유지한다 (안정 정렬) */
 const sortWithMainFirst = (workspaces: Workspace[], mainWorkspaceId?: string) =>
@@ -40,7 +41,7 @@ export const ProfileWorkspaceSection = () => {
           className={styles.moreButton}
         >
           상세보기
-          <ChevronRight size={14} />
+          <ChevronRight size={ICON_SIZE.md} />
         </button>
       </div>
 
@@ -60,7 +61,11 @@ export const ProfileWorkspaceSection = () => {
               >
                 <div className={styles.listLeft}>
                   <div className={styles.listIconWrap}>
-                    {ws.type === "couple" ? <Heart size={18} /> : <Users size={18} />}
+                    {ws.type === "couple" ? (
+                      <Heart size={ICON_SIZE.lg} />
+                    ) : (
+                      <Users size={ICON_SIZE.lg} />
+                    )}
                   </div>
                   <div className={styles.nameRow}>
                     <span className={styles.listTitle}>{ws.name}</span>
@@ -72,13 +77,13 @@ export const ProfileWorkspaceSection = () => {
                   <div className={styles.memberStack}>
                     {[...members]
                       .reverse()
-                      .slice(0, 3)
+                      .slice(0, VISIBLE_MEMBER_COUNT)
                       .map((member) => (
                         <div key={member.id} className={styles.memberAvatar}>
                           <ProfileImage
                             uri={member.avatar}
                             name={member.name}
-                            size={MEMBER_AVATAR_SIZE}
+                            size={AVATAR_SIZE.xs}
                           />
                         </div>
                       ))}

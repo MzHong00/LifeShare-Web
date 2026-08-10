@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { Plus, Users, Heart } from "lucide-react";
+import { Plus, Users, Heart, KeyRound } from "lucide-react";
 
 import { ROUTES } from "@/constants/routes";
 import { useCurrentWorkspace } from "@/features/workspace/hooks/useCurrentWorkspace";
@@ -11,6 +11,7 @@ import { ProfileImage } from "@/components/ui/ProfileImage";
 import { Skeleton } from "@/components/feedback/Skeleton";
 import { formatDate, calculateDDay } from "@/utils/date";
 import { APP_WORKSPACE } from "@/constants/config";
+import { ICON_SIZE, AVATAR_SIZE } from "@/constants/style";
 import styles from "./WorkspaceListView.module.scss";
 
 import type { CSSProperties } from "react";
@@ -73,7 +74,11 @@ export const WorkspaceListView = () => {
               >
                 <div className={styles.cardTop}>
                   <div className={styles.wsIcon}>
-                    {ws.type === "couple" ? <Heart size={22} /> : <Users size={22} />}
+                    {ws.type === "couple" ? (
+                      <Heart size={ICON_SIZE.xl} />
+                    ) : (
+                      <Users size={ICON_SIZE.xl} />
+                    )}
                   </div>
                   <div className={styles.wsInfo}>
                     <div className={styles.nameRow}>
@@ -93,7 +98,11 @@ export const WorkspaceListView = () => {
                     <div className={styles.membersStack}>
                       {[...ws.members].reverse().map((member) => (
                         <div key={member.id} className={styles.memberAvatar}>
-                          <ProfileImage uri={member.avatar} name={member.name} size={24} />
+                          <ProfileImage
+                            uri={member.avatar}
+                            name={member.name}
+                            size={AVATAR_SIZE.xs}
+                          />
                         </div>
                       ))}
                     </div>
@@ -109,7 +118,16 @@ export const WorkspaceListView = () => {
           onClick={() => router.push(ROUTES.WORKSPACE.SETUP.path)}
           className={styles.addButton}
         >
-          <Plus size={18} />새 {APP_WORKSPACE.KR} 만들기
+          <Plus size={ICON_SIZE.lg} />새 {APP_WORKSPACE.KR} 만들기
+        </button>
+
+        <button
+          type="button"
+          onClick={() => router.push(ROUTES.WORKSPACE.JOIN.path)}
+          className={styles.joinByCodeButton}
+        >
+          <KeyRound size={ICON_SIZE.lg} />
+          초대 코드로 참여하기
         </button>
       </div>
     </div>

@@ -7,6 +7,7 @@ import { AppHeader } from "@/components/layout/AppHeader";
 import { formatDate } from "@/utils/date";
 import { useAnniversaries } from "@/features/anniversary/hooks/useAnniversaries";
 import { useCurrentWorkspace } from "@/features/workspace/hooks/useCurrentWorkspace";
+import { ICON_SIZE } from "@/constants/style";
 import { AnniversaryItem } from "./AnniversaryItem";
 
 import styles from "./AnniversaryView.module.scss";
@@ -36,7 +37,7 @@ export const AnniversaryView = () => {
           <div className={styles.heroBgOverlay} />
           <div className={styles.heroContent}>
             <div className={styles.heroTopText}>
-              <Heart size={20} fill="white" color="white" />
+              <Heart size={ICON_SIZE.lg} fill="white" color="white" />
               <p className={styles.heroTitle}>우리의 특별한 날</p>
               <p className={styles.heroSubTitle}>함께한 모든 순간이 소중해요</p>
             </div>

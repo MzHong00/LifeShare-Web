@@ -7,6 +7,7 @@ import { Checkbox } from "@/components/ui/Checkbox";
 import styles from "./WorkspaceSetupView.module.scss";
 
 import type { RoomType } from "@/features/workspace/types/workspace";
+import { ICON_SIZE } from "@/constants/style";
 
 interface SetupCreateStepProps {
   subStep: "type" | "name"; // 유형 선택 / 이름 설정 세부 단계
@@ -63,7 +64,7 @@ export const SetupCreateStep = ({
                 )}
               >
                 <Icon
-                  size={24}
+                  size={ICON_SIZE.xl}
                   color={isActive ? "var(--primary)" : "var(--grey-500)"}
                   fill={iconFill}
                 />

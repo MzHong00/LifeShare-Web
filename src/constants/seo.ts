@@ -8,6 +8,7 @@ export const PAGE_TITLES = {
   LOGIN: "로그인",
   WORKSPACE_LANDING: "듀어스 시작하기",
   WORKSPACE_JOIN: "워크스페이스 초대",
+  WORKSPACE_CODE_JOIN: "초대 코드로 참여",
   WORKSPACE_SETUP: "워크스페이스 만들기",
   WORKSPACE_LIST: "워크스페이스 목록",
   WORKSPACE_EDIT: "워크스페이스 수정",

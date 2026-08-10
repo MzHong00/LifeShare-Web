@@ -130,6 +130,21 @@
   border-radius: var(--radius-pill);
 }
 
+.ownerBadge {
+  font-size: 11px;
+  font-weight: var(--font-weight-bold);
+  color: var(--primary);
+  background-color: var(--primary-light);
+  padding: 3px var(--space-sm);
+  border-radius: var(--radius-pill);
+}
+
+.kickButton {
+  margin-left: auto;
+  @include expand-tap-target(16px);
+  color: var(--grey-400);
+}
+
 .themeRow {
   @include flex-col(10px);
   padding: var(--space-lg) var(--space-xl);

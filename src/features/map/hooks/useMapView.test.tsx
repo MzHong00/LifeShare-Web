@@ -55,6 +55,7 @@ const createMember = (id: string, name: string): WorkspaceMember => ({
   id,
   name,
   email: `${id}@test.com`,
+  role: "member",
 });
 
 const createWorkspace = (members: WorkspaceMember[]): Workspace => ({

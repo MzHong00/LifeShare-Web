@@ -15,9 +15,6 @@ import type { Filter } from "@/features/todo/hooks/useFilteredTodos";
 import type { Todo } from "@/features/todo/types/todo";
 import type { Workspace } from "@/features/workspace/types/workspace";
 
-// 캘린더 등 외부 소비자 호환을 위해 Filter 타입을 재노출한다.
-export type { Filter };
-
 const FILTER_LABELS: Record<Filter, string> = {
   all: "전체",
   active: "진행 중",
@@ -58,7 +55,7 @@ export const TodoList = ({
   // 항목별 담당자 조회를 O(n) find 대신 O(1) 조회로 처리하기 위해 id -> member 맵을 미리 구성한다
   const memberMap = useMemo(
     () => new Map(currentWorkspace?.members?.map((member) => [member.id, member])),
-    [currentWorkspace]
+    [currentWorkspace?.members]
   );
 
   /** 항목 클릭 시 상세/수정 화면으로 이동한다 */
@@ -69,7 +66,8 @@ export const TodoList = ({
 
   // initialDate가 있으면 해당 날짜를 기본값으로 세팅한 채로 생성 화면으로 이동한다.
   const addHref = initialDate ? ROUTES.TODO.CREATE.query({ initialDate }) : ROUTES.TODO.CREATE.path;
-  const isEmpty = !isPending && !isError && displayedTodos.length === 0;
+  const isLoaded = !isPending && !isError; // 스켈레톤·에러가 아닌 정상 조회 완료 상태
+  const isEmpty = isLoaded && displayedTodos.length === 0;
 
   return (
     <div className={styles.container}>
@@ -114,9 +112,7 @@ export const TodoList = ({
           </div>
         )}
 
-        {!isPending &&
-          !isError &&
-          !isEmpty &&
+        {isLoaded &&
           displayedTodos.map((todo) => (
             <TodoItem
               key={todo.id}

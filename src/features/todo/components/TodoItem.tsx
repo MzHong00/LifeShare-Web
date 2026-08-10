@@ -11,6 +11,7 @@ import styles from "./TodoItem.module.scss";
 
 import type { Todo } from "@/features/todo/types/todo";
 import type { WorkspaceMember } from "@/features/workspace/types/workspace";
+import { ICON_SIZE, AVATAR_SIZE } from "@/constants/style";
 
 interface TodoItemProps {
   item: Todo;
@@ -36,7 +37,7 @@ export const TodoItem = memo(({ item, assignee, onToggle, onPress }: TodoItemPro
         aria-label={item.isCompleted ? "완료 취소" : "완료 처리"}
       >
         {item.isCompleted ? (
-          <CheckCircle2 size={26} color={markerColor} fill={`${markerColor}40`} />
+          <CheckCircle2 size={ICON_SIZE.xl} color={markerColor} fill={`${markerColor}40`} />
         ) : (
           <div className={styles.circle} style={{ borderColor: item.color || COLORS.border }} />
         )}
@@ -58,7 +59,9 @@ export const TodoItem = memo(({ item, assignee, onToggle, onPress }: TodoItemPro
         </p>
       </button>
 
-      {assignee && <ProfileImage uri={assignee.avatar} name={assignee.name} size={28} />}
+      {assignee && (
+        <ProfileImage uri={assignee.avatar} name={assignee.name} size={AVATAR_SIZE.sm} />
+      )}
     </div>
   );
 });

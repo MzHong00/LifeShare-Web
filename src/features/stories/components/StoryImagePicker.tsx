@@ -1,6 +1,8 @@
 import { RefObject } from "react";
 import { Image as ImageIcon, X } from "lucide-react";
 
+import { ICON_SIZE } from "@/constants/style";
+
 import styles from "./StoryImagePicker.module.scss";
 
 interface StoryImagePickerProps {
@@ -24,7 +26,7 @@ export const StoryImagePicker = ({
         <div className={styles.thumbnailWrap}>
           <img src={previewUrl} alt="선택한 스토리 사진" className={styles.thumbnail} />
           <button onClick={onRemove} className={styles.removeButton} aria-label="사진 제거">
-            <X size={16} />
+            <X size={ICON_SIZE.md} />
           </button>
         </div>
       ) : (
@@ -33,7 +35,7 @@ export const StoryImagePicker = ({
           className={styles.imagePlaceholder}
           aria-label="사진 추가하기"
         >
-          <ImageIcon size={32} />
+          <ImageIcon size={ICON_SIZE["2xl"]} />
           <span>사진 추가하기</span>
         </button>
       )}

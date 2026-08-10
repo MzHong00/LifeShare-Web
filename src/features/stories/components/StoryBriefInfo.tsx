@@ -1,6 +1,7 @@
 import { MapPin, Calendar } from "lucide-react";
 
 import { formatDate } from "@/utils/date";
+import { ICON_SIZE } from "@/constants/style";
 
 import styles from "./StoryBriefInfo.module.scss";
 
@@ -16,7 +17,7 @@ export const StoryBriefInfo = ({ story }: StoryBriefInfoProps) => {
       <h1 className={styles.title}>{story.title}</h1>
       <div className={styles.metaRow}>
         <div className={styles.metaItem}>
-          <Calendar size={14} color="var(--grey-400)" />
+          <Calendar size={ICON_SIZE.md} color="var(--grey-400)" />
           <span>{formatDate(story.date)}</span>
         </div>
         {story.path.length > 0 && (

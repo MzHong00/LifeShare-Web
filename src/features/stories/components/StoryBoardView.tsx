@@ -5,18 +5,17 @@ import { useQuery } from "@tanstack/react-query";
 import { Camera, RotateCcw } from "lucide-react";
 import { useRouter } from "next/navigation";
 
+import { ROUTES } from "@/constants/routes";
+import { ICON_SIZE } from "@/constants/style";
 import { storyQueries } from "@/features/stories/queries/storyQueries";
 import { useCurrentWorkspace } from "@/features/workspace/hooks/useCurrentWorkspace";
-import { ROUTES } from "@/constants/routes";
-
-import { useMemoryBoard } from "../hooks/useMemoryBoard";
-import { useScatterCards } from "../hooks/useScatterCards";
-
-import { SHELL_STORIES, isShellStory } from "@/features/stories/constants/previewMockStories";
+import { useMemoryBoard } from "@/features/stories/hooks/useMemoryBoard";
+import { useScatterCards } from "@/features/stories/hooks/useScatterCards";
+import { createShellStories, isShellStory } from "@/features/stories/constants/previewMockStories";
 import { StoryDetailOverlay } from "@/features/stories/components/StoryDetailOverlay";
+import { MemoryCard } from "@/features/stories/components/MemoryCard";
+import { StoryBoardHeader } from "@/features/stories/components/StoryBoardHeader";
 import { getFanCardDiff, getFanCardStyle } from "@/features/stories/utils/fanCardUtils";
-import { MemoryCard } from "./MemoryCard";
-import { StoryBoardHeader } from "./StoryBoardHeader";
 
 import styles from "./StoryBoardView.module.scss";
 
@@ -51,7 +50,7 @@ export const StoryBoardView = () => {
   const boardStories = useMemo(
     () => [
       ...stories,
-      ...SHELL_STORIES(currentWorkspace?.id ?? "", BOARD_STORY_COUNT - stories.length),
+      ...createShellStories(currentWorkspace?.id ?? "", BOARD_STORY_COUNT - stories.length),
     ],
     [stories, currentWorkspace?.id]
   );
@@ -178,10 +177,10 @@ export const StoryBoardView = () => {
 
           {isStoriesError && (
             <div className={styles.errorState}>
-              <Camera size={40} className={styles.errorIcon} />
+              <Camera size={ICON_SIZE["3xl"]} className={styles.errorIcon} />
               <p className={styles.errorTitle}>기억을 불러오지 못했어요</p>
               <button type="button" onClick={() => refetchStories()} className={styles.errorRetry}>
-                <RotateCcw size={12} />
+                <RotateCcw size={ICON_SIZE.sm} />
                 다시 시도
               </button>
             </div>

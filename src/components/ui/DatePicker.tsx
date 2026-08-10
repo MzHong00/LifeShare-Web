@@ -2,7 +2,7 @@
 import { useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-import { ICON_SIZE } from "@/constants/iconSize";
+import { ICON_SIZE } from "@/constants/style";
 import { CalendarDayCell } from "@/features/calendar/components/CalendarDayCell";
 import { addMonths, formatYearMonth, getCalendarDays, getTodayDateString } from "@/utils/date";
 import { cx } from "@/utils/cn";

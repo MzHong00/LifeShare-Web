@@ -3,6 +3,7 @@ import { X } from "lucide-react";
 
 import { StoryDetailContent } from "@/features/stories/components/StoryDetailContent";
 import { useSwipeDismiss } from "@/features/stories/hooks/useSwipeDismiss";
+import { ICON_SIZE } from "@/constants/style";
 
 import styles from "./StoryDetailOverlay.module.scss";
 
@@ -32,7 +33,7 @@ export const StoryDetailOverlay = ({ story, onClose }: StoryDetailOverlayProps) 
       onPointerCancel={handlePointerUp}
     >
       <button type="button" onClick={onClose} className={styles.detailClose} aria-label="상세 닫기">
-        <X size={20} />
+        <X size={ICON_SIZE.lg} />
       </button>
       <StoryDetailContent story={story} />
     </div>

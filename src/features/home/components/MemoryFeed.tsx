@@ -8,6 +8,7 @@ import { useCurrentWorkspace } from "@/features/workspace/hooks/useCurrentWorksp
 import { ProfileImage } from "@/components/ui/ProfileImage";
 import { MemberListContent } from "./MemberListContent";
 import { modalActions } from "@/stores/useModalStore";
+import { AVATAR_SIZE } from "@/constants/style";
 
 import { ActivityDashboard } from "./ActivityDashboard";
 import { AnniversaryJourney } from "./AnniversaryJourney";
@@ -77,7 +78,7 @@ export const MemoryFeed = () => {
             >
               {reversedMembers.map((member) => (
                 <div key={member.id} className={styles.memberAvatar}>
-                  <ProfileImage uri={member.avatar} name={member.name} size={28} />
+                  <ProfileImage uri={member.avatar} name={member.name} size={AVATAR_SIZE.sm} />
                 </div>
               ))}
             </button>

@@ -1,4 +1,4 @@
-import { renderHook, waitFor } from "@testing-library/react";
+import { renderHook } from "@testing-library/react";
 import { describe, expect, it, vi, beforeEach } from "vitest";
 
 import { ROUTES } from "@/constants/routes";
@@ -12,7 +12,7 @@ import {
   useUpdateWorkspaceThemeMutation,
   useUpdateWorkspaceMemberMutation,
   useLeaveWorkspaceMutation,
-  useCreateInviteCodeMutation,
+  useRemoveMemberMutation,
 } from "@/features/workspace/queries/workspaceMutations";
 import { useWorkspaceEditActions } from "./useWorkspaceEditActions";
 
@@ -29,10 +29,6 @@ vi.mock("@tanstack/react-query", () => ({
 
 vi.mock("@/features/auth/queries/authQueries", () => ({
   authQueries: { user: vi.fn() },
-}));
-
-vi.mock("@/features/workspace/utils/workspaceUtils", () => ({
-  buildInviteLink: (code: string) => `https://duous.app/invite/${code}`,
 }));
 
 vi.mock("@/stores/useModalStore", () => ({
@@ -57,17 +53,12 @@ vi.mock("@/features/workspace/queries/workspaceMutations", () => ({
   useUpdateWorkspaceThemeMutation: vi.fn(),
   useUpdateWorkspaceMemberMutation: vi.fn(),
   useLeaveWorkspaceMutation: vi.fn(),
-  useCreateInviteCodeMutation: vi.fn(),
+  useRemoveMemberMutation: vi.fn(),
 }));
 
 const mockUserRef = { current: mockUser as { id: string } | undefined };
 
 const createMutation = (mutateAsync = vi.fn()) => ({ mutateAsync, isPending: false });
-
-Object.defineProperty(navigator, "clipboard", {
-  value: { writeText: vi.fn() },
-  configurable: true,
-});
 
 describe("useWorkspaceEditActions", () => {
   const updateNameMutateAsync = vi.fn();
@@ -75,7 +66,7 @@ describe("useWorkspaceEditActions", () => {
   const updateThemeMutateAsync = vi.fn();
   const updateMemberMutateAsync = vi.fn();
   const leaveWorkspaceMutateAsync = vi.fn();
-  const createInviteCodeMutateAsync = vi.fn();
+  const removeMemberMutateAsync = vi.fn();
 
   beforeEach(() => {
     vi.clearAllMocks();
@@ -113,9 +104,9 @@ describe("useWorkspaceEditActions", () => {
         typeof useLeaveWorkspaceMutation
       >
     );
-    vi.mocked(useCreateInviteCodeMutation).mockReturnValue(
-      createMutation(createInviteCodeMutateAsync) as unknown as ReturnType<
-        typeof useCreateInviteCodeMutation
+    vi.mocked(useRemoveMemberMutation).mockReturnValue(
+      createMutation(removeMemberMutateAsync) as unknown as ReturnType<
+        typeof useRemoveMemberMutation
       >
     );
   });
@@ -190,28 +181,6 @@ describe("useWorkspaceEditActions", () => {
     });
   });
 
-  it("invite 성공 시 초대 링크를 클립보드에 복사하고 성공 토스트를 띄운다", async () => {
-    createInviteCodeMutateAsync.mockResolvedValueOnce("abc123");
-    const { result } = renderHook(() => useWorkspaceEditActions("workspace-1"));
-
-    await result.current.invite();
-
-    expect(navigator.clipboard.writeText).toHaveBeenCalledWith("https://duous.app/invite/abc123");
-    expect(toastActions.showToast).toHaveBeenCalledWith(
-      "초대 링크를 복사했습니다. 파트너에게 공유해보세요.",
-      "success"
-    );
-  });
-
-  it("invite 실패 시 에러 토스트를 띄운다", async () => {
-    createInviteCodeMutateAsync.mockRejectedValueOnce(new Error("fail"));
-    const { result } = renderHook(() => useWorkspaceEditActions("workspace-1"));
-
-    await result.current.invite();
-
-    expect(toastActions.showToast).toHaveBeenCalledWith("초대 링크 생성에 실패했습니다.", "error");
-  });
-
   it("leave 성공 시 현재 워크스페이스면 store를 초기화하고 목록 화면으로 이동한다", async () => {
     leaveWorkspaceMutateAsync.mockResolvedValueOnce(undefined);
     const { result } = renderHook(() => useWorkspaceEditActions("workspace-1"));
@@ -256,13 +225,27 @@ describe("useWorkspaceEditActions", () => {
     expect(mockReplace).not.toHaveBeenCalled();
   });
 
-  it("isInviting은 createInviteCode 뮤테이션의 isPending 값을 반영한다", async () => {
-    vi.mocked(useCreateInviteCodeMutation).mockReturnValue({
-      mutateAsync: createInviteCodeMutateAsync,
-      isPending: true,
-    } as unknown as ReturnType<typeof useCreateInviteCodeMutation>);
+  it("kickMember는 대상 멤버 제거 뮤테이션을 호출한다", async () => {
+    removeMemberMutateAsync.mockResolvedValueOnce(undefined);
     const { result } = renderHook(() => useWorkspaceEditActions("workspace-1"));
 
-    await waitFor(() => expect(result.current.isInviting).toBe(true));
+    await result.current.kickMember("user-2");
+
+    expect(removeMemberMutateAsync).toHaveBeenCalledWith({
+      workspaceId: "workspace-1",
+      userId: "user-2",
+    });
+    expect(modalActions.showModal).not.toHaveBeenCalled();
+  });
+
+  it("kickMember 실패 시 에러 메시지를 담아 알림 모달을 띄운다", async () => {
+    removeMemberMutateAsync.mockRejectedValueOnce(new Error("권한 없음"));
+    const { result } = renderHook(() => useWorkspaceEditActions("workspace-1"));
+
+    await result.current.kickMember("user-2");
+
+    expect(modalActions.showModal).toHaveBeenCalledWith(
+      expect.objectContaining({ message: "권한 없음" })
+    );
   });
 });

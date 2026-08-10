@@ -20,7 +20,12 @@ export interface MemberUpdateRequestDto {
   avatarUrl?: string; // 프로필 이미지 URL
 }
 
-/** 초대 코드 생성 응답 */
-export interface InviteCodeCreateResponseDto {
-  code: string; // 발급된 초대 코드
+/** 초대 코드 조회·발급 응답 */
+export interface InviteCodeResponseDto {
+  code: string | null; // 워크스페이스의 현재 초대 코드 (미발급 시 null)
+}
+
+/** 워크스페이스 참여 요청 본문 (참여자는 세션에서 확정) */
+export interface WorkspaceJoinRequestDto {
+  inviteCode: string; // 참여 근거가 되는 초대 코드 (정규화된 형태)
 }
