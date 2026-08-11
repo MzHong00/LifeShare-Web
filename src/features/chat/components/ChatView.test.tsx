@@ -132,13 +132,14 @@ describe("ChatView", () => {
     expect(screen.queryByPlaceholderText("메시지...")).not.toBeInTheDocument();
   });
 
-  it("워크스페이스 로딩 중에는 빈 상태 대신 채팅 UI를 유지한다", () => {
+  it("워크스페이스 로딩 중에는 빈 상태 대신 로딩 스피너를 노출한다", () => {
     setChatState({ currentWorkspace: null, isWorkspacePending: true });
 
     render(<ChatView />);
 
     expect(screen.queryByText("아직 파트너가 없어요")).not.toBeInTheDocument();
-    expect(screen.getByPlaceholderText("메시지...")).toBeInTheDocument();
+    expect(screen.getByRole("status", { name: "로딩 중" })).toBeInTheDocument();
+    expect(screen.queryByPlaceholderText("메시지...")).not.toBeInTheDocument();
   });
 
   it("파트너가 있으면 헤더·메시지·입력바를 렌더링한다", () => {

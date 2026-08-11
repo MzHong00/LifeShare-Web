@@ -22,35 +22,13 @@
 }
 
 // 로딩, 에러 컨테이너 공통 스타일
-.skeletonContainer,
+.loadingState,
 .errorState {
   position: absolute;
   inset: 0;
   @include flex-col-center(16px);
   justify-content: center;
   text-align: center;
-}
-
-// 스켈레톤 중앙 배열
-.skeletonContainer {
-  @include flex-row(10px);
-  justify-content: center;
-}
-
-.skeletonCard {
-  width: 90px;
-  aspect-ratio: 3 / 4;
-  border-radius: var(--radius-md);
-  background: linear-gradient(90deg, var(--grey-100) 25%, var(--grey-50) 50%, var(--grey-100) 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.4s ease-in-out infinite;
-
-  &:nth-child(2) {
-    transform: rotate(4deg) translateY(-8px);
-  }
-  &:nth-child(3) {
-    transform: rotate(-3deg) translateY(4px);
-  }
 }
 
 .errorIcon {
@@ -208,14 +186,5 @@
   &:nth-of-type(11) .floatWrap {
     animation-duration: 4.1s;
     animation-delay: -2.3s;
-  }
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
   }
 }

@@ -36,6 +36,17 @@
   overflow: hidden;
 }
 
+// 로딩 스켈레톤 행 — .listRow와 같은 패딩·구분선으로 실제 목록과 높이를 맞춘다
+.skeletonRow {
+  @include flex-row(14px);
+  align-items: center;
+  padding: var(--space-lg);
+
+  &:not(:last-child) {
+    border-bottom: 1px solid var(--grey-100);
+  }
+}
+
 .listRow {
   @include flex-between;
   padding: var(--space-lg);

@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Camera, RotateCcw } from "lucide-react";
 import { useRouter } from "next/navigation";
 
+import { Spinner } from "@/components/feedback/Spinner";
 import { ROUTES } from "@/constants/routes";
 import { ICON_SIZE } from "@/constants/style";
 import { storyQueries } from "@/features/stories/queries/storyQueries";
@@ -19,7 +20,6 @@ import { getFanCardDiff, getFanCardStyle } from "@/features/stories/utils/fanCar
 
 import styles from "./StoryBoardView.module.scss";
 
-const SKELETON_KEYS = ["skeleton-1", "skeleton-2", "skeleton-3"]; // 로딩 스켈레톤 카드 개수(3장)
 const CENTER_MOVE_MS = 450; // 카드가 보드 중앙으로 이동하는 시간(이후 상세 오버레이를 펼침)
 const BOARD_STORY_COUNT = 20; // 보드를 채우는 목표 스토리 수(부채꼴 5장 + 흩어진 카드 15장, 실 스토리 + 껍데기)
 const FAN_DRAG_STEP_PX = 130; // 부채꼴에서 카드 한 장을 넘기는 데 필요한 드래그 거리(px)
@@ -37,7 +37,7 @@ export const StoryBoardView = () => {
   const [detailId, setDetailId] = useState<string | null>(null); // 상세 오버레이로 펼쳐진 스토리 id(없으면 null)
 
   const router = useRouter();
-  const { currentWorkspace } = useCurrentWorkspace();
+  const { currentWorkspace, isPending: isWorkspacePending } = useCurrentWorkspace();
 
   const {
     data: stories = [],
@@ -45,6 +45,9 @@ export const StoryBoardView = () => {
     isError: isStoriesError,
     refetch: refetchStories,
   } = useQuery(storyQueries.list(currentWorkspace?.id ?? ""));
+
+  // 워크스페이스 조회 중엔 스토리 쿼리가 비활성이라(isPending=false) 함께 로딩으로 취급 — 진입 직후 흰 화면 방지
+  const isBoardLoading = isWorkspacePending || isStoriesPending;
 
   // 실 스토리 뒤에 부족분만큼 껍데기를 붙여 보드를 항상 BOARD_STORY_COUNT개로 채움(목록 화면에는 영향 없음)
   const boardStories = useMemo(
@@ -66,13 +69,13 @@ export const StoryBoardView = () => {
     collageRef,
     boardRef,
     smallItems.length,
-    !isStoriesPending && !isStoriesError // 카드 DOM이 렌더링된 뒤에 슬롯 배치가 실행되도록 전달
+    !isBoardLoading && !isStoriesError // 카드 DOM이 렌더링된 뒤에 슬롯 배치가 실행되도록 전달
   );
 
   // 언마운트 시 상세 열기 예약 타이머 정리
   useEffect(() => () => clearTimeout(detailTimerRef.current), []);
 
-  if (!currentWorkspace) return null;
+  if (!currentWorkspace && !isWorkspacePending) return null;
 
   const detailStory = detailId ? boardStories.find((story) => story.id === detailId) : null; // 상세 오버레이에 표시할 스토리
 
@@ -167,11 +170,9 @@ export const StoryBoardView = () => {
         />
 
         <div className={styles.centerContent}>
-          {isStoriesPending && (
-            <div className={styles.skeletonContainer}>
-              {SKELETON_KEYS.map((key) => (
-                <div key={key} className={styles.skeletonCard} aria-hidden="true" />
-              ))}
+          {isBoardLoading && (
+            <div className={styles.loadingState}>
+              <Spinner />
             </div>
           )}
 
@@ -186,7 +187,7 @@ export const StoryBoardView = () => {
             </div>
           )}
 
-          {!isStoriesPending && !isStoriesError && (
+          {!isBoardLoading && !isStoriesError && (
             <div className={styles.collageContainer} ref={collageRef}>
               <div
                 className={styles.bigStack}
