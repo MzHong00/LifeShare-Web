@@ -22,6 +22,7 @@ export const ChatView = () => {
     user?.id ?? ""
   );
   const { bottomRef } = useChatViewport(messages);
+  const isChatLoading = isWorkspacePending || isLoading; // 워크스페이스 조회 중엔 메시지 쿼리가 비활성이라 함께 로딩으로 취급
   // 나를 제외한 채팅 상대 전원 — memo로 참조를 고정해 ChatHeader의 memo가 유효하게 유지
   const partners = useMemo(
     () => currentWorkspace?.members?.filter((m) => m.id !== user?.id) ?? [],
@@ -46,14 +47,14 @@ export const ChatView = () => {
 
             <MessageList
               messages={messages}
-              isLoading={isLoading}
+              isLoading={isChatLoading}
               isError={isError}
               members={currentWorkspace?.members}
               bottomRef={bottomRef}
               className={styles.messages}
             />
 
-            {!isLoading && (
+            {!isChatLoading && (
               <div className={styles.inputArea}>
                 <ChatInput value={inputText} onChange={setInputText} onSend={handleSend} />
               </div>

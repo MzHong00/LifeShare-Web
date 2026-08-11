@@ -18,14 +18,14 @@
   --warning: var(--amber-500);
   --warning-light: var(--amber-100);
 
-  // 워크스페이스 테마 (기본값: 핑크) — primitive 참조
-  --theme-primary: #f43f5e; /* 테마 그라데이션 시작색 (기본 핑크 테마: 로즈) — 전역 --primary와 분리 */
-  --theme-primary-rgb: 244, 63, 94; /* --theme-primary 알파 변형용 RGB 채널 */
-  --theme-accent: var(--pink-500); /* 워크스페이스 테마 액센트 (기본: 핑크) */
-  --theme-accent-rgb: 236, 72, 153; /* --theme-accent 알파 변형용 RGB 채널 */
-  --theme-accent-light: var(--pink-100);
-  --theme-tertiary: #d946ef; /* 오로라 배경 3번째 광원 (기본 핑크 테마: 푸시아) */
-  --theme-tertiary-rgb: 217, 70, 239; /* --theme-tertiary 알파 변형용 RGB 채널 */
+  // 워크스페이스 테마 (기본값: 블루) — primitive 참조
+  --theme-primary: var(--primary); /* 테마 그라데이션 시작색 (기본 블루 테마: 코어 블루) */
+  --theme-primary-rgb: var(--primary-rgb); /* --theme-primary 알파 변형용 RGB 채널 */
+  --theme-accent: #38bdf8; /* 워크스페이스 테마 액센트 (기본: 스카이 블루) */
+  --theme-accent-rgb: 56, 189, 248; /* --theme-accent 알파 변형용 RGB 채널 */
+  --theme-accent-light: #e0f2fe;
+  --theme-tertiary: #0ea5e9; /* 오로라 배경 3번째 광원 (기본 블루 테마: 하늘색) */
+  --theme-tertiary-rgb: 14, 165, 233; /* --theme-tertiary 알파 변형용 RGB 채널 */
 
   // 용도별 그림자 — 중립 elevation 스케일(_tokens-layout.scss)과 값이 사실상 동일한 것만 별칭 처리,
   // 나머지는 컴포넌트별로 튜닝됐거나 브랜드 컬러가 섞인 고유값이라 유지
@@ -38,7 +38,7 @@
   --overlay-scrim: rgba(0, 0, 0, 0.5);
 }
 
-/* 워크스페이스 테마가 'pink'일 때: :root 기본값 명시적 재선언 — 상위 요소의 활성 테마 상속을 차단 */
+/* 워크스페이스 테마가 'pink'일 때: 핑크 오로라 콘셉트 — 로즈 → 핑크 + 푸시아 광원 */
 [data-theme="pink"] {
   --theme-primary: #f43f5e;
   --theme-primary-rgb: 244, 63, 94;

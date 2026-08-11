@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import { Heart, Users, ChevronRight } from "lucide-react";
 
 import { ProfileImage } from "@/components/ui/ProfileImage";
+import { Skeleton } from "@/components/feedback/Skeleton";
 import { ROUTES } from "@/constants/routes";
 import { useCurrentWorkspace } from "@/features/workspace/hooks/useCurrentWorkspace";
 import { ICON_SIZE, AVATAR_SIZE } from "@/constants/style";
@@ -11,6 +12,7 @@ import styles from "./ProfileWorkspaceSection.module.scss";
 
 import type { Workspace } from "@/features/workspace/types/workspace";
 
+const SKELETON_ROW_COUNT = 2; // 로딩 스켈레톤 행 개수
 const VISIBLE_WORKSPACE_COUNT = 3; // 목록에 노출할 최대 라이프룸 개수
 const VISIBLE_MEMBER_COUNT = 3; // 라이프룸 행에 노출할 최대 참여자 아바타 개수
 
@@ -25,7 +27,7 @@ const sortWithMainFirst = (workspaces: Workspace[], mainWorkspaceId?: string) =>
 /** 프로필 하단 "라이프룸" 섹션: 참여 중인 라이프룸 목록을 최대 3개 노출한다 */
 export const ProfileWorkspaceSection = () => {
   const router = useRouter();
-  const { workspaces, currentWorkspace } = useCurrentWorkspace();
+  const { workspaces, currentWorkspace, isPending } = useCurrentWorkspace();
 
   const visibleWorkspaces = sortWithMainFirst(workspaces, currentWorkspace?.id).slice(
     0,
@@ -45,9 +47,22 @@ export const ProfileWorkspaceSection = () => {
         </button>
       </div>
 
-      {visibleWorkspaces.length === 0 ? (
+      {isPending && (
+        <div className={styles.listCard}>
+          {Array.from({ length: SKELETON_ROW_COUNT }, (_, index) => (
+            <div key={index} className={styles.skeletonRow}>
+              <Skeleton width={38} height={38} radius={12} />
+              <Skeleton width="45%" height={16} />
+            </div>
+          ))}
+        </div>
+      )}
+
+      {!isPending && visibleWorkspaces.length === 0 && (
         <p className={styles.emptyText}>참여 중인 라이프룸이 없어요</p>
-      ) : (
+      )}
+
+      {!isPending && visibleWorkspaces.length > 0 && (
         <div className={styles.listCard}>
           {visibleWorkspaces.map((ws) => {
             const isMain = ws.id === currentWorkspace?.id;

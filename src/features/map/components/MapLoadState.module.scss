@@ -4,6 +4,7 @@
   flex: 1;
   height: 100%;
   @include flex-col-center(8px);
+  justify-content: center; // 세로 중앙 정렬 — 없으면 스피너가 지도 영역 최상단에 붙는다
   background-color: var(--grey-100);
 }
 
