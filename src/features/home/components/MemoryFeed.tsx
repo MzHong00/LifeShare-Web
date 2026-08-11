@@ -1,18 +1,17 @@
 "use client";
 import { useMemo } from "react";
-
 import { useQuery } from "@tanstack/react-query";
 
 import { authQueries } from "@/features/auth/queries/authQueries";
 import { useCurrentWorkspace } from "@/features/workspace/hooks/useCurrentWorkspace";
 import { ProfileImage } from "@/components/ui/ProfileImage";
-import { MemberListContent } from "./MemberListContent";
 import { modalActions } from "@/stores/useModalStore";
 import { AVATAR_SIZE } from "@/constants/style";
 
 import { ActivityDashboard } from "./ActivityDashboard";
 import { AnniversaryJourney } from "./AnniversaryJourney";
 import { AnniversarySpotlight } from "./AnniversarySpotlight";
+import { MemberListContent } from "./MemberListContent";
 import { UpcomingDigest } from "./UpcomingDigest";
 
 import styles from "./MemoryFeed.module.scss";

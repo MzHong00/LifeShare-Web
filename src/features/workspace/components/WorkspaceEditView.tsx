@@ -1,5 +1,4 @@
 "use client";
-import type { CSSProperties } from "react";
 import { useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { ChevronRight, Star, Trash2, User, UserPlus, UserMinus } from "lucide-react";
@@ -20,6 +19,8 @@ import { APP_WORKSPACE } from "@/constants/config";
 import { cx } from "@/utils/cn";
 import { ICON_SIZE, AVATAR_SIZE } from "@/constants/style";
 import styles from "./WorkspaceEditView.module.scss";
+
+import type { CSSProperties } from "react";
 
 const LAST_LEAVE_CONFIRM_PHRASE = "삭제하기"; // 마지막 멤버 나가기(=전체 삭제) 모달에서 그대로 입력해야 진행되는 확인 문구
 

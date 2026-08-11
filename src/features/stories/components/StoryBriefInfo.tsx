@@ -6,11 +6,13 @@ import { ICON_SIZE } from "@/constants/style";
 import styles from "./StoryBriefInfo.module.scss";
 
 import type { Story } from "@/features/stories/types/story";
+import type { CSSProperties } from "react";
 
 interface StoryBriefInfoProps {
   story: Story;
 }
 
+/** 스토리 상세 상단의 제목·날짜·경로 요약 정보 */
 export const StoryBriefInfo = ({ story }: StoryBriefInfoProps) => {
   return (
     <div className={styles.wrapper}>
@@ -22,7 +24,10 @@ export const StoryBriefInfo = ({ story }: StoryBriefInfoProps) => {
         </div>
         {story.path.length > 0 && (
           <div className={styles.metaItem}>
-            <div className={styles.pathDot} style={{ backgroundColor: story.pathColor }} />
+            <div
+              className={styles.pathDot}
+              style={{ "--path-color": story.pathColor } as CSSProperties}
+            />
             <span>경로 {story.path.length}개 지점</span>
           </div>
         )}

@@ -1,5 +1,7 @@
 "use client";
 import { create } from "zustand";
+import { useShallow } from "zustand/react/shallow";
+
 import type { ModalConfig } from "@/types/modal";
 
 interface ModalState {
@@ -8,8 +10,9 @@ interface ModalState {
 
 const modalStore = create<ModalState>()(() => ({ modal: null }));
 
-/** 모달 상태 셀렉터 훅 */
-export const useModalStore = <T>(selector: (state: ModalState) => T) => modalStore(selector);
+/** 모달 상태 셀렉터 훅 (useShallow 내장) */
+export const useModalStore = <T>(selector: (state: ModalState) => T) =>
+  modalStore(useShallow(selector));
 
 export const modalActions = {
   /** 모달을 띄운다 */

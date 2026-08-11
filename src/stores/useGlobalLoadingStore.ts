@@ -1,5 +1,6 @@
 "use client";
 import { create } from "zustand";
+import { useShallow } from "zustand/react/shallow";
 
 interface GlobalLoadingState {
   isLoading: boolean;
@@ -11,9 +12,9 @@ const globalLoadingStore = create<GlobalLoadingState>()(() => ({
   message: null,
 }));
 
-/** 전역 로딩 상태 셀렉터 훅 */
+/** 전역 로딩 상태 셀렉터 훅 (useShallow 내장) */
 export const useGlobalLoadingStore = <T>(selector: (state: GlobalLoadingState) => T) =>
-  globalLoadingStore(selector);
+  globalLoadingStore(useShallow(selector));
 
 export const globalLoadingActions = {
   /** 전역 로딩 오버레이를 표시한다 */

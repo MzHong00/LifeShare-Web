@@ -16,6 +16,7 @@ interface StoryPathFieldProps {
   onClear: () => void;
 }
 
+/** 스토리 작성 폼의 경로 입력 필드(미설정 시 안내, 설정 시 경로 미리보기) */
 export const StoryPathField = ({ path, pathColor, onEdit, onClear }: StoryPathFieldProps) => {
   if (path.length === 0) {
     return (

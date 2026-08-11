@@ -8,7 +8,8 @@ describe("Skeleton", () => {
     const { container } = render(<Skeleton />);
     const el = container.firstChild as HTMLElement;
 
-    expect(el).toHaveStyle({ width: "100%", borderRadius: "8px" });
+    expect(el.style.getPropertyValue("--skeleton-width")).toBe("100%");
+    expect(el.style.getPropertyValue("--skeleton-radius")).toBe("8px");
   });
 
   it("aria-hidden 속성이 적용된다", () => {
@@ -22,7 +23,9 @@ describe("Skeleton", () => {
     const { container } = render(<Skeleton width={120} height={40} radius={4} />);
     const el = container.firstChild as HTMLElement;
 
-    expect(el).toHaveStyle({ width: "120px", height: "40px", borderRadius: "4px" });
+    expect(el.style.getPropertyValue("--skeleton-width")).toBe("120px");
+    expect(el.style.getPropertyValue("--skeleton-height")).toBe("40px");
+    expect(el.style.getPropertyValue("--skeleton-radius")).toBe("4px");
   });
 
   it("className을 전달하면 병합된다", () => {

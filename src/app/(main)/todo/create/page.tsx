@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+
 import { TodoCreateView } from "@/features/todo/components/TodoCreateView";
 import { PAGE_TITLES } from "@/constants/seo";
 

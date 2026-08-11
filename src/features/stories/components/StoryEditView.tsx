@@ -15,6 +15,7 @@ const PathPickerMap = dynamic(
   { ssr: false }
 );
 
+/** 스토리 생성/수정 화면(사진·제목·내용·날짜·경로 입력) */
 export const StoryEditView = () => {
   const {
     isEditMode,

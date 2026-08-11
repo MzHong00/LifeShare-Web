@@ -12,6 +12,7 @@ import { ICON_SIZE } from "@/constants/style";
 import styles from "./StoryDetailContent.module.scss";
 
 import type { Story } from "@/features/stories/types/story";
+import type { CSSProperties } from "react";
 
 interface StoryDetailContentProps {
   story: Story;
@@ -58,7 +59,10 @@ export const StoryDetailContent = ({ story }: StoryDetailContentProps) => {
           {formatDate(story.date) && <span className={styles.date}>{formatDate(story.date)}</span>}
           {story.path.length > 0 && (
             <span className={styles.pathMeta}>
-              <span className={styles.pathDot} style={{ backgroundColor: story.pathColor }} />
+              <span
+                className={styles.pathDot}
+                style={{ "--path-color": story.pathColor } as CSSProperties}
+              />
               경로 {story.path.length}개 지점
             </span>
           )}

@@ -3,15 +3,15 @@ import { Users, Check } from "lucide-react";
 
 import { ProfileImage } from "@/components/ui/ProfileImage";
 import { cx } from "@/utils/cn";
+import { ICON_SIZE, AVATAR_SIZE } from "@/constants/style";
 
 import styles from "./AssigneePicker.module.scss";
 
 import type { WorkspaceMember } from "@/features/workspace/types/workspace";
-import { ICON_SIZE, AVATAR_SIZE } from "@/constants/style";
 
 interface AssigneePickerProps {
-  members: WorkspaceMember[];
-  assigneeId?: string;
+  members: WorkspaceMember[]; // 담당자 선택지로 표시할 워크스페이스 멤버 목록
+  assigneeId?: string; // 현재 선택된 담당자 id (미지정 시 공통)
   /** 담당자 선택 핸들러. 공통(미지정) 선택 시 undefined를 전달한다 */
   onSelect: (assigneeId: string | undefined) => void;
 }

@@ -2,6 +2,7 @@ import { AppHeader } from "@/components/layout/AppHeader";
 import { APP_BRAND_NAME } from "@/constants/config";
 import styles from "./PrivacyView.module.scss";
 
+/** 개인정보 처리방침 안내 화면 */
 export const PrivacyView = () => {
   return (
     <div className={styles.page}>

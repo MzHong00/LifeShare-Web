@@ -27,12 +27,16 @@ export function useQueryParams() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  // 현재 searchParams의 수정 가능한 복사본을 만든다.
-  // 메모된 인스턴스를 공유·변조하면 URL 미반영 시 상태가 오염되므로 액션마다 새로 생성한다.
+  /**
+   * 현재 searchParams의 수정 가능한 복사본을 만든다.
+   * 메모된 인스턴스를 공유·변조하면 URL 미반영 시 상태가 오염되므로 액션마다 새로 생성한다.
+   */
   const clone = useCallback(() => new URLSearchParams(searchParams.toString()), [searchParams]);
 
-  // params 변경을 URL에 반영한다. replace를 사용해 히스토리 스택을 오염시키지 않는다.
-  // scroll: false로 스크롤 위치를 유지한다.
+  /**
+   * params 변경을 URL에 반영한다. replace를 사용해 히스토리 스택을 오염시키지 않는다.
+   * scroll: false로 스크롤 위치를 유지한다.
+   */
   const push = useCallback(
     (updated: URLSearchParams) => {
       router.replace(`?${updated.toString()}`, { scroll: false });
@@ -40,7 +44,7 @@ export function useQueryParams() {
     [router]
   );
 
-  // 특정 파라미터를 단일 값으로 덮어쓴다.
+  /** 특정 파라미터를 단일 값으로 덮어쓴다. */
   const set = useCallback(
     (name: string, value: string) => {
       const params = clone();
@@ -50,8 +54,10 @@ export function useQueryParams() {
     [clone, push]
   );
 
-  // 다중 값 파라미터에서 특정 값을 토글한다.
-  // 이미 존재하면 제거, 없으면 추가한다.
+  /**
+   * 다중 값 파라미터에서 특정 값을 토글한다.
+   * 이미 존재하면 제거, 없으면 추가한다.
+   */
   const toggle = useCallback(
     (name: string, value: string) => {
       const params = clone();
@@ -66,7 +72,7 @@ export function useQueryParams() {
     [clone, push]
   );
 
-  // 파라미터를 제거한다. value 미전달 시 해당 name의 모든 값을 제거한다.
+  /** 파라미터를 제거한다. value 미전달 시 해당 name의 모든 값을 제거한다. */
   const remove = useCallback(
     (name: string, value?: string) => {
       const params = clone();
@@ -76,7 +82,7 @@ export function useQueryParams() {
     [clone, push]
   );
 
-  // setParams 객체의 레퍼런스를 안정적으로 유지해 불필요한 리렌더를 방지한다.
+  /** setParams 객체의 레퍼런스를 안정적으로 유지해 불필요한 리렌더를 방지한다. */
   const setParams = useMemo<QueryParamActions>(
     () => ({ set, toggle, delete: remove }),
     [set, toggle, remove]

@@ -14,6 +14,7 @@ import { ICON_SIZE } from "@/constants/style";
 
 import styles from "./StoriesView.module.scss";
 
+/** 스토리 목록 화면(검색·2단 지그재그 그리드) */
 export const StoriesView = () => {
   const router = useRouter();
   const [params, setParams] = useQueryParams();

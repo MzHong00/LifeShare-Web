@@ -4,10 +4,10 @@ import { Heart, Users } from "lucide-react";
 import { APP_WORKSPACE } from "@/constants/config";
 import { cx } from "@/utils/cn";
 import { Checkbox } from "@/components/ui/Checkbox";
+import { ICON_SIZE } from "@/constants/style";
 import styles from "./WorkspaceSetupView.module.scss";
 
 import type { RoomType } from "@/features/workspace/types/workspace";
-import { ICON_SIZE } from "@/constants/style";
 
 interface SetupCreateStepProps {
   subStep: "type" | "name"; // 유형 선택 / 이름 설정 세부 단계

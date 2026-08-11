@@ -36,6 +36,7 @@
   width: 10px;
   height: 10px;
   border-radius: var(--radius-pill);
+  background-color: var(--path-color);
   flex-shrink: 0;
 }
 
@@ -110,9 +111,13 @@
 }
 
 .trackDot {
+  width: var(--dot-size);
+  height: var(--dot-size);
   border-radius: 9999px;
   flex-shrink: 0;
-  background-color: var(--grey-300);
+  background-color: var(--dot-bg);
+  outline: var(--dot-outline);
+  outline-offset: 2px;
   transition: background-color 0.15s;
 }
 
@@ -120,7 +125,7 @@
   width: 1.5px;
   flex: 1;
   margin-top: 3px;
-  background-color: var(--grey-200);
+  background-color: var(--line-bg);
   min-height: 12px;
 }
 
@@ -134,7 +139,7 @@
 .waypointLabel {
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
-  color: var(--grey-700);
+  color: var(--label-color);
   line-height: 1.2;
 }
 

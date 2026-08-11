@@ -6,16 +6,17 @@ import { ProfileImage } from "@/components/ui/ProfileImage";
 import { COLORS } from "@/constants/theme";
 import { getRelativeDateLabel, isPastDate, isToday } from "@/utils/date";
 import { cx } from "@/utils/cn";
+import { ICON_SIZE, AVATAR_SIZE } from "@/constants/style";
 
 import styles from "./TodoItem.module.scss";
 
+import type { CSSProperties } from "react";
 import type { Todo } from "@/features/todo/types/todo";
 import type { WorkspaceMember } from "@/features/workspace/types/workspace";
-import { ICON_SIZE, AVATAR_SIZE } from "@/constants/style";
 
 interface TodoItemProps {
-  item: Todo;
-  assignee?: WorkspaceMember;
+  item: Todo; // 표시할 할 일 항목
+  assignee?: WorkspaceMember; // 담당자로 지정된 워크스페이스 멤버
   /** 완료 토글 핸들러 */
   onToggle: (id: string) => void;
   /** 항목 클릭(상세/수정 이동) 핸들러 */
@@ -39,7 +40,10 @@ export const TodoItem = memo(({ item, assignee, onToggle, onPress }: TodoItemPro
         {item.isCompleted ? (
           <CheckCircle2 size={ICON_SIZE.xl} color={markerColor} fill={`${markerColor}40`} />
         ) : (
-          <div className={styles.circle} style={{ borderColor: item.color || COLORS.border }} />
+          <div
+            className={styles.circle}
+            style={{ "--circle-border-color": item.color || COLORS.border } as CSSProperties}
+          />
         )}
       </button>
 

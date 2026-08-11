@@ -1,5 +1,7 @@
 "use client";
 import { create } from "zustand";
+import { useShallow } from "zustand/react/shallow";
+
 import type { ToastType } from "@/types/toast";
 
 interface ToastItem {
@@ -18,8 +20,9 @@ const toastStore = create<ToastState>()(() => ({ toast: null }));
 
 let hideTimer: ReturnType<typeof setTimeout> | null = null; // 자동 제거 타이머(새 토스트가 뜨면 이전 타이머를 취소하고 갱신)
 
-/** 토스트 상태 셀렉터 훅 */
-export const useToastStore = <T>(selector: (state: ToastState) => T) => toastStore(selector);
+/** 토스트 상태 셀렉터 훅 (useShallow 내장) */
+export const useToastStore = <T>(selector: (state: ToastState) => T) =>
+  toastStore(useShallow(selector));
 
 export const toastActions = {
   /** 토스트를 표시한다. 이전 토스트가 있다면 즉시 교체하고 TOAST_DURATION_MS 후 자동 제거한다 */

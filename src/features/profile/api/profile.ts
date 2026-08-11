@@ -1,6 +1,7 @@
 import { bffFetch } from "@/lib/api/bffClient";
 
 import type { User } from "@/types/user";
+import type { ProfileUpdateRequestDto } from "@/server/domain/profile/dto";
 
 export const profileApi = {
   // 비로그인 등으로 조회에 실패하면 null을 반환한다 (재시도로 인한 불필요한 요청 방지, BFF 경유)
@@ -17,7 +18,7 @@ export const profileApi = {
     bffFetch<void>("/api/profile", "프로필 초기화에 실패했습니다.", { method: "POST" }),
 
   // 이름·프로필 이미지를 영속화하고, 참여 중인 모든 라이프룸의 멤버 정보에도 동기화한다 (BFF 경유)
-  updateProfile: async (updates: { name?: string; profileImage?: string }): Promise<void> =>
+  updateProfile: async (updates: ProfileUpdateRequestDto): Promise<void> =>
     bffFetch<void>("/api/profile", "프로필 수정에 실패했습니다.", {
       method: "PATCH",
       body: JSON.stringify(updates),

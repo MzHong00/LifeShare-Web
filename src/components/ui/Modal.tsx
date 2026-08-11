@@ -7,6 +7,11 @@ import styles from "./Modal.module.scss";
 
 import type { ModalConfig } from "@/types/modal";
 
+interface ModalContentProps {
+  modal: ModalConfig;
+}
+
+/** 전역 모달 스토어를 구독해 모달을 렌더링한다 */
 export const Modal = () => {
   const modal = useModalStore((s) => s.modal);
 
@@ -16,10 +21,7 @@ export const Modal = () => {
   return <ModalContent modal={modal} />;
 };
 
-interface ModalContentProps {
-  modal: ModalConfig;
-}
-
+/** 모달 본문 UI(제목·메시지·커스텀 콘텐츠·확인 문구 입력·액션 버튼) */
 const ModalContent = ({ modal }: ModalContentProps) => {
   const [typedPhrase, setTypedPhrase] = useState(""); // confirmPhrase 확인용 입력값
 
@@ -42,11 +44,11 @@ const ModalContent = ({ modal }: ModalContentProps) => {
       <div className={styles.backdrop} onClick={handleCancel} />
       <div className={styles.container}>
         <div className={styles.body}>
-          {modal.title && <h3 className={styles.title}>{modal.title}</h3>}
-          {modal.message && <p className={styles.message}>{modal.message}</p>}
-          {modal.content && <div className={styles.content}>{modal.content}</div>}
+          {!!modal.title && <h3 className={styles.title}>{modal.title}</h3>}
+          {!!modal.message && <p className={styles.message}>{modal.message}</p>}
+          {!!modal.content && <div className={styles.content}>{modal.content}</div>}
 
-          {modal.confirmPhrase && (
+          {!!modal.confirmPhrase && (
             <div className={styles.phraseField}>
               {/* 문구 뒤에 "문구를"이 붙어 조사가 고정되므로 어떤 확인 문구를 넣어도 문장이 어색해지지 않는다 */}
               <p className={styles.phraseHint}>

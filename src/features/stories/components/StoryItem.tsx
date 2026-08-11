@@ -8,6 +8,7 @@ import { ICON_SIZE } from "@/constants/style";
 import styles from "./StoryItem.module.scss";
 
 import type { Story } from "@/features/stories/types/story";
+import type { CSSProperties } from "react";
 
 interface StoryItemProps {
   story: Story;
@@ -25,7 +26,7 @@ export const StoryItem = ({ story, onPress }: StoryItemProps) => {
           styles.thumbnail,
           hasThumbnail ? styles.thumbnailTall : styles.thumbnailShort
         )}
-        style={{ backgroundColor: `${story.pathColor}20` }}
+        style={{ "--path-color": story.pathColor } as CSSProperties}
       >
         {hasThumbnail ? (
           <Image
@@ -36,7 +37,7 @@ export const StoryItem = ({ story, onPress }: StoryItemProps) => {
             className={styles.thumbnailImage}
           />
         ) : (
-          <MapPin size={ICON_SIZE["2xl"]} style={{ color: story.pathColor }} />
+          <MapPin size={ICON_SIZE["2xl"]} className={styles.thumbnailIcon} />
         )}
       </div>
       <div className={styles.info}>

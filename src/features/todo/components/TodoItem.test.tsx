@@ -88,7 +88,7 @@ describe("TodoItem", () => {
     const { container } = renderItem({ color: "#F04452" });
     const circle = container.querySelector<HTMLElement>("[style*='border-color']");
 
-    expect(circle?.style.borderColor).toBe("rgb(240, 68, 82)");
+    expect(circle?.style.getPropertyValue("--circle-border-color")).toBe("#F04452");
   });
 
   it("담당자가 있으면 담당자 이니셜을 렌더링한다", () => {

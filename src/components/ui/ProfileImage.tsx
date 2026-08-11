@@ -8,6 +8,8 @@ import { useResetOnChange } from "@/hooks/useResetOnChange";
 
 import styles from "./ProfileImage.module.scss";
 
+import type { CSSProperties } from "react";
+
 interface ProfileImageProps {
   uri?: string;
   name: string;
@@ -17,10 +19,13 @@ interface ProfileImageProps {
 
 // 이름 첫 글자의 char code로 색상을 결정해 동일 사용자는 항상 같은 색을 갖는다
 const BG_COLORS = ["#3182F6", "#10b981", "#a855f7", "#f97316", "#ec4899", "#6366f1"];
+const INITIAL_FONT_RATIO = 0.4; // 아바타 크기 대비 이니셜 폰트 크기 비율
 
-/** 사용자 프로필 이미지(로딩 스켈레톤·에러 시 이니셜 폴백 포함) */
-// 멤버 아바타 스택·채팅 버블 등 목록에서 반복 렌더링되므로, 부모(워크스페이스 쿼리 등) 리렌더 시에도
-// uri·name·size·className이 그대로면 재계산을 건너뛴다
+/**
+ * 사용자 프로필 이미지(로딩 스켈레톤·에러 시 이니셜 폴백 포함)
+ * 멤버 아바타 스택·채팅 버블 등 목록에서 반복 렌더링되므로, 부모(워크스페이스 쿼리 등) 리렌더 시에도
+ * uri·name·size·className이 그대로면 재계산을 건너뛴다
+ */
 const ProfileImageComponent = ({ uri, name, size = 40, className }: ProfileImageProps) => {
   // 이미지 로딩 상태: uri가 있으면 처음엔 로딩 중으로 시작한다
   const [isLoading, setIsLoading] = useState(!!uri);
@@ -41,7 +46,10 @@ const ProfileImageComponent = ({ uri, name, size = 40, className }: ProfileImage
 
   if (uri && !isError) {
     return (
-      <div className={cx(styles.wrapper, className)} style={{ width: size, height: size }}>
+      <div
+        className={cx(styles.wrapper, className)}
+        style={{ "--profile-image-size": `${size}px` } as CSSProperties}
+      >
         {/* 이미지가 로드되기 전까지 shimmer 스켈레톤을 오버레이한다 */}
         {isLoading && <div className={styles.skeleton} />}
         <Image
@@ -64,11 +72,15 @@ const ProfileImageComponent = ({ uri, name, size = 40, className }: ProfileImage
   return (
     <div
       className={cx(styles.fallback, className)}
-      style={{ width: size, height: size, backgroundColor: bgColor }}
+      style={
+        {
+          "--profile-image-size": `${size}px`,
+          "--profile-image-bg": bgColor,
+          "--profile-image-initial-size": `${size * INITIAL_FONT_RATIO}px`,
+        } as CSSProperties
+      }
     >
-      <span className={styles.initial} style={{ fontSize: size * 0.4 }}>
-        {initial}
-      </span>
+      <span className={styles.initial}>{initial}</span>
     </div>
   );
 };

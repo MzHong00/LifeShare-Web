@@ -6,6 +6,7 @@ import { useCurrentWorkspace } from "@/features/workspace/hooks/useCurrentWorksp
 import { MemoryFeed } from "@/features/home/components/MemoryFeed";
 import { HomeViewSkeleton } from "@/features/home/components/HomeViewSkeleton";
 import { ROUTES } from "@/constants/routes";
+
 import styles from "./HomeView.module.scss";
 
 export const HomeView = () => {

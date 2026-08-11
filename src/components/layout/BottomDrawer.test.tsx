@@ -22,7 +22,7 @@ describe("BottomDrawer", () => {
     );
     const drawer = container.firstChild as HTMLElement;
 
-    expect(drawer).toHaveStyle({ height: "50px" });
+    expect(drawer.style.getPropertyValue("--drawer-height")).toBe("50px");
   });
 
   it("bottomOffset을 전달하면 해당 값이 적용된다", () => {
@@ -33,7 +33,7 @@ describe("BottomDrawer", () => {
     );
     const drawer = container.firstChild as HTMLElement;
 
-    expect(drawer).toHaveStyle({ bottom: "20px" });
+    expect(drawer.style.getPropertyValue("--drawer-bottom-offset")).toBe("20px");
   });
 
   it("핸들을 드래그하면 높이가 변경된다", () => {
@@ -48,7 +48,7 @@ describe("BottomDrawer", () => {
     fireEvent.mouseDown(handle, { clientY: 500 });
     fireEvent.mouseMove(document, { clientY: 300 });
 
-    expect(drawer.style.height).not.toBe("40px");
+    expect(drawer.style.getPropertyValue("--drawer-height")).not.toBe("40px");
 
     fireEvent.mouseUp(document);
   });
@@ -66,6 +66,6 @@ describe("BottomDrawer", () => {
     fireEvent.mouseMove(document, { clientY: 500 - window.innerHeight * 0.45 });
     fireEvent.mouseUp(document);
 
-    expect(drawer.style.height).toBe(`${window.innerHeight * 0.45}px`);
+    expect(drawer.style.getPropertyValue("--drawer-height")).toBe(`${window.innerHeight * 0.45}px`);
   });
 });

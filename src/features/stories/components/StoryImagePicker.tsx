@@ -14,6 +14,7 @@ interface StoryImagePickerProps {
   onRemove: () => void;
 }
 
+/** 스토리 작성 폼의 사진 선택/미리보기/제거 UI */
 export const StoryImagePicker = ({
   previewUrl,
   fileInputRef,

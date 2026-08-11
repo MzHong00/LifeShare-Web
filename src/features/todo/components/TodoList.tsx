@@ -24,8 +24,8 @@ const FILTER_LABELS: Record<Filter, string> = {
 const SKELETON_ROW_KEYS = ["todo-skeleton-1", "todo-skeleton-2", "todo-skeleton-3"]; // 로딩 스켈레톤 행 개수(3개)
 
 interface TodoListProps {
-  todos: Todo[];
-  currentWorkspace: Workspace | null;
+  todos: Todo[]; // 표시할 전체 할 일 목록
+  currentWorkspace: Workspace | null; // 담당자 정보를 조회할 현재 워크스페이스
   // 캘린더처럼 특정 날짜 기준으로 추가할 때 initialDate를 넘길 수 있음
   initialDate?: string;
   // 현재 활성 필터. 부모(페이지)에서 URL 쿼리스트링과 동기화해 관리한다.

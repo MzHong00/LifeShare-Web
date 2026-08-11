@@ -11,11 +11,11 @@ import { useQueryParams } from "@/hooks/useQueryParams";
 import { AppHeader } from "@/components/layout/AppHeader";
 import { TodoList } from "@/features/todo/components/TodoList";
 import { FILTERS } from "@/features/todo/hooks/useFilteredTodos";
+import { ICON_SIZE } from "@/constants/style";
 
 import styles from "./TodoView.module.scss";
 
 import type { Filter } from "@/features/todo/hooks/useFilteredTodos";
-import { ICON_SIZE } from "@/constants/style";
 
 export const TodoView = () => {
   const router = useRouter();

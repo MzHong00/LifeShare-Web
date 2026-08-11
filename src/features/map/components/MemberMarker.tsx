@@ -1,8 +1,8 @@
 import { memo } from "react";
-
 import { OverlayView } from "@react-google-maps/api";
 import Image from "next/image";
 
+import { AVATAR_SIZE } from "@/constants/style";
 import { cx } from "@/utils/cn";
 import { getInitials } from "@/utils/format";
 
@@ -28,8 +28,8 @@ const MemberMarkerComponent = ({ member, lat, lng, isMe, onClick }: MemberMarker
             <Image
               src={member.avatar}
               alt={member.name}
-              width={48}
-              height={48}
+              width={AVATAR_SIZE.lg}
+              height={AVATAR_SIZE.lg}
               className={styles.image}
             />
           ) : (

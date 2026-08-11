@@ -1,6 +1,7 @@
 "use client";
 import { useCallback, useRef } from "react";
 import { useJsApiLoader } from "@react-google-maps/api";
+
 import { ENV } from "@/constants/config";
 
 const API_KEY_PLACEHOLDER = "your_google_maps_api_key_here"; // .env 미설정 시 기본 placeholder 값
@@ -18,7 +19,7 @@ interface UseGoogleMapResult {
  * Google Maps JS API 로더와 Map 인스턴스 ref를 캡슐화한다.
  * API 키 부재·로드 에러·로딩·완료를 단일 status로 합쳐 컴포넌트는 선언적으로 분기만 한다.
  */
-export function useGoogleMap(): UseGoogleMapResult {
+export const useGoogleMap = (): UseGoogleMapResult => {
   const { isLoaded, loadError } = useJsApiLoader({
     googleMapsApiKey: ENV.GOOGLE_MAPS_API_KEY,
   });
@@ -47,4 +48,4 @@ export function useGoogleMap(): UseGoogleMapResult {
     mapRef,
     onMapLoad,
   };
-}
+};

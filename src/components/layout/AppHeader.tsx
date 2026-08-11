@@ -16,6 +16,7 @@ interface AppHeaderProps {
   className?: string; // 페이지별 배경 등 스타일 확장용 (기본은 투명)
 }
 
+/** 페이지 상단 공통 헤더: 뒤로가기 버튼 + 제목 + 우측 커스텀 요소 */
 export const AppHeader = ({
   title,
   isBackVisible = true,
@@ -37,7 +38,7 @@ export const AppHeader = ({
         <div className={styles.placeholder} />
       )}
 
-      {title && <h1 className={styles.title}>{title}</h1>}
+      {!!title && <h1 className={styles.title}>{title}</h1>}
 
       <div className={styles.right}>{rightElement}</div>
     </header>

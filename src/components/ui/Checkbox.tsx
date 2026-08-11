@@ -15,6 +15,7 @@ interface CheckboxProps {
   className?: string;
 }
 
+/** 라벨이 있는 체크박스 버튼 */
 export const Checkbox = ({ label, isChecked, onPress, isDisabled, className }: CheckboxProps) => {
   return (
     <button

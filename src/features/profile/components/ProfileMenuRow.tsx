@@ -5,7 +5,7 @@ import { ChevronRight } from "lucide-react";
 import { ICON_SIZE } from "@/constants/style";
 import { cx } from "@/utils/cn";
 
-import styles from "./ProfileView.module.scss";
+import styles from "./ProfileMenuRow.module.scss";
 
 import type { ProfileMenuItem } from "@/features/profile/constants/profileMenu";
 

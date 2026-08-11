@@ -37,7 +37,7 @@ interface GoogleMapViewProps {
   onStoryClick: (storyId: string) => void;
 }
 
-export function GoogleMapView({
+export const GoogleMapView = ({
   center,
   focusLocation,
   myUserId,
@@ -48,7 +48,7 @@ export function GoogleMapView({
   selectedStoryId,
   onMemberClick,
   onStoryClick,
-}: GoogleMapViewProps) {
+}: GoogleMapViewProps) => {
   const { status, loadErrorMessage, mapRef, onMapLoad } = useGoogleMap();
 
   // 경로가 2개 이상인 스토리만 폴리라인으로 표시
@@ -117,4 +117,4 @@ export function GoogleMapView({
       </GoogleMap>
     </div>
   );
-}
+};

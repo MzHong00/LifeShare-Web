@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+
 import { WorkspaceEditView } from "@/features/workspace/components/WorkspaceEditView";
 import { PAGE_TITLES } from "@/constants/seo";
 

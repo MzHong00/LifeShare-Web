@@ -57,14 +57,14 @@ describe("CalendarDayCell", () => {
     const { container } = renderCell({ dotColors: ["rgb(255, 0, 0)"] });
     const dot = container.querySelectorAll("div")[1] as HTMLElement;
 
-    expect(dot.style.backgroundColor).toBe("rgb(255, 0, 0)");
+    expect(dot.style.getPropertyValue("--dot-color")).toBe("rgb(255, 0, 0)");
   });
 
   it("선택된 셀의 점에는 인라인 색상을 입히지 않는다", () => {
     const { container } = renderCell({ isSelected: true, dotColors: ["rgb(255, 0, 0)"] });
     const dot = container.querySelectorAll("div")[1] as HTMLElement;
 
-    expect(dot.style.backgroundColor).toBe("");
+    expect(dot.style.getPropertyValue("--dot-color")).toBe("");
   });
 
   it("선택된 셀과 선택되지 않은 셀의 숫자 클래스가 다르다", () => {

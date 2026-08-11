@@ -22,7 +22,7 @@
   width: 26px;
   height: 26px;
   border-radius: var(--radius-pill);
-  border: 2px solid;
+  border: 2px solid var(--circle-border-color);
 }
 
 .contentButton {

@@ -25,13 +25,14 @@ const FORMAT_ERROR_MESSAGE = "초대 코드 8자리를 정확히 입력해주세
 /** 초대 코드를 직접 입력해 라이프룸에 참여하는 화면 (링크 없이 코드만 받은 경우의 진입점) */
 export const WorkspaceCodeJoinView = () => {
   const router = useRouter();
-  const { data: user } = useQuery(authQueries.user());
-  const { workspaces } = useCurrentWorkspace();
-  const joinWorkspace = useJoinWorkspaceMutation();
 
   const [inputValue, setInputValue] = useState(""); // 입력창에 보이는 값 (하이픈 포함)
   const [submittedCode, setSubmittedCode] = useState(""); // 조회를 확정한 정규화 코드
   const [errorMessage, setErrorMessage] = useState(""); // 입력창 아래 인라인 에러
+
+  const { data: user } = useQuery(authQueries.user());
+  const { workspaces } = useCurrentWorkspace();
+  const joinWorkspace = useJoinWorkspaceMutation();
 
   const {
     data: workspace,

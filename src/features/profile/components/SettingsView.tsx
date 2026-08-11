@@ -38,6 +38,7 @@ const SETTING_ITEMS: SettingItem[] = [
   },
 ];
 
+/** 프로필 설정 화면(사진·이름 수정, 알림/위치 설정, 로그아웃) */
 export const SettingsView = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const nameInputRef = useRef<HTMLInputElement>(null);

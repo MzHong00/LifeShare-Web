@@ -1,0 +1,51 @@
+@use "styles/mixins" as *;
+
+.listRow {
+  @include flex-between;
+  padding: var(--space-lg);
+  width: 100%;
+  @include ripple-effect;
+
+  &:not(:last-child) {
+    border-bottom: 1px solid var(--grey-100);
+  }
+}
+
+.listLeft {
+  @include flex-row(14px);
+}
+
+.listIconWrap {
+  @include icon-box(38px, 12px);
+
+  &.blue {
+    background-color: var(--primary-light);
+    color: var(--primary);
+  }
+
+  &.green {
+    background-color: var(--success-light);
+    color: var(--success);
+  }
+
+  &.grey {
+    background-color: var(--grey-100);
+    color: var(--grey-700);
+  }
+}
+
+.listTitle {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--grey-900);
+}
+
+.listRight {
+  @include flex-row(6px);
+}
+
+.listRightText {
+  font-size: var(--font-size-sm);
+  color: var(--grey-400);
+  font-weight: var(--font-weight-medium);
+}

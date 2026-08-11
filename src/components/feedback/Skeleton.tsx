@@ -2,6 +2,8 @@ import { cx } from "@/utils/cn";
 
 import styles from "./Skeleton.module.scss";
 
+import type { CSSProperties } from "react";
+
 interface SkeletonProps {
   width?: string | number; // 블록 너비 (기본: 100%)
   height?: string | number; // 블록 높이
@@ -13,7 +15,13 @@ interface SkeletonProps {
 export const Skeleton = ({ width = "100%", height, radius = 8, className }: SkeletonProps) => (
   <div
     className={cx(styles.skeleton, className)}
-    style={{ width, height, borderRadius: radius }}
+    style={
+      {
+        "--skeleton-width": typeof width === "number" ? `${width}px` : width,
+        "--skeleton-height": typeof height === "number" ? `${height}px` : height,
+        "--skeleton-radius": typeof radius === "number" ? `${radius}px` : radius,
+      } as CSSProperties
+    }
     aria-hidden="true"
   />
 );

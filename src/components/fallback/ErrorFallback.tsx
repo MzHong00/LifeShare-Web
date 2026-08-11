@@ -1,11 +1,13 @@
 import { AlertCircle } from "lucide-react";
 
 import { ICON_SIZE } from "@/constants/style";
+
 import styles from "./ErrorFallback.module.scss";
 
 interface ErrorFallbackProps {
   desc?: string; // 에러 메시지
-  onRetry: () => void; // 재시도(reset) 콜백
+  /** 재시도(reset) 콜백 */
+  onRetry: () => void;
 }
 
 /** 페이지 단위 Error Boundary(error.tsx)에서 공통으로 쓰는 에러 폴백 UI */

@@ -10,7 +10,9 @@ interface MemberListContentProps {
   members: WorkspaceMember[];
 }
 
-// 참여자 목록 모달에 표시되는 멤버 리스트 UI
+/**
+ * 참여자 목록 모달에 표시되는 멤버 리스트 UI
+ */
 export const MemberListContent = ({ members }: MemberListContentProps) => {
   if (members.length === 0) {
     return <p className={styles.empty}>참여자가 없어요</p>;

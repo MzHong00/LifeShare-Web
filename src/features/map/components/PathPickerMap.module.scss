@@ -15,6 +15,22 @@
   inset: 0;
 }
 
+// ─── 경로 정점 마커 ───────────────────────────────────────────────────────────
+
+.vertexWrapper {
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.vertexDot {
+  width: var(--dot-size);
+  height: var(--dot-size);
+  border-radius: 50%;
+  background-color: var(--dot-bg);
+  border: var(--dot-border-width) solid var(--dot-border-color);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
 // ─── X 닫기 버튼 (좌상단) ────────────────────────────────────────────────────
 
 .closeBtn {
@@ -137,12 +153,14 @@
 .count {
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-bold);
+  color: var(--path-color);
 }
 
 .confirmBtn {
   height: 36px;
   padding: 0 18px;
   border-radius: 10px;
+  background-color: var(--path-color);
   color: var(--white);
   font-size: var(--font-size-md);
   font-weight: var(--font-weight-bold);
@@ -174,6 +192,7 @@
 .colorDot {
   @include icon-box(24px);
   flex-shrink: 0;
+  background-color: var(--dot-color);
   transition: transform 0.12s;
 
   &:active {

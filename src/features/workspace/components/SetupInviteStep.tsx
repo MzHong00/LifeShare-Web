@@ -1,10 +1,10 @@
 "use client";
 import { UserPlus, Copy, Link2 } from "lucide-react";
 
+import { ICON_SIZE } from "@/constants/style";
 import styles from "./WorkspaceSetupView.module.scss";
 
 import type { RoomType } from "@/features/workspace/types/workspace";
-import { ICON_SIZE } from "@/constants/style";
 
 interface SetupInviteStepProps {
   workspaceName: string; // 생성된 워크스페이스 이름

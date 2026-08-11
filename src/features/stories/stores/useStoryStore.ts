@@ -1,6 +1,7 @@
 "use client";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { useShallow } from "zustand/react/shallow";
 import type { LocationPoint } from "@/features/stories/types/story";
 
 interface StoryState {
@@ -28,7 +29,9 @@ const storyStore = create<StoryState>()(
   )
 );
 
-export const useStoryStore = <T>(selector: (state: StoryState) => T) => storyStore(selector);
+/** 스토리 기록/선택 상태 셀렉터 훅 (useShallow 내장) */
+export const useStoryStore = <T>(selector: (state: StoryState) => T) =>
+  storyStore(useShallow(selector));
 
 export const storyActions = {
   startRecording: () => storyStore.setState({ isRecording: true, recordingPath: [] }),

@@ -1,11 +1,19 @@
 "use client";
 import { useEffect } from "react";
+
 import { useQueryClient } from "@tanstack/react-query";
 
 import { supabase } from "@/lib/supabase/client";
 import { authQueries } from "@/features/auth/queries/authQueries";
 
-export const SessionProvider = ({ children }: { children: React.ReactNode }) => {
+interface SessionProviderProps {
+  children: React.ReactNode;
+}
+
+/**
+ * Supabase 인증 상태 변경을 구독해 유저 쿼리를 동기화한다.
+ */
+export const SessionProvider = ({ children }: SessionProviderProps) => {
   const queryClient = useQueryClient();
 
   useEffect(() => {

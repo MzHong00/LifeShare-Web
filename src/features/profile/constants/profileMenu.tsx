@@ -12,7 +12,8 @@ export interface ProfileMenuItem {
   label: string; // 표시 라벨
   subText: string; // 우측 보조 텍스트
   route?: string; // 이동 경로
-  onClick?: () => void; // route 대신 실행할 커스텀 동작
+  /** route 대신 실행할 커스텀 동작 */
+  onClick?: () => void;
   icon: ReactNode; // 아이콘 노드
   colorClass: "blue" | "green" | "grey"; // 아이콘 박스 색상 클래스명
 }

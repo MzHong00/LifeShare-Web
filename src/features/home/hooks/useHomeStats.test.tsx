@@ -6,6 +6,7 @@ import { useCurrentWorkspace } from "@/features/workspace/hooks/useCurrentWorksp
 import { storyQueries } from "@/features/stories/queries/storyQueries";
 import { useHomeStats } from "./useHomeStats";
 
+import type { Story } from "@/features/stories/types/story";
 import type { ReactNode } from "react";
 
 vi.mock("@/features/workspace/hooks/useCurrentWorkspace", () => ({
@@ -31,10 +32,10 @@ describe("useHomeStats", () => {
     vi.mocked(useCurrentWorkspace).mockReturnValue({
       currentWorkspace: { id: "ws-1", name: "워크스페이스1", type: "couple", themeColor: "blue" },
       workspaces: [],
-    } as any);
+    } as unknown as ReturnType<typeof useCurrentWorkspace>);
     const { Wrapper, queryClient } = createWrapper();
-    const stories = [{ id: "1" }, { id: "2" }, { id: "3" }, { id: "4" }];
-    queryClient.setQueryData(storyQueries.list("ws-1").queryKey, stories as any);
+    const stories = [{ id: "1" }, { id: "2" }, { id: "3" }, { id: "4" }] as Story[];
+    queryClient.setQueryData(storyQueries.list("ws-1").queryKey, stories);
 
     const { result } = renderHook(() => useHomeStats(), { wrapper: Wrapper });
 
@@ -45,7 +46,7 @@ describe("useHomeStats", () => {
     vi.mocked(useCurrentWorkspace).mockReturnValue({
       currentWorkspace: null,
       workspaces: [],
-    } as any);
+    } as unknown as ReturnType<typeof useCurrentWorkspace>);
     const { Wrapper } = createWrapper();
 
     const { result } = renderHook(() => useHomeStats(), { wrapper: Wrapper });

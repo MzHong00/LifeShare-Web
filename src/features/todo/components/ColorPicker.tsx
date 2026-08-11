@@ -7,7 +7,7 @@ import styles from "./ColorPicker.module.scss";
 import type { CSSProperties } from "react";
 
 interface ColorPickerProps {
-  selectedColor: string;
+  selectedColor: string; // 현재 선택된 색상
   /** 색상 선택 핸들러 */
   onSelect: (color: string) => void;
 }

@@ -14,6 +14,7 @@ import { ProfileMenuRow } from "./ProfileMenuRow";
 import { ProfileHeroSkeleton } from "./ProfileHeroSkeleton";
 import styles from "./ProfileView.module.scss";
 
+/** 프로필 탭 메인 화면(히어로·워크스페이스·알림/지원 메뉴) */
 export const ProfileView = () => {
   const router = useRouter();
   const { user, email, displayName, isLoading, isError } = useProfileUser();

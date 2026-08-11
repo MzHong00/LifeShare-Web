@@ -21,6 +21,7 @@ const NAV_ITEMS = [
 const GNB_PATHS = NAV_ITEMS.map((item) => item.href);
 const GNB_HEIGHT_CSS_VAR = "--gnb-height"; // GNB 실제 렌더 높이를 다른 화면(바텀시트 등)에서 참조하기 위한 CSS 변수명
 
+/** 하단 GNB(전역 네비게이션). 지정된 GNB 경로에서만 표시되며, 자신의 높이를 CSS 변수로 노출한다 */
 export const BottomNav = () => {
   const navRef = useRef<HTMLElement>(null);
 

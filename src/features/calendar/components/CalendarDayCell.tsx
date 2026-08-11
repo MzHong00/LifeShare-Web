@@ -5,6 +5,8 @@ import { getDayNumber, getDayOfWeek } from "@/utils/date";
 
 import styles from "./CalendarDayCell.module.scss";
 
+import type { CSSProperties } from "react";
+
 const SUNDAY = 0; // 일요일 요일 인덱스
 const SATURDAY = 6; // 토요일 요일 인덱스
 const MAX_DOTS = 3; // 셀에 표시할 최대 점 개수
@@ -45,7 +47,7 @@ const CalendarDayCellComponent = ({
             <div
               key={color}
               className={cx(styles.dot, isSelected && styles.dotSelected)}
-              style={isSelected ? undefined : { backgroundColor: color }}
+              style={isSelected ? undefined : ({ "--dot-color": color } as CSSProperties)}
             />
           ))}
         </div>

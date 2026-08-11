@@ -24,6 +24,7 @@ const CENTER_MOVE_MS = 450; // 카드가 보드 중앙으로 이동하는 시간
 const BOARD_STORY_COUNT = 20; // 보드를 채우는 목표 스토리 수(부채꼴 5장 + 흩어진 카드 15장, 실 스토리 + 껍데기)
 const FAN_DRAG_STEP_PX = 130; // 부채꼴에서 카드 한 장을 넘기는 데 필요한 드래그 거리(px)
 
+/** 스토리 보드 메인 화면(부채꼴 카드 + 흩뿌려진 카드로 기억을 탐색) */
 export const StoryBoardView = () => {
   const boardRef = useRef<HTMLDivElement>(null); // 카드가 튕겨야 할 실제 벽(보드) 경계
   const collageRef = useRef<HTMLDivElement>(null); // 카드 transform의 기준 좌표계(offsetParent)

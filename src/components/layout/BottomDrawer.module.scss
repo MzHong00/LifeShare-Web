@@ -4,6 +4,8 @@
   position: absolute;
   left: 0;
   right: 0;
+  height: var(--drawer-height);
+  bottom: var(--drawer-bottom-offset);
   background-color: var(--white);
   border-top-left-radius: 24px;
   border-top-right-radius: 24px;

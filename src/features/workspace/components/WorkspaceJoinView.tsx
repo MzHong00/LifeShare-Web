@@ -19,11 +19,12 @@ import styles from "./WorkspaceJoinView.module.scss";
 export const WorkspaceJoinView = () => {
   const router = useRouter();
   const { code } = useParams<{ code: string }>();
+
+  const [joinError, setJoinError] = useState(""); // 참여 실패 메시지
+
   const { data: user } = useQuery(authQueries.user());
   const { workspaces } = useCurrentWorkspace();
   const joinWorkspace = useJoinWorkspaceMutation();
-
-  const [joinError, setJoinError] = useState(""); // 참여 실패 메시지
 
   const inviteCode = normalizeInviteCode(code); // 링크의 코드도 대소문자·하이픈 표기를 흡수한다
   const {

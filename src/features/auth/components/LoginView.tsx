@@ -13,6 +13,7 @@ import { GoogleIcon } from "@/assets/icons/GoogleIcon";
 import { APP_BRAND_NAME } from "@/constants/config";
 import { ROUTES } from "@/constants/routes";
 import { ICON_SIZE } from "@/constants/style";
+
 import styles from "./LoginView.module.scss";
 
 const GOOGLE_LOGIN_ERROR_MESSAGE = "구글 로그인에 실패했습니다. 잠시 후 다시 시도해주세요.";

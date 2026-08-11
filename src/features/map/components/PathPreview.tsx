@@ -6,6 +6,7 @@ import { ICON_SIZE } from "@/constants/style";
 
 import styles from "./PathPreview.module.scss";
 
+import type { CSSProperties } from "react";
 import type { LocationPoint } from "@/features/stories/types/story";
 
 interface PathPreviewProps {
@@ -23,8 +24,17 @@ const POLYLINE_LAYERS = [
   { strokeWidth: 4, opacity: 0.15 },
   { strokeWidth: 2.5, opacity: 1 },
 ];
+const GRID_SIZE = 20;
+const GRID_STROKE_WIDTH = 0.5;
+const WAYPOINT_DOT_RADIUS = 2.5;
+const WAYPOINT_DOT_OPACITY = 0.7;
+const ENDPOINT_OUTER_RADIUS = 6;
+const ENDPOINT_INNER_RADIUS = 4.5;
+const START_CENTER_RADIUS = 2;
+const TRACK_DOT_SIZE_ENDPOINT = 10;
+const TRACK_DOT_SIZE_WAYPOINT = 7;
 
-export function PathPreview({ path, pathColor, onEdit, onClear }: PathPreviewProps) {
+export const PathPreview = ({ path, pathColor, onEdit, onClear }: PathPreviewProps) => {
   const points = useMemo(() => {
     if (path.length === 0) return [];
     const lats = path.map((p) => p.latitude);
@@ -56,8 +66,13 @@ export function PathPreview({ path, pathColor, onEdit, onClear }: PathPreviewPro
           preserveAspectRatio="xMidYMid meet"
         >
           <defs>
-            <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
-              <path d="M 20 0 L 0 0 0 20" fill="none" stroke="var(--grey-200)" strokeWidth="0.5" />
+            <pattern id="grid" width={GRID_SIZE} height={GRID_SIZE} patternUnits="userSpaceOnUse">
+              <path
+                d={`M ${GRID_SIZE} 0 L 0 0 0 ${GRID_SIZE}`}
+                fill="none"
+                stroke="var(--grey-200)"
+                strokeWidth={GRID_STROKE_WIDTH}
+              />
             </pattern>
           </defs>
           <rect width={VIEW_W} height={VIEW_H} fill="url(#grid)" />
@@ -77,21 +92,33 @@ export function PathPreview({ path, pathColor, onEdit, onClear }: PathPreviewPro
             ))}
 
           {points.slice(1, -1).map((pt, i) => (
-            <circle key={i} cx={pt.x} cy={pt.y} r={2.5} fill={pathColor} opacity={0.7} />
+            <circle
+              key={i}
+              cx={pt.x}
+              cy={pt.y}
+              r={WAYPOINT_DOT_RADIUS}
+              fill={pathColor}
+              opacity={WAYPOINT_DOT_OPACITY}
+            />
           ))}
 
           {startPoint && (
             <>
-              <circle cx={startPoint.x} cy={startPoint.y} r={6} fill="white" />
-              <circle cx={startPoint.x} cy={startPoint.y} r={4.5} fill={pathColor} />
-              <circle cx={startPoint.x} cy={startPoint.y} r={2} fill="white" />
+              <circle cx={startPoint.x} cy={startPoint.y} r={ENDPOINT_OUTER_RADIUS} fill="white" />
+              <circle
+                cx={startPoint.x}
+                cy={startPoint.y}
+                r={ENDPOINT_INNER_RADIUS}
+                fill={pathColor}
+              />
+              <circle cx={startPoint.x} cy={startPoint.y} r={START_CENTER_RADIUS} fill="white" />
             </>
           )}
 
           {endPoint && (
             <>
-              <circle cx={endPoint.x} cy={endPoint.y} r={6} fill="white" />
-              <circle cx={endPoint.x} cy={endPoint.y} r={4.5} fill={pathColor} />
+              <circle cx={endPoint.x} cy={endPoint.y} r={ENDPOINT_OUTER_RADIUS} fill="white" />
+              <circle cx={endPoint.x} cy={endPoint.y} r={ENDPOINT_INNER_RADIUS} fill={pathColor} />
             </>
           )}
         </svg>
@@ -100,7 +127,7 @@ export function PathPreview({ path, pathColor, onEdit, onClear }: PathPreviewPro
       {/* ── 정보 + 액션 ── */}
       <div className={styles.info}>
         <div className={styles.infoLeft}>
-          <div className={styles.dot} style={{ backgroundColor: pathColor }} />
+          <div className={styles.dot} style={{ "--path-color": pathColor } as CSSProperties} />
           <div>
             <p className={styles.infoTitle}>경로 저장됨</p>
             <p className={styles.infoSub}>
@@ -138,18 +165,20 @@ export function PathPreview({ path, pathColor, onEdit, onClear }: PathPreviewPro
               <div className={styles.track}>
                 <div
                   className={styles.trackDot}
-                  style={{
-                    backgroundColor: isEndpoint ? pathColor : "var(--grey-300)",
-                    width: isEndpoint ? 10 : 7,
-                    height: isEndpoint ? 10 : 7,
-                    outline: isEndpoint ? `2px solid ${pathColor}` : "none",
-                    outlineOffset: 2,
-                  }}
+                  style={
+                    {
+                      "--dot-bg": isEndpoint ? pathColor : "var(--grey-300)",
+                      "--dot-size": `${isEndpoint ? TRACK_DOT_SIZE_ENDPOINT : TRACK_DOT_SIZE_WAYPOINT}px`,
+                      "--dot-outline": isEndpoint ? `2px solid ${pathColor}` : "none",
+                    } as CSSProperties
+                  }
                 />
                 {!isLast && (
                   <div
                     className={styles.trackLine}
-                    style={{ backgroundColor: i === 0 ? pathColor : "var(--grey-200)" }}
+                    style={
+                      { "--line-bg": i === 0 ? pathColor : "var(--grey-200)" } as CSSProperties
+                    }
                   />
                 )}
               </div>
@@ -158,7 +187,11 @@ export function PathPreview({ path, pathColor, onEdit, onClear }: PathPreviewPro
               <div className={styles.waypointContent}>
                 <span
                   className={styles.waypointLabel}
-                  style={{ color: isEndpoint ? pathColor : "var(--grey-700)" }}
+                  style={
+                    {
+                      "--label-color": isEndpoint ? pathColor : "var(--grey-700)",
+                    } as CSSProperties
+                  }
                 >
                   {label}
                 </span>
@@ -173,4 +206,4 @@ export function PathPreview({ path, pathColor, onEdit, onClear }: PathPreviewPro
       </div>
     </div>
   );
-}
+};

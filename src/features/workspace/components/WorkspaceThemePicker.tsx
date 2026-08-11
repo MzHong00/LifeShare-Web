@@ -5,7 +5,8 @@ import styles from "./WorkspaceThemePicker.module.scss";
 import type { ThemeColor } from "@/features/workspace/types/workspace";
 
 interface WorkspaceThemePickerProps {
-  value: ThemeColor;
+  value: ThemeColor; // 현재 선택된 테마 색상
+  /** 테마 색상 변경 핸들러 */
   onChange: (themeColor: ThemeColor) => void;
 }
 

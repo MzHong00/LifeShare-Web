@@ -19,6 +19,7 @@ import styles from "./StoryDetailView.module.scss";
 
 import type { Story } from "@/features/stories/types/story";
 
+/** 스토리 상세 화면(본문 표시, 수정/삭제 진입) */
 export const StoryDetailView = () => {
   const router = useRouter();
   const params = useParams();

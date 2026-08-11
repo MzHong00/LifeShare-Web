@@ -39,7 +39,11 @@ export const useCalendar = () => {
 
   const { currentWorkspace } = useCurrentWorkspace();
   const workspaceId = currentWorkspace?.id ?? ""; // 조회 대상 워크스페이스 id (미선택 시 쿼리 비활성화)
-  const { data: events = [] } = useQuery(calendarQueries.list(workspaceId));
+  const {
+    data: events = [],
+    isPending: isEventsPending,
+    isError: isEventsError,
+  } = useQuery(calendarQueries.list(workspaceId));
   const {
     data: todos = [],
     isPending: isTodosPending,
@@ -92,6 +96,8 @@ export const useCalendar = () => {
     markedDates,
     calendarDays,
     selectedDateTodos,
+    isEventsPending,
+    isEventsError,
     isTodosPending,
     isTodosError,
     currentWorkspace,

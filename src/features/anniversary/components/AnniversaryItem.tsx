@@ -1,16 +1,16 @@
 import { Heart } from "lucide-react";
 
 import { Card } from "@/components/ui/Card";
+import { ICON_SIZE } from "@/constants/style";
 import { formatDate } from "@/utils/date";
 import { cx } from "@/utils/cn";
 
 import styles from "./AnniversaryItem.module.scss";
 
 import type { Anniversary } from "@/features/anniversary/types/anniversary";
-import { ICON_SIZE } from "@/constants/style";
 
 interface AnniversaryItemProps {
-  anniversary: Anniversary;
+  anniversary: Anniversary; // 표시할 기념일 데이터
 }
 
 export const AnniversaryItem = ({ anniversary }: AnniversaryItemProps) => {

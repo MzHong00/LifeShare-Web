@@ -18,13 +18,16 @@ import { MapLoadState } from "@/features/map/components/MapLoadState";
 
 import styles from "./PathPickerMap.module.scss";
 
+import type { CSSProperties } from "react";
 import type { LocationPoint } from "@/features/stories/types/story";
 
 const ENDPOINT_DOT_SIZE = 18;
 const WAYPOINT_DOT_SIZE = 12;
 const ENDPOINT_BORDER = 3;
 const WAYPOINT_BORDER = 2;
-const DOT_WHITE = "#ffffff"; // 정점 마커의 흰색(지도 캔버스 인라인 스타일 전용)
+const DOT_WHITE = "#ffffff"; // 정점 마커의 흰색
+const PATH_STROKE_OPACITY = 1;
+const PATH_STROKE_WEIGHT = 5;
 
 /** 현재 위치를 조회해 지도 중심을 이동한다 (미지원·거부 시 무시) */
 const panToCurrentPosition = (map: google.maps.Map) => {
@@ -42,12 +45,12 @@ interface PathPickerMapProps {
   onClose: () => void;
 }
 
-export function PathPickerMap({
+export const PathPickerMap = ({
   initialPath = [],
   initialColor,
   onConfirm,
   onClose,
-}: PathPickerMapProps) {
+}: PathPickerMapProps) => {
   const [path, setPath] = useState<LocationPoint[]>(initialPath);
   const [color, setColor] = useState(initialColor ?? PATH_COLORS[0]);
 
@@ -93,7 +96,11 @@ export function PathPickerMap({
             {path.length > 1 && (
               <Polyline
                 path={toLatLngPath(path)}
-                options={{ strokeColor: color, strokeOpacity: 1, strokeWeight: 5 }}
+                options={{
+                  strokeColor: color,
+                  strokeOpacity: PATH_STROKE_OPACITY,
+                  strokeWeight: PATH_STROKE_WEIGHT,
+                }}
               />
             )}
             {path.map((point, i) => {
@@ -106,17 +113,17 @@ export function PathPickerMap({
                   position={{ lat: point.latitude, lng: point.longitude }}
                   mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
                 >
-                  <div style={{ transform: "translate(-50%, -50%)", pointerEvents: "none" }}>
-                    {/* 정점 마커 — 색상이 선택값에 따라 동적이라 지도 캔버스 인라인 스타일 유지 */}
+                  <div className={styles.vertexWrapper}>
                     <div
-                      style={{
-                        width: size,
-                        height: size,
-                        borderRadius: "50%",
-                        backgroundColor: isStart ? DOT_WHITE : color,
-                        border: `${isEndpoint ? ENDPOINT_BORDER : WAYPOINT_BORDER}px solid ${isStart ? color : DOT_WHITE}`,
-                        boxShadow: "0 2px 8px rgba(0,0,0,0.3)",
-                      }}
+                      className={styles.vertexDot}
+                      style={
+                        {
+                          "--dot-size": `${size}px`,
+                          "--dot-bg": isStart ? DOT_WHITE : color,
+                          "--dot-border-width": `${isEndpoint ? ENDPOINT_BORDER : WAYPOINT_BORDER}px`,
+                          "--dot-border-color": isStart ? color : DOT_WHITE,
+                        } as CSSProperties
+                      }
                     />
                   </div>
                 </OverlayView>
@@ -170,14 +177,14 @@ export function PathPickerMap({
                 </button>
               </div>
               <div className={styles.toolRight}>
-                <span className={styles.count} style={{ color }}>
+                <span className={styles.count} style={{ "--path-color": color } as CSSProperties}>
                   {path.length}개
                 </span>
                 <button
                   type="button"
                   onClick={() => onConfirm(path, color)}
                   className={styles.confirmBtn}
-                  style={{ backgroundColor: color }}
+                  style={{ "--path-color": color } as CSSProperties}
                 >
                   완료
                 </button>
@@ -197,7 +204,7 @@ export function PathPickerMap({
               type="button"
               onClick={() => setColor(c)}
               className={cx(styles.colorDot, color === c && styles.colorDotActive)}
-              style={{ backgroundColor: c }}
+              style={{ "--dot-color": c } as CSSProperties}
               aria-label={c}
             />
           ))}
@@ -205,4 +212,4 @@ export function PathPickerMap({
       </div>
     </div>
   );
-}
+};

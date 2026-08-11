@@ -27,9 +27,6 @@ type CreateSubStep = "type" | "name"; // create 단계 내부 세부 단계
  */
 export const useWorkspaceSetupWizard = () => {
   const router = useRouter();
-  const { data: user } = useQuery(authQueries.user());
-  const createWorkspace = useCreateWorkspaceMutation();
-  const createInviteCode = useCreateInviteCodeMutation();
 
   const [step, setStep] = useState<Step>("initial"); // 현재 위저드 단계
   const [createSubStep, setCreateSubStep] = useState<CreateSubStep>("type"); // create 세부 단계
@@ -39,6 +36,9 @@ export const useWorkspaceSetupWizard = () => {
   const [isMain, setIsMain] = useState(true); // 메인 워크스페이스 설정 여부
   const [createdWorkspaceId, setCreatedWorkspaceId] = useState<string | null>(null); // 생성 완료됐지만 초대코드 발급에 실패한 워크스페이스 id (재시도 시 재사용)
 
+  const { data: user } = useQuery(authQueries.user());
+  const createWorkspace = useCreateWorkspaceMutation();
+  const createInviteCode = useCreateInviteCodeMutation();
   // 발급된 코드는 뮤테이션이 쿼리 캐시에 넣어두므로 공유 훅이 그대로 읽어 쓴다
   const inviteShare = useInviteShare(createdWorkspaceId ?? "");
 
